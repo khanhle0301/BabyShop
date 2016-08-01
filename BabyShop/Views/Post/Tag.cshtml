@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Model.EF.Post>
+@{
+    ViewBag.Title = "Tag";
+    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+    var tag = (Model.EF.Tag)ViewBag.Tag;
+}
+
+
+<link href="~/Assets/client/css/customPost.css" rel="stylesheet" />
+
+<div class="container">
+    <div class="content">
+        <h2 style="color:deeppink;text-align:center">TAG: @tag.Name</h2>
+        @foreach (var item in Model)
+        {
+            <div class="image group">
+                <div class="grid images_3_of_1">
+                    <img src="@item.Image" alt="" />
+                </div>
+                <div class="grid news_desc">
+                    <h3><a href="/tin-tuc/@item.Metatitle-@item.ID">@item.Name </a></h3>
+                    <h4>Posted on @item.CreatedDate by <span><a href="#">@item.CreatedBy</a></span></h4>
+                    @item.Description
+                </div>
+            </div>
+        }
+        <div class="clearfix"> </div>
+        @if (ViewBag.TotalPage > 1)
+            {
+                var pageDisplay = (int)ViewBag.MaxPage;
+                int totalPage = (int)ViewBag.TotalPage;
+                int currentPage = ((int)ViewBag.Page);
+
+                // Create numeric links
+                var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
+                var endPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
+
+            <nav>
+                <ul class="pagination">
+                    @if (currentPage > 1)
+                    {
+                        <li>
+                            <a href="?page=1" aria-label="First">
+                                <i class="fa fa-angle-double-left"></i>
+                            </a>
+                        </li>
+                            <li>
+                                <a href="?page=@(currentPage-1)" aria-label="Previous">
+                                    <i class="fa fa-angle-left"></i>
+                                </a>
+                            </li>
+                    }
+
+                    @for (int i = startPageIndex; i <= endPageIndex; i++)
+                    {
+                        if (currentPage == i)
+                        {
+                            <li class="active"><a href="?page=@i" title="Trang @i">@i</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="?page=@i" title="Trang @i">@i</a></li>
+                        }
+                    }
+                    @if (currentPage < totalPage)
+                    {
+                        <li>
+                            <a href="?page=@(currentPage+1)" aria-label="Next">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                            <li>
+                                <a href="?page=@totalPage" aria-label="Last">
+                                    <i class="fa fa-angle-double-right"></i>
+                                </a>
+                            </li>
+                    }
+                </ul>
+            </nav>
+        }
+    </div>
+</div>

@@ -1,0 +1,72 @@
+﻿@model List<Model.EF.Menu>
+@using BabyShop.Common
+@{
+    var session = (UserLogin)Session[BabyShop.Common.CommonConstants.USER_SESSION];
+}
+
+<div class="header">
+    <div class="top-header">
+        <div class="container">
+            <div class="top-header-left">
+                <ul class="support">
+                    <li><label> </label></li>
+                    <li><a href="/ho-tro">Hỗ trợ<span class="live"> Online</span></a></li>
+                </ul>
+                <ul class="support">
+                    <li class="van"><a href="/hinh-thuc-van-chuyen"><label> </label></a></li>
+                    <li><a href="/hinh-thuc-van-chuyen">Giao hàng <span class="live">toàn quốc</span></a></li>
+                </ul>
+
+                <ul class="support">
+                    <li><label> </label></li>
+                    <li><a href="/gioi-thieu">Giới thiệu</a></li>
+                </ul>
+                <ul class="support">
+                    <li><label> </label></li>
+                    <li><a href="/cam-nang-cho-be">Cẩm nang cho bé</a></li>
+                </ul>
+                <ul class="support">
+                    <li><label> </label></li>
+                    <li><a href="/lien-he">Liên hệ</a></li>
+                </ul>
+                <div class="clearfix"> </div>
+            </div>         
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <div class="bottom-header">
+        <div class="container">
+            <div class="header-bottom-left">
+                <div class="logo">
+                    <a href="/"><img src="/Assets/client/images/logo.png" alt=" " /></a>
+                </div>
+                <div class="search">
+                    <form method="get" action="/tim-kiem">
+                        <input type="text" id="txtKeyword" name="keyword" placeholder="Gõ từ khóa">
+                        <input type="submit" value="Tìm kiếm" id="btnSearch">
+                    </form>                                
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            <div class="header-bottom-right">               
+                @if (session == null)
+                {
+                    <ul class="login">
+                        <li><a href="/dang-nhap"><span> </span>ĐĂNG NHẬP</a></li> |
+                        <li><a href="/dang-ky">ĐĂNG KÝ</a></li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="login1">
+                        <li><a href="/tai-khoan"><span> </span>Xin chào : @session.Name</a></li> |
+                        <li><a>@Html.ActionLink("Thoát", "Logout", "User")</a></li>
+                    </ul>
+                }
+                <div class="cart"><a href="/gio-hang"><span> </span>GIỎ HÀNG</a></div>
+                <div class="clearfix"> </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>

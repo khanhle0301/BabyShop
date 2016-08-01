@@ -1,0 +1,126 @@
+﻿@model BabyShop.Models.FeedbackViewModel
+@using BotDetect.Web.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section footerJS{
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDf5goklh5E5Uj-gSmaNdTBtqPoyy1-iv8"></script>
+    <script src="~/Assets/client/js/controller/contactController.js"></script>
+    <script>
+        function timDuongDi() {
+            var latlng = new google.maps.LatLng(@Model.ContactDetail.Lat, @Model.ContactDetail.Lng); //Vị trí của cửa hàng
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: latlng,
+                zoom: 17
+            });
+            var infoWindow = new google.maps.InfoWindow({ map: map });
+
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent('Vị trí của bạn');
+                    map.setCenter(pos);
+
+                    var directionsDisplay = new google.maps.DirectionsRenderer({
+                        map: map
+                    });
+                    var request = {
+                        destination: latlng, // Điểm đến là vị trí cửa hàng
+                        origin: pos, // Điểm bắt đầu là vị trí hiện tại của bạn
+                        travelMode: google.maps.TravelMode.DRIVING
+                    };
+                    var directionsService = new google.maps.DirectionsService();
+                    directionsService.route(request, function (response, status) {
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            // Display the route on the map.
+                            directionsDisplay.setDirections(response);
+                        }
+                    });
+                }, function () {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                                  'Error: The Geolocation service failed.' :
+                                  'Error: Your browser doesn\'t support geolocation.');
+        }
+    </script>
+}
+<style>
+    #map {
+        height: 400px;
+    }
+</style>
+<link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl" rel="stylesheet" type="text/css" />
+<input type="hidden" id="hidAddress" value="@Model.ContactDetail.Name<br />Điện thoại:@Model.ContactDetail.Phone <br>Địa chỉ: @Model.ContactDetail.Address" />
+<input type="hidden" id="hidLat" value="@Model.ContactDetail.Lat" />
+<input type="hidden" id="hidLng" value="@Model.ContactDetail.Lng" />
+<input type="hidden" id="hidName" value="@Model.ContactDetail.Name" />
+@if (ViewData["SuccessMsg"] != null)
+{
+    <div class="single_top">
+        <div class="single_grid">
+            <div class="alert alert-success">
+                <strong>Chúc mừng bạn! </strong> gửi phản hồi thành công.
+                <br />Chúng tôi sẽ liên hệ lại sớm nhất có thể. Click <a href="/">vào đây </a>để về trang chủ.
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="main">
+        <div class="reservation_top">
+            <div class="contact_right">
+                <h3>Thông tin liên hệ</h3>
+                <address class="address">
+                    <p>@Model.ContactDetail.Address</p>
+                    <dl>
+                        <dt> </dt>
+                        <dd>Điện thoại :<span> @Model.ContactDetail.Phone</span></dd>
+                        <dd>E-mail :&nbsp; <a href="mailto:@(Model.ContactDetail.Email)">@(Model.ContactDetail.Email)</a></dd>
+                    </dl>
+                </address>
+                <div class="clearfix"></div>
+                <button class="btn btn-primary" style="" onclick="timDuongDi()">Tìm đường đi</button>
+                <div id="map"></div>
+            </div>
+        </div>
+
+        <div class="reservation_top">
+            <div class="contact_right">
+                <h3>Gửi thông tin liên hệ</h3>
+                <div class="contact-form">
+                    @using (Html.BeginForm("SendFeedback", "Contact", FormMethod.Post))
+                {
+                        @Html.ValidationSummary(false, "", new { @class = "error" });
+                        @Html.TextBoxFor(model => model.Name, new { @class = "textbox", @placeholder = "Họ tên" });
+                        @Html.TextBoxFor(model => model.Email, new { @class = "textbox", @placeholder = "Email" });
+                        @Html.TextBoxFor(model => model.Subject, new { @class = "textbox", @placeholder = "Chủ đề" });
+                        @Html.TextAreaFor(model => model.Message, new { @placeholder = "Nội dung" });
+                    MvcCaptcha contactCaptcha = new MvcCaptcha("contactCaptcha");
+                        @Html.Captcha(contactCaptcha)
+                        @Html.TextBox("CaptchaCode")
+
+                        <input type="submit" value="Gởi">
+                        <div class="clearfix"> </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
