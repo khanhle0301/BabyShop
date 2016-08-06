@@ -18,8 +18,6 @@ namespace Model.EF
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<Footer> Footers { get; set; }
-        public virtual DbSet<Menu> Menus { get; set; }
-        public virtual DbSet<MenuType> MenuTypes { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
@@ -28,15 +26,13 @@ namespace Model.EF
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductTag> ProductTags { get; set; }
         public virtual DbSet<Slide> Slides { get; set; }
-        public virtual DbSet<SystemConfig> SystemConfigs { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Size> Sizes { get; set; }
+        public virtual DbSet<SizeProduct> SizeProducts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<About>()
-                .Property(e => e.MetaTitle)
-                .IsUnicode(false);
 
             modelBuilder.Entity<About>()
                 .Property(e => e.CreatedBy)
@@ -91,16 +87,6 @@ namespace Model.EF
             modelBuilder.Entity<Feedback>()
                 .Property(e => e.Email)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<Menu>()
-                .Property(e => e.Target)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<MenuType>()
-                .HasMany(e => e.Menus)
-                .WithRequired(e => e.MenuType)
-                .HasForeignKey(e => e.TypeID)
-                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Order>()
                 .Property(e => e.CustomerEmail)
@@ -168,10 +154,6 @@ namespace Model.EF
 
             modelBuilder.Entity<ProductTag>()
                 .Property(e => e.TagID)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<SystemConfig>()
-                .Property(e => e.Code)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Tag>()

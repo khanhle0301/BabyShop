@@ -10,7 +10,8 @@
     public partial class Admin
     {
         public int ID { get; set; }
-       
+
+        [Display(Name= "Tài khoản")]
         public string UserName { get; set; }
 
         [StringLength(50)]
@@ -37,16 +38,21 @@
         [Display(Name = "Điện thoại")]
         public string Phone { get; set; }
 
+        [Display(Name = "Ngày tạo")]
         public DateTime? CreatedDate { get; set; }
 
+        [Display(Name = "Tạo bởi")]
         [StringLength(50)]
         public string CreatedBy { get; set; }
 
+        [Display(Name = "Ngày cập nhật")]
         public DateTime? UpdatedDate { get; set; }
 
+        [Display(Name = "Cập nhật bởi")]
         [StringLength(50)]
         public string UpdatedBy { get; set; }
 
+        [Display(Name = "Trạng thái")]
         public bool Status { get; set; }
     }
 }

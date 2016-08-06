@@ -21,7 +21,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
     <!--//fonts-->
     <script src="/Assets/client/js/jquery.min.js"></script>
-    <!--script-->
 </head>
 <body>
     <!--header-->
@@ -29,20 +28,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!---->
     <div class="container">
         @RenderBody()
-        @{Html.RenderAction("Category", "Home");}
+        @RenderSection("category", required: false)
     </div>
     <!---->
     @{ Html.RenderAction("Footer", "Home");}
     <div class="clearfix"></div>
 
-    <script src="~/Assets/client/js/jquery.min.js"></script>
-    <script src="~/Assets/client/js/jquery-ui.js"></script>
-
-    <script src="~/Assets/client/js/jquery.validate.js"></script>
-    <script src="~/Assets/client/js/additional-methods.min.js"></script>
-
-    <script src="~/Assets/client/js/controller/shoppingCart.js"></script>
-    <script src="~/Assets/client/js/common.js"></script>
+    <script src="/Assets/client/js/jquery-ui.js"></script>
+   
+    <script src="/Assets/client/js/jquery.validate.js"></script>
+    <script src="/Assets/client/js/additional-methods.min.js"></script>
+    <script src="/Assets/client/js/common.js"></script>
 
     @RenderSection("footerJS", required: false)
 </body>

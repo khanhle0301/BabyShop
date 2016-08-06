@@ -6,6 +6,12 @@
     ViewBag.Title = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section category{
+    @{Html.RenderAction("Category", "Home");}
+}
+
+
 @if (ViewData["SuccessMsg"] != null)
 {
     <div class="single_top">

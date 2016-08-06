@@ -1,0 +1,134 @@
+﻿@model Model.EF.Post
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    Chi tiết tin tức
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Thông tin tin tức
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            ID
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.ID)
+                        </dd>
+                        <dt>
+                          Tiêu đề
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Name)
+                        </dd>
+
+                        <dt>
+                           Loại tin
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.PostCategory.Name)
+                        </dd>
+
+                        <dt>
+                          Hình ảnh
+                        </dt>
+
+                        <dd>
+                            <img src="@Html.DisplayFor(model => model.Image)" width="100" alt="" />
+                        </dd>
+
+                        <dt>
+                          Mô tả ngắn
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Description)
+                        </dd>
+
+                        <dt>
+                          Chi tiết
+                        </dt>
+
+                        <dd>
+                            @Html.Raw(Model.Detail)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Tag)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Tag)
+                        </dd>
+
+                        <dt>
+                          Ngày tạo
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedDate)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedBy)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedBy)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.UpdatedDate)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.UpdatedDate)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.UpdatedBy)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.UpdatedBy)
+                        </dd>
+
+                        <dt>
+                           Lượt xem
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.ViewCount)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Status)
+                        </dt>
+
+                        <dd>
+                            @Html.Raw(Model.Status ? "<strong>Kích hoạt</strong>" : "Khoá")
+                        </dd>
+
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

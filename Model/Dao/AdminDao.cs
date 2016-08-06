@@ -79,50 +79,9 @@ namespace Model.Dao
             }
         }
 
-        public IEnumerable<Admin> ListAllPaging(string sortOrder, string searchString, int page, int pageSize)
+        public List<Admin> ListAllPaging()
         {
-            IQueryable<Admin> query = db.Admins;
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                query = query.Where(x => x.Name.Contains(searchString) || x.Email.Contains(searchString) || x.UserName.Contains(searchString));
-            }
-            switch (sortOrder)
-            {
-                case "name":
-                    query = query.OrderBy(x => x.Name);
-                    break;
-                case "name_desc":
-                    query = query.OrderByDescending(x => x.Name);
-                    break;
-                case "email":
-                    query = query.OrderBy(x => x.Email);
-                    break;
-                case "email_desc":
-                    query = query.OrderByDescending(x => x.Email);
-                    break;
-                case "username":
-                    query = query.OrderBy(x => x.UserName);
-                    break;
-                case "username_desc":
-                    query = query.OrderByDescending(x => x.UserName);
-                    break;
-                case "date":
-                    query = query.OrderBy(x => x.CreatedDate);
-                    break;
-                case "date_desc":
-                    query = query.OrderByDescending(x => x.CreatedDate);
-                    break;
-                case "status":
-                    query = query.OrderBy(x => x.Status);
-                    break;
-                case "status_desc":
-                    query = query.OrderByDescending(x => x.Status);
-                    break;
-                default:
-                    query = query.OrderByDescending(x => x.CreatedDate);
-                    break;
-            }
-            return query.ToPagedList(page, pageSize);
+            return db.Admins.OrderByDescending(x => x.CreatedDate).ToList();
         }
 
         public Admin ViewDetail(int id)
@@ -144,7 +103,7 @@ namespace Model.Dao
         public bool EmailExists(string email)
         {
             return db.Admins.Any(x => x.Email == email);
-        }       
+        }
 
 
         public int Login(string userName, string passWord)

@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Detail";
-    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container">
     <div class="content">
@@ -13,27 +13,13 @@
         </div>
         <div class="section-group">
             @Html.Raw(Model.Detail)
-            @*<ul>
-                    @{
-                        var tags = (List<Model.EF.Tag>)ViewBag.Tags;
-                        foreach (var tag in tags)
-                        {
-                            <li><a href="/tag/@tag.ID">@tag.Name</a></li>
-                        }
-                    }
-                </ul>*@
-
             <div class="tag">
-                <ul class="taglist">
-                    <li>Tag :</li>
-                    @foreach (var tag in (List<Model.EF.Tag>)ViewBag.Tags)
-                    {
-                        <li><a href="/tag/@tag.ID">@(tag.Name), </a></li>
-                    }
-
-                </ul>
+                <b>Tag :</b>
+                @foreach (var tag in (List<Model.EF.Tag>)ViewBag.Tags)
+                {
+                    <a href="/tag/@tag.ID">@(tag.Name), </a>
+                }
             </div>
-
         </div>
     </div>
 </div>

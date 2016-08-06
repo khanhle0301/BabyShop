@@ -464,7 +464,7 @@ h5.latest-product{
 .chain-grid{
 	border: 1px solid #ddd;
 	position: relative;	
-	width: 30.7%;
+	width: 30.7%;   
 	margin: 0 2.6% 0 0;
 	padding:0;
 }
@@ -1198,6 +1198,13 @@ ul.face-in-to li a span.facebook-in{
 	color:#000;
 	line-height: 1.5em;
 }
+
+.left-m{
+	font-size:1.5em;
+	float:left;
+	color:#F97E76;
+}
+
 .left-n{
 	font-size:1.8em;
 	float:left;

@@ -8,7 +8,7 @@
             var btn = $(this);
             var id = btn.data('id');
             $.ajax({
-                url: "/Admin/AdminUser/ChangeStatus",
+                url: "/Admin/User/ChangeStatus",
                 data: { id: id },
                 dataType: "json",
                 type: "POST",

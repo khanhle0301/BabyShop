@@ -4,6 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var tag = (Model.EF.Tag)ViewBag.Tag;
 }
+
+@section category{
+    @{Html.RenderAction("Category", "Home");}
+}
+
+
 <div class="women-product">
     @if (Model.Count() > 0)
     {

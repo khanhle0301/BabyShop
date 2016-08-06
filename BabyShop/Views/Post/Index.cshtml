@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Model.EF.Post>
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <link href="~/Assets/client/css/customPost.css" rel="stylesheet" />
@@ -16,7 +16,7 @@
                     <img src="@item.Image" alt="" />
                 </div>
                 <div class="grid news_desc">
-                    <h3><a href="/tin-tuc/@item.Metatitle-@item.ID">@item.Name </a></h3>
+                    <h3><a href="/cam-nang-cho-be/@item.Metatitle-@item.ID">@item.Name </a></h3>
                     <h4>Posted on @item.CreatedDate by <span><a href="#">@item.CreatedBy</a></span></h4>
                     @item.Description<a href="/tin-tuc/@item.Metatitle-@item.ID" title="đọc tiếp">[....]</a>
                 </div>

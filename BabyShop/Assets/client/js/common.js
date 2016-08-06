@@ -34,10 +34,12 @@
         $('.btnAddToCart').off('click').on('click', function (e) {
             e.preventDefault();
             var productId = parseInt($(this).data('id'));
+            var txtSize = document.getElementById("txtSize").value;
             $.ajax({
                 url: '/Cart/Add',
                 data: {
-                    productId: productId
+                    productId: productId,
+                    Size: txtSize
                 },
                 type: 'POST',
                 dataType: 'json',
@@ -50,7 +52,8 @@
                     }
                 }
             });
-        });       
+        });
+
     }
 }
 common.init();

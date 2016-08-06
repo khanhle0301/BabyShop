@@ -10,8 +10,10 @@ namespace BabyShop.Areas.Admin.Models
     {
         public int ID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Vui lòng nhập tên danh mục")]
+        [MaxLength(50, ErrorMessage = "Tên danh mục không được quá 50 ký tự")]
         [Display(Name= "Tên danh mục")]
+        [System.Web.Mvc.Remote("CateNameExists", "CategoryProduct", ErrorMessage = "Tên danh mục đã tồn tại.")]
         public string Name { get; set; }
 
         [StringLength(50)]
@@ -20,6 +22,7 @@ namespace BabyShop.Areas.Admin.Models
         [Display(Name = "Tên danh mục cha")]
         public int? ParentID { get; set; }
 
+        [Display(Name = "Thứ tự hiển thị")]
         public int? DisplayOrder { get; set; }
 
         public DateTime? CreatedDate { get; set; }

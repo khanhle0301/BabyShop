@@ -1,5 +1,4 @@
-﻿@model PagedList.IPagedList<Model.EF.User>
-@using PagedList.Mvc;
+﻿@model List<Model.EF.User>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -8,50 +7,36 @@
 @section header{
     Danh mục user
 }
+@section jsFooter{
+    <script src="/Assets/admin/js/controller/userController.js"></script>
+}
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 Danh sách người dùng
+                <a class="btn btn-success" href="/Admin/About/Create">Thêm mới</a>
             </div>
             <!-- /.panel-heading -->
-            <div class="panel-body">
-                @using (Html.BeginForm("Index", "User", FormMethod.Get))
-                {
-                    <div class="row form-group">
-                        <div class="col-lg-12">
-                            <div class="col-md-4">
-                                <div class="input-group custom-search-form">
-                                    <input type="text" value="@ViewBag.CurrentFilter" class="form-control" name="searchString" placeholder="Tìm kiếm.">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="submit">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>                           
-                        </div>
-                    </div>
-                }
-
+            <div class="panel-body">           
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover">
+                    <table class="table table-striped table-bordered table-hover" id="myTable">
                         <thead>
                             <tr>
                                 <th>
-                                    @Html.ActionLink("Tài khoản", "Index", new { sortOrder = ViewBag.UserNameSortParm, currentFilter = ViewBag.CurrentFilter })
+                                    Tài khoản
                                 </th>
                                 <th>
-                                    @Html.ActionLink("Họ tên", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+                                    Họ tên
                                 </th>
                                 <th>
-                                    @Html.ActionLink("Email", "Index", new { sortOrder = ViewBag.EmailSortParm, currentFilter = ViewBag.CurrentFilter })
+                                    Email
                                 </th>
                                 <th>
-                                    @Html.ActionLink("Ngày tạo", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })
+                                    Ngày tạo
                                 </th>
                                 <th>
-                                    @Html.ActionLink("Trạng thái", "Index", new { sortOrder = ViewBag.StatusSortParm, currentFilter = ViewBag.CurrentFilter })
+                                    Trạng thái
                                 </th>
                                 <th>#</th>
                             </tr>
@@ -68,6 +53,8 @@
                                     <td>
                                         <a href="/Admin/User/Edit/@item.ID">Sửa</a>
                                         |
+                                        <a href="/Admin/User/Details/@item.ID">Chi tiết</a>
+                                        |
                                         @Ajax.ActionLink("Xoá", "Delete", new { @id = item.ID }, new AjaxOptions
                                    {
                                        Confirm = "Bạn có muốn xoá bản ghi này?",
@@ -79,10 +66,6 @@
                             }
                         </tbody>
                     </table>
-                    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
-
-                    @Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
                 </div>
                 <!-- /.table-responsive -->
             </div>

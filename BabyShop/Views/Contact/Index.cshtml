@@ -4,6 +4,12 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section category{
+    @{Html.RenderAction("Category", "Home");}
+}
+
+
 @section footerJS{
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDf5goklh5E5Uj-gSmaNdTBtqPoyy1-iv8"></script>
     <script src="~/Assets/client/js/controller/contactController.js"></script>

@@ -40,7 +40,7 @@ namespace BabyShop.Controllers
 
                 var adminEmail = ConfigHelper.GetByKey("AdminEmail");
                 var mail = MailHelper.SendMail(adminEmail, "Thông tin liên hệ từ website", content);
-                var id = new ContactDao().InsertFeedBack(feedback);
+                var id = new FeedbackDao().Insert(feedback);
                 ViewData["SuccessMsg"] = "Gửi phản hồi thành công";
             }
 

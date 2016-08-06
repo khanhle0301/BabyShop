@@ -1,0 +1,92 @@
+﻿@model Model.EF.Order
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    Chi tiết
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Thông tin phản hồi.
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            ID
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.ID)
+                        </dd>
+                        <dt>
+                            Tên khách hàng
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CustomerName)
+                        </dd>
+
+                        <dt>
+                            Địa chỉ
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CustomerAddress)
+                        </dd>
+
+                        <dt>
+                           Email
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CustomerEmail)
+                        </dd>
+
+                        <dt>
+                            Điện thoại
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CustomerMobile)
+                        </dd>
+
+                        <dt>
+                            Lời nhắn
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CustomerMessage)
+                        </dd>
+
+                        <dt>
+                            Ngày tạo
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedDate)
+                        </dd>
+
+                        <dt>
+                            Trạng thái
+                        </dt>
+
+                        <dd>
+                            @Html.Raw(Model.Status ? "<strong>Kích hoạt</strong>" : "Khoá")
+                            @*@Html.DisplayFor(model => model.Status)*@
+                        </dd>
+
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

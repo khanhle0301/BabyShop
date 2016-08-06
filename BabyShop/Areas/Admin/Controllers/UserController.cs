@@ -1,4 +1,5 @@
 ﻿using BabyShop.Common;
+using Common;
 using Model.Dao;
 using Model.EF;
 using System;
@@ -11,29 +12,18 @@ namespace BabyShop.Areas.Admin.Controllers
 {
     public class UserController : BaseController
     {
-        // GET: Admin/User
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
-        {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = sortOrder == "name" ? "name_desc" : "name";
-            ViewBag.UserNameSortParm = sortOrder == "username" ? "username_desc" : "username";
-            ViewBag.DateSortParm = sortOrder == "date" ? "date_desc" : "date";
-            ViewBag.EmailSortParm = sortOrder == "email" ? "email_desc" : "email";
-            ViewBag.StatusSortParm = sortOrder == "status" ? "status_desc" : "status";
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
+        // GET: Admin/User        
 
-            ViewBag.CurrentFilter = searchString;
-            int pageSize = 5;
-            int pageNumber = (page ?? 1);
-            var result = new UserDao().ListAllPaging(sortOrder, searchString, pageNumber, pageSize);
+        public ActionResult Index()
+        {
+            var result = new UserDao().ListAll();
             return View(result);
+        }
+
+        public ActionResult Details(int id)
+        {
+            var model = new UserDao().ViewDetail(id);
+            return View(model);
         }
 
         [HttpGet]
@@ -82,7 +72,5 @@ namespace BabyShop.Areas.Admin.Controllers
                 status = result
             });
         }
-
-
     }
 }

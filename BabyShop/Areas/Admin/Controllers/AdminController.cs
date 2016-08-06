@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Model.EF;
+using Common;
 
 namespace BabyShop.Areas.Admin.Controllers
 {
@@ -14,27 +15,9 @@ namespace BabyShop.Areas.Admin.Controllers
     {
 
         // GET: Admin/AdminUser
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
-        {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = sortOrder == "name" ? "name_desc" : "name";
-            ViewBag.UserNameSortParm = sortOrder == "username" ? "username_desc" : "username";
-            ViewBag.DateSortParm = sortOrder == "date" ? "date_desc" : "date";
-            ViewBag.EmailSortParm = sortOrder == "email" ? "email_desc" : "email";
-            ViewBag.StatusSortParm = sortOrder == "status" ? "status_desc" : "status";
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
-
-            ViewBag.CurrentFilter = searchString;
-            int pageSize = 5;
-            int pageNumber = (page ?? 1);
-            var result = new AdminDao().ListAllPaging(sortOrder, searchString, pageNumber, pageSize);
+        public ActionResult Index()
+        {           
+            var result = new AdminDao().ListAllPaging();
             return View(result);
         }
 
@@ -61,12 +44,9 @@ namespace BabyShop.Areas.Admin.Controllers
                     admin.Email = adminModel.Email;
                     admin.Phone = adminModel.Phone;
                     admin.CreatedDate = DateTime.Now;
-                    var session = (AdminLogin)Session[CommonConstants.ADMIN_SESSION];
-                    if (session != null)
-                    {
-                        var entity = dao.GetByID(session.UserName);
-                        admin.CreatedBy = entity.UserName;
-                    }
+                    var session = (AdminLogin)Session[Common.CommonConstants.ADMIN_SESSION];
+                    var entity = dao.GetByID(session.UserName);
+                    admin.CreatedBy = entity.UserName;
                     admin.Status = adminModel.Status;
                     int id = dao.Insert(admin);
                     if (id > 0)
@@ -96,14 +76,11 @@ namespace BabyShop.Areas.Admin.Controllers
             try
             {
                 if (ModelState.IsValid)
-                {                  
-                    var dao = new AdminDao();                    
-                    var session = (AdminLogin)Session[CommonConstants.ADMIN_SESSION];
-                    if (session != null)
-                    {
-                        var entity = dao.GetByID(session.UserName);
-                        admin.UpdatedBy = entity.UserName;
-                    }
+                {
+                    var dao = new AdminDao();
+                    var session = (AdminLogin)Session[Common.CommonConstants.ADMIN_SESSION];
+                    var entity = dao.GetByID(session.UserName);
+                    admin.UpdatedBy = entity.UserName;
                     var result = dao.Update(admin);
                     if (result)
                     {
@@ -119,15 +96,20 @@ namespace BabyShop.Areas.Admin.Controllers
             { return View(); }
         }
 
-        [HttpDelete]   
+        public ActionResult Details(int id)
+        {
+            var result = new AdminDao().ViewDetail(id);
+            return View(result);
+        }
+
+        [HttpDelete]
         public ActionResult Delete(int id)
         {
             new AdminDao().Delete(id);
             return RedirectToAction("Index");
         }
 
-
-        [HttpPost]      
+        [HttpPost]
         public JsonResult ChangeStatus(int id)
         {
             var result = new AdminDao().ChangeStatus(id);

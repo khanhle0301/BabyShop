@@ -1,5 +1,7 @@
 ﻿using Common;
 using Model.EF;
+using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -13,6 +15,38 @@ namespace Model.Dao
         public ProductDao()
         {
             db = new BabyShopDbContext();
+        }
+
+        public void UpdateImages(long productId, string images)
+        {
+            var product = db.Products.Find(productId);
+            product.MoreImage = images;
+            db.SaveChanges();
+        }
+
+        public bool Delete(int id)
+        {
+            try
+            {
+                var cate = db.Products.Find(id);
+                db.Products.Remove(cate);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool NameExists(string name)
+        {
+            return db.Products.Any(x => x.Name == name);
+        }
+
+        public List<Product> ListAllPaging()
+        {
+            return db.Products.OrderByDescending(x => x.CreatedDate).ToList();
         }
 
         public int Product(Product entity)
@@ -44,8 +78,6 @@ namespace Model.Dao
                              CreatedBy = a.CreatedBy,
                              UpdatedDate = a.UpdatedDate,
                              UpdatedBy = a.UpdatedBy,
-                             HomeFlag = a.HomeFlag,
-                             HotFlag = a.HotFlag,
                              ViewCount = a.ViewCount,
                              Status = a.Status
 
@@ -65,8 +97,6 @@ namespace Model.Dao
                              CreatedBy = x.CreatedBy,
                              UpdatedDate = x.UpdatedDate,
                              UpdatedBy = x.UpdatedBy,
-                             HomeFlag = x.HomeFlag,
-                             HotFlag = x.HotFlag,
                              ViewCount = x.ViewCount,
                              Status = x.Status
                          });
@@ -81,17 +111,17 @@ namespace Model.Dao
 
         public List<Product> ListNewProduct(int top)
         {
-            return db.Products.Where(x => x.Status && x.HomeFlag == true).OrderByDescending(x => x.CreatedDate).Take(top).ToList();
+            return db.Products.Where(x => x.Status).OrderByDescending(x => x.CreatedDate).Take(top).ToList();
         }
 
         public List<Product> ListPromotionProduct(int top)
         {
-            return db.Products.Where(x => x.Status && x.PromotionPrice.HasValue && x.PromotionPrice > 0 && x.HomeFlag == true).OrderByDescending(x => x.CreatedDate).Take(top).ToList();
+            return db.Products.Where(x => x.Status && x.PromotionPrice.HasValue && x.PromotionPrice > 0).OrderByDescending(x => x.CreatedDate).Take(top).ToList();
         }
 
         public List<Product> ListHotProduct(int top)
         {
-            return db.Products.Where(x => x.Status && x.HotFlag == true && x.HomeFlag == true).OrderByDescending(x => x.CreatedDate).Take(top).ToList();
+            return db.Products.Where(x => x.Status).OrderByDescending(x => x.QuantitySold).Take(top).ToList();
         }
 
         public Product ViewDetail(int id)
@@ -199,7 +229,7 @@ namespace Model.Dao
 
         public IEnumerable<Product> ListAllHotProduct(int page, int pageSize, string sort, out int totalRow)
         {
-            var query = db.Products.Where(x => x.Status && x.HotFlag == true);
+            var query = db.Products.Where(x => x.Status);
             switch (sort)
             {
                 case "discount":
@@ -215,7 +245,6 @@ namespace Model.Dao
             totalRow = query.Count();
             return query.Skip((page - 1) * pageSize).Take(pageSize);
         }
-
 
         public List<string> MoreImage(int id)
         {
@@ -291,57 +320,152 @@ namespace Model.Dao
             return db.Tags.Count(x => x.ID == id) > 0;
         }
 
-        public Product Insert(Product product)
+        public void InsertSize(string id, string name)
         {
-            db.Products.Add(product);
+            var size = new Size();
+            size.ID = id;
+            size.Name = name;
+            db.Sizes.Add(size);
             db.SaveChanges();
-            if (!string.IsNullOrEmpty(product.Tag))
-            {
-                string[] tags = product.Tag.Split(',');
-                foreach (var tag in tags)
-                {
-                    var tagId = StringHelper.ToUnsignString(tag);
-                    var existedTag = this.CheckTag(tagId);
-                    //insert to to tag table
-                    if (!existedTag)
-                    {
-                        this.InsertTag(tagId, tag);
-                    }
-                    //insert to product tag
-                    this.InsertProductTag(product.ID, tagId);
-                }
-            }
-            return product;
         }
 
-        public Product Edit(Product product)
+        public void InsertProductSize(int productId, string sizeId)
         {
+            SizeProduct productSize = new SizeProduct();
+            productSize.ProductID = productId;
+            productSize.SizeID = sizeId;
+            db.SizeProducts.Add(productSize);
             db.SaveChanges();
+        }
 
-            //Xử lý tag
-            if (!string.IsNullOrEmpty(product.Tag))
+        public bool CheckSize(string id)
+        {
+            return db.Sizes.Count(x => x.ID == id) > 0;
+        }
+
+
+        public int Insert(Product product)
+        {
+            try
             {
-                this.RemoveAllContentTag(product.ID);
-                string[] tags = product.Tag.Split(',');
-                foreach (var tag in tags)
+                db.Products.Add(product);
+                db.SaveChanges();
+                if (!string.IsNullOrEmpty(product.Tag))
                 {
-                    var tagId = StringHelper.ToUnsignString(tag);
-                    var existedTag = this.CheckTag(tagId);
-                    //insert to to tag table
-                    if (!existedTag)
+                    string[] tags = product.Tag.Split(',');
+                    foreach (var tag in tags)
                     {
-                        this.InsertTag(tagId, tag);
+                        var tagId = StringHelper.ToUnsignString(tag);
+                        var existedTag = this.CheckTag(tagId);
+                        //insert to to tag table
+                        if (!existedTag)
+                        {
+                            this.InsertTag(tagId, tag);
+                        }
+                        //insert to product tag
+                        this.InsertProductTag(product.ID, tagId);
                     }
-                    //insert to product tag
-                    this.InsertProductTag(product.ID, tagId);
                 }
+
+                if (!string.IsNullOrEmpty(product.Size))
+                {
+                    string[] sizes = product.Size.Split(',');
+                    foreach (var size in sizes)
+                    {
+                        var sizeID = StringHelper.ToUnsignString(size);
+                        var existedSize = this.CheckSize(sizeID);
+                        //insert to to size table
+                        if (!existedSize)
+                        {
+                            this.InsertSize(sizeID, size);
+                        }
+                        //insert to product size
+                        this.InsertProductSize(product.ID, sizeID);
+                    }
+                }
+                return product.ID;
             }
-            return product;
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+        public bool Update(Product product)
+        {
+            try
+            {
+                var model = db.Products.Find(product.ID);
+                model.Name = product.Name;
+                model.Metatitle = StringHelper.ToUnsignString(product.Name);
+                model.CategoryID = product.CategoryID;
+                model.Image = product.Image;
+                model.Price = product.Price;
+                model.PromotionPrice = product.PromotionPrice;
+                model.Quantity = product.Quantity;
+                model.Description = product.Description;
+                model.Detail = product.Detail;
+                model.Tag = product.Tag;
+                model.Size = product.Size;
+                model.UpdatedDate = DateTime.Now;
+                model.UpdatedBy = product.UpdatedBy;
+                model.Status = product.Status;
+                db.SaveChanges();
+                this.RemoveAllContentTag(product.ID);
+                //Xử lý tag
+                if (!string.IsNullOrEmpty(product.Tag))
+                {
+                    string[] tags = product.Tag.Split(',');
+                    foreach (var tag in tags)
+                    {
+                        var tagId = StringHelper.ToUnsignString(tag);
+                        var existedTag = this.CheckTag(tagId);
+                        //insert to to tag table
+                        if (!existedTag)
+                        {
+                            this.InsertTag(tagId, tag);
+                        }
+                        //insert to product tag
+                        this.InsertProductTag(product.ID, tagId);
+                    }
+                }
+
+                this.RemoveAllProductSize(product.ID);
+                //Xử lý Size
+                if (!string.IsNullOrEmpty(product.Size))
+                {
+                    string[] sizes = product.Size.Split(',');
+                    foreach (var size in sizes)
+                    {
+                        var sizeID = StringHelper.ToUnsignString(size);
+                        var existedSize = this.CheckSize(sizeID);
+                        //insert to to Size table
+                        if (!existedSize)
+                        {
+                            this.InsertSize(sizeID, size);
+                        }
+                        //insert to product Size
+                        this.InsertProductSize(product.ID, sizeID);
+                    }
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public void RemoveAllContentTag(int id)
         {
             db.ProductTags.RemoveRange(db.ProductTags.Where(x => x.ProductID == id));
+            db.SaveChanges();
+        }
+
+
+        public void RemoveAllProductSize(int id)
+        {
+            db.SizeProducts.RemoveRange(db.SizeProducts.Where(x => x.ProductID == id));
             db.SaveChanges();
         }
 

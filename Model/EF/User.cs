@@ -12,6 +12,7 @@
         public int ID { get; set; }
 
         [StringLength(50)]
+        [Display(Name= "Tài khoản")]
         public string UserName { get; set; }
 
         [StringLength(50)]
@@ -38,10 +39,13 @@
         [Display(Name = "Điện thoại")]
         public string Phone { get; set; }
 
+        [Display(Name = "Ngày tạo")]
         public DateTime? CreatedDate { get; set; }
 
+        [Display(Name = "Ngày cập nhật")]
         public DateTime? UpdatedDate { get; set; }
 
+        [Display(Name = "Trạng thái")]
         public bool Status { get; set; }
     }
 }

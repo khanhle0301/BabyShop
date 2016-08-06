@@ -53,6 +53,7 @@ namespace BabyShop.Areas.Admin.Models
 
         public string UpdatedBy { get; set; }
 
+        [Display(Name = "Trạng thái")]
         public bool Status { get; set; }
     }
 }

@@ -29,6 +29,10 @@ namespace Model.Dao
             return user.Status;
         }
 
+        public List<User> ListAll()
+        {
+            return db.Users.ToList();
+        }
 
         public IEnumerable<User> ListAllPaging(string sortOrder, string searchString, int page, int pageSize)
         {
@@ -169,7 +173,7 @@ namespace Model.Dao
                 admin.Address = entity.Address;
                 admin.Email = entity.Email;
                 admin.Phone = entity.Phone;
-                admin.UpdatedDate = DateTime.Now;              
+                admin.UpdatedDate = DateTime.Now;
                 admin.Status = entity.Status;
                 db.SaveChanges();
                 return true;

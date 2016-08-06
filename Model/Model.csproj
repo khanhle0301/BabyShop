@@ -52,7 +52,11 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.Mvc">
-      <HintPath>..\BabyShop\bin\System.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\BabyShop\BabyShop\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc.Extensions, Version=1.1.0.6, Culture=neutral, PublicKeyToken=d631f4e4b226a032, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Web.Mvc.Extensions.1.1.1.2\lib\net45\System.Web.Mvc.Extensions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -64,15 +68,16 @@
   <ItemGroup>
     <Compile Include="Dao\AboutDao.cs" />
     <Compile Include="Dao\AdminDao.cs" />
-    <Compile Include="Dao\CategoryDao.cs" />
     <Compile Include="Dao\ContactDao.cs" />
+    <Compile Include="Dao\FeedbackDao.cs" />
     <Compile Include="Dao\FooterDao.cs" />
-    <Compile Include="Dao\MenuDao.cs" />
     <Compile Include="Dao\OrderDao.cs" />
     <Compile Include="Dao\OrderDetailDao.cs" />
+    <Compile Include="Dao\PostCategoryDao.cs" />
     <Compile Include="Dao\PostDao.cs" />
-    <Compile Include="Dao\ProductCategoryDao.cs" />
+    <Compile Include="Dao\CategoryProductDao.cs" />
     <Compile Include="Dao\ProductDao.cs" />
+    <Compile Include="Dao\ProductSizeDao.cs" />
     <Compile Include="Dao\SlideDao.cs" />
     <Compile Include="Dao\TagDao.cs" />
     <Compile Include="Dao\UserDao.cs" />
@@ -83,8 +88,6 @@
     <Compile Include="EF\Contact.cs" />
     <Compile Include="EF\Feedback.cs" />
     <Compile Include="EF\Footer.cs" />
-    <Compile Include="EF\Menu.cs" />
-    <Compile Include="EF\MenuType.cs" />
     <Compile Include="EF\Order.cs" />
     <Compile Include="EF\OrderDetail.cs" />
     <Compile Include="EF\Post.cs" />
@@ -92,8 +95,9 @@
     <Compile Include="EF\PostTag.cs" />
     <Compile Include="EF\Product.cs" />
     <Compile Include="EF\ProductTag.cs" />
+    <Compile Include="EF\Size.cs" />
+    <Compile Include="EF\SizeProduct.cs" />
     <Compile Include="EF\Slide.cs" />
-    <Compile Include="EF\SystemConfig.cs" />
     <Compile Include="EF\Tag.cs" />
     <Compile Include="EF\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,17 +109,12 @@
   <ItemGroup>
     <Content Include="Content\PagedList.css" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{0C66FA12-CAA0-4D3D-AF04-66863B0FABAC}</Project>
       <Name>Common</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

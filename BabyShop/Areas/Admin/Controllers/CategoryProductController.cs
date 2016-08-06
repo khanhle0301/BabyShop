@@ -1,4 +1,6 @@
 ﻿using BabyShop.Areas.Admin.Models;
+using BabyShop.Common;
+using Common;
 using Model.Dao;
 using Model.EF;
 using System;
@@ -11,28 +13,16 @@ namespace BabyShop.Areas.Admin.Controllers
 {
     public class CategoryProductController : BaseController
     {
-        BabyShopDbContext db = new BabyShopDbContext();
         // GET: Admin/CategoryProduct
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+        public ActionResult Index()
+        {           
+            var result = new CategoryProductDao().ListAllPaging();
+            return View(result);
+        }
+        
+        public ActionResult Details(int id)
         {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = sortOrder == "name" ? "name_desc" : "name";
-            ViewBag.IDSortParm = sortOrder == "id" ? "id_desc" : "id";
-            ViewBag.DateSortParm = sortOrder == "date" ? "date_desc" : "date";
-            ViewBag.StatusSortParm = sortOrder == "status" ? "status_desc" : "status";
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
-
-            ViewBag.CurrentFilter = searchString;
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            var result = new ProductCategoryDao().ListAllPaging(sortOrder, searchString, pageNumber, pageSize);
+            var result = new CategoryProductDao().ViewDetail(id);
             return View(result);
         }
 
@@ -43,24 +33,29 @@ namespace BabyShop.Areas.Admin.Controllers
             return View();
         }
 
-
         [HttpPost]
         public ActionResult Create(CategoryProductModel model)
         {
             if (ModelState.IsValid)
             {
-                var dao = new CategoryProduct();
-                dao.Name = model.Name;
-                dao.ParentID = model.ParentID;
-                dao.Status = model.Status;
-                var result = new ProductCategoryDao().Insert(dao);
+                var cateProduct = new CategoryProduct();
+                cateProduct.Name = model.Name;
+                cateProduct.MetaTitle = StringHelper.ToUnsignString(model.Name);
+                cateProduct.ParentID = model.ParentID;
+                cateProduct.CreatedDate = DateTime.Now;
+                cateProduct.DisplayOrder = model.DisplayOrder == null ? 1 : model.DisplayOrder;
+                var session = (AdminLogin)Session[Common.CommonConstants.ADMIN_SESSION];
+                var entity = new AdminDao().GetByID(session.UserName);
+                cateProduct.CreatedBy = entity.UserName;
+                cateProduct.Status = model.Status;
+                var result = new CategoryProductDao().Insert(cateProduct);
                 if (result > 0)
                 {
-                    SetAlert("Thêm danh mục sản phẩm thành công", "success");
+                    SetAlert("Thêm danh thành công", "success");
                     return RedirectToAction("Index", "CategoryProduct");
                 }
                 else
-                    ModelState.AddModelError("", "Thêm danh mục sản phẩm thất bại");
+                    ModelState.AddModelError("", "Thêm thất bại");
             }
             SetViewBag();
             return View(model);
@@ -69,7 +64,7 @@ namespace BabyShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var dao = new ProductCategoryDao();
+            var dao = new CategoryProductDao();
             var result = dao.ViewDetail(id);
             SetViewBag(result.ParentID);
             return View(result);
@@ -80,11 +75,14 @@ namespace BabyShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var dao = new ProductCategoryDao();
-                var result = dao.Update(model);
+                var cate = new CategoryProduct();
+                var session = (AdminLogin)Session[Common.CommonConstants.ADMIN_SESSION];
+                var entity = new AdminDao().GetByID(session.UserName);
+                model.UpdatedBy = entity.UserName;
+                var result = new CategoryProductDao().Update(model);
                 if (result)
                 {
-                    SetAlert("Cập nhật danh mục sản phẩm thành công", "success");
+                    SetAlert("Cập nhật thành công", "success");
                     return RedirectToAction("Index", "CategoryProduct");
                 }
                 else
@@ -98,14 +96,22 @@ namespace BabyShop.Areas.Admin.Controllers
 
         public void SetViewBag(int? selectedId = null)
         {
-            var dao = new ProductCategoryDao();
+            var dao = new CategoryProductDao();
             ViewBag.ParentID = new SelectList(dao.ListAll(), "ID", "Name", selectedId);
         }
 
-        [HttpGet]
-        public JsonResult NameExists(string name)
+        [HttpDelete]
+        public ActionResult Delete(int id)
         {
-            return Json(!db.CategoryProducts.Any(x => x.Name == name), JsonRequestBehavior.AllowGet);
+            new CategoryProductDao().Delete(id);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public JsonResult CateNameExists(string name)
+        {
+            var result = new CategoryProductDao().NameExists(name);
+            return Json(!result, JsonRequestBehavior.AllowGet);
         }
 
     }

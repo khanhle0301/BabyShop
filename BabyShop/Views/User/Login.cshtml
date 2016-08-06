@@ -4,6 +4,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section category{
+    @{Html.RenderAction("Category", "Home");}
+}
+
 <div class="account_grid">
     <div class="login-right">
         <h3>Đăng nhập</h3>

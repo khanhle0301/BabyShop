@@ -26,9 +26,9 @@ namespace BabyShop
 
             routes.MapRoute(
              name: "Content Detail",
-             url: "tin-tuc/{metatitle}-{id}",
+             url: "cam-nang-cho-be/{metatitle}-{id}",
              defaults: new { controller = "Post", action = "Detail", id = UrlParameter.Optional },
-             namespaces: new[] { "OnlineShop.Controllers" }
+             namespaces: new[] { "BabyShop.Controllers" }
          );
 
             routes.MapRoute(
@@ -41,7 +41,7 @@ namespace BabyShop
            name: "Tags",
            url: "tag/{tagId}",
            defaults: new { controller = "Post", action = "Tag", id = UrlParameter.Optional },
-           namespaces: new[] { "OnlineShop.Controllers" }
+           namespaces: new[] { "BabyShop.Controllers" }
        );
 
 
@@ -49,7 +49,7 @@ namespace BabyShop
            name: "Tags Product",
            url: "san-pham/tag/{tagId}",
            defaults: new { controller = "Product", action = "Tag", id = UrlParameter.Optional },
-           namespaces: new[] { "OnlineShop.Controllers" }
+           namespaces: new[] { "BabyShop.Controllers" }
        );
 
             routes.MapRoute(

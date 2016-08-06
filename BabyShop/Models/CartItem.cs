@@ -12,5 +12,6 @@ namespace BabyShop.Models
         public int ProductId { set; get; }
         public Product Product { set; get; }
         public int Quantity { set; get; }
+        public string Size { set; get; }
     }
 }

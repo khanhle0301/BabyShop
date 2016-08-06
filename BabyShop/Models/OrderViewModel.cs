@@ -23,8 +23,6 @@ namespace BabyShop.Models
 
         public string Message { set; get; }
 
-        public bool Status { set; get; }
-
-        public IEnumerable<OrderDetailViewModel> OrderDetails { set; get; }
+        public bool Status { set; get; }       
     }
 }

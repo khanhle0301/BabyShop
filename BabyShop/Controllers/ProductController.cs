@@ -26,7 +26,7 @@ namespace BabyShop.Controllers
 
             int totalPage = (int)Math.Ceiling((double)totalRow / pageSize);
 
-            ViewBag.Category = new CategoryDao().ViewDetail(cateId);
+            ViewBag.Category = new CategoryProductDao().ViewDetail(cateId);
 
             ViewBag.TotalPage = totalPage;
             ViewBag.TotalCount = totalRow;
@@ -39,12 +39,13 @@ namespace BabyShop.Controllers
         }
 
         public ActionResult Detail(int id)
-        {
+        {            
             var updateViewCount = new ProductDao().UpdateViewCount(id);
             var product = new ProductDao().ViewDetail(id);
             ViewBag.RelatedProducts = new ProductDao().ListRelatedProducts(id);
             ViewBag.MoreImage = new ProductDao().MoreImage(id);
             ViewBag.Tags = new ProductDao().ListTag(id);
+            ViewBag.ListSize = new ProductSizeDao().ListByIdProduct(id);
             return View(product);
         }
 

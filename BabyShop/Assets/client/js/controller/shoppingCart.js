@@ -30,24 +30,21 @@
                 }
             }
         });
-
-        $('#btnAddToCart').off('click').on('click', function (e) {
-            e.preventDefault();
-            var productId = parseInt($(this).data('id'));
-            cart.addItem(productId);
-        });
         $('#btnContinue').off('click').on('click', function () {
             window.location.href = "/";
         });
+
         $('#btnUpdate').off('click').on('click', function () {
             var listProduct = $('.txtQuantity');
             var cartList = [];
-            $.each(listProduct, function (i, item) {
+
+            $.each(listProduct, function (i, item) {           
                 cartList.push({
                     Quantity: $(item).val(),
                     Product: {
                         ID: $(item).data('id')
-                    }
+                    },
+                    Size: $(item).data('size')                    
                 });
             });
 
@@ -63,6 +60,7 @@
                 }
             })
         });
+
         $('#btnDeleteAll').off('click').on('click', function () {
             $.ajax({
                 url: '/Cart/DeleteAll',
@@ -78,7 +76,10 @@
         $('.btn-delete').off('click').on('click', function (e) {
             e.preventDefault();
             $.ajax({
-                data: { id: $(this).data('id') },
+                data: {
+                    id: $(this).data('id'),
+                    Size: $(this).data('size')
+                },
                 url: '/Cart/Delete',
                 dataType: 'json',
                 type: 'POST',
@@ -105,7 +106,7 @@
         });
 
         $('#btnCreateOrder').off('click').on('click', function (e) {
-            e.preventDefault();          
+            e.preventDefault();
             var isValid = $('#frmPayment').valid();
             if (isValid) {
                 cart.createOrder();
@@ -113,7 +114,6 @@
 
         });
     },
-
     deleteAll: function () {
         $.ajax({
             url: '/Cart/DeleteAll',
@@ -126,23 +126,6 @@
             }
         });
     },
-
-    addItem: function (productId) {
-        $.ajax({
-            url: '/Cart/Add',
-            data: {
-                productId: productId
-            },
-            type: 'POST',
-            dataType: 'json',
-            success: function (response) {
-                if (response.status) {
-                    alert('Thêm sản phẩm thành công.');
-                }
-            }
-        });
-    },
-
     getLoginUser: function () {
         $.ajax({
             url: '/Cart/GetUser',
@@ -159,7 +142,6 @@
             }
         });
     },
-
     createOrder: function () {
         var order = {
             Name: $('#txtName').val(),
@@ -185,7 +167,7 @@
                     else {
                         console.log('create order ok');
                         $('#divCheckout').hide();
-                        cart.deleteAll();                       
+                        cart.deleteAll();
                         setTimeout(function () {
                             $('#cartContent').html('Cảm ơn bạn đã đặt hàng thành công. Chúng tôi sẽ liên hệ sớm nhất.');
                         }, 2000);
@@ -198,6 +180,14 @@
                 }
             }
         });
+    },
+    getTotalOrder: function () {
+        var listTextBox = $('.txtQuantity');
+        var total = 0;
+        $.each(listTextBox, function (i, item) {
+            total += parseInt($(item).val()) * parseFloat($(item).data('price'));
+        });
+        return total;
     },
 
 }

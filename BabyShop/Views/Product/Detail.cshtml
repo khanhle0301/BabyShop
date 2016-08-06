@@ -6,11 +6,15 @@
     var moreImage = ViewBag.MoreImage;
 }
 
+@section category{
+    @{Html.RenderAction("Category", "Home");}
+}
+
 <link href="~/Assets/client/css/etalage.css" rel="stylesheet" />
 @section footerJS{
     <script type="text/javascript" src="/Assets/client/js/jquery.flexisel.js"></script>
     <script src="/Assets/client/js/jquery.etalage.min.js"></script>
-    <script src="~/Assets/client/js/controller/shoppingCart.js"></script>
+    <script src="/Assets/client/js/controller/shoppingCart.js"></script>
     <script>
         jQuery(document).ready(function ($) {
             $("#flexiselDemo1").flexisel({
@@ -38,9 +42,9 @@
 
             $('#etalage').etalage({
                 thumb_image_width: 300,
-                thumb_image_height: 400,
+                thumb_image_height: 300,
                 source_image_width: 900,
-                source_image_height: 1200,
+                source_image_height: 900,
                 show_hint: true,
                 click_callback: function (image_anchor, instance_id) {
                     alert('Callback example:\nYou clicked on an image with the anchor: "' + image_anchor + '"\n(in Etalage instance: "' + instance_id + '")');
@@ -77,50 +81,58 @@
                 @if (Model.PromotionPrice.HasValue)
                 {
                     <div class="left-n ">@(Model.PromotionPrice == 0 ? "Liên hệ" : Model.PromotionPrice.Value.ToString("N0"))</div>
+                    <div style="margin-left:20px" class="left-m ">
+                        Size <select id="txtSize">
+                            @foreach (var item in (List<Model.EF.SizeProduct>)ViewBag.ListSize)
+                            {
+                                <option value="@item.Size.Name">@item.Size.Name</option>
+                            }
+                        </select>
+                    </div>
                 }
                 else
                 {
                     <div class="left-n ">@(Model.Price == 0 ? "Liên hệ" : Model.Price.Value.ToString("N0"))</div>
+                    <div style="margin-left:20px" class="left-m ">
+                        Size <select id="txtSize">
+                            @foreach (var item in (List<Model.EF.SizeProduct>)ViewBag.ListSize)
+                            {
+                                <option value="@item.Size.Name">@item.Size.Name</option>
+                            }
+                        </select>
+                    </div>
                 }
                 <a class="now-get get-cart-in btnAddToCart" href="#" data-id="@Model.ID">Thêm vào giỏ hàng</a>
                 <div class="clearfix"></div>
             </div>
-            <h6>@Model.Quantity sản phẩm trong kho</h6>
+            @if (@Model.Quantity.HasValue && @Model.Quantity > 0)
+            {
+                <h6>Còn hàng</h6>
+            }
+            else
+            {
+                <h6>Hết hàng</h6>
+            }
             <p>@Model.Description</p>
             <div class="tag">
-                <h5>Tag :</h5>
-                <ul class="taglist">
-                    @foreach (var tag in (List<Model.EF.Tag>)ViewBag.Tags)
-                    {
-                        <li><a href="/san-pham/tag/@(tag.ID)">@(tag.Name), </a></li>
-                    }
-
-                </ul>
+                <b>Tag :</b>
+                @foreach (var tag in (List<Model.EF.Tag>)ViewBag.Tags)
+                {
+                    <a href="/san-pham/tag/@(tag.ID)">@(tag.Name), </a>
+                }
             </div>
             <div class="clearfix"></div>
-            <div class="share">
-                <h5>Share Product :</h5>
-                <ul class="share_nav">
-                    <li><a href="#"><img src="/Assets/client/images/facebook.png" title="facebook"></a></li>
-                    <li><a href="#"><img src="/Assets/client/images/twitter.png" title="Twiiter"></a></li>
-                    <li><a href="#"><img src="/Assets/client/images/rss.png" title="Rss"></a></li>
-                    <li><a href="#"><img src="/Assets/client/images/gpluse.png" title="Google+"></a></li>
-                </ul>
-            </div>
-            <div class="clearfix"></div>
-
         </div>
         <div class="clearfix"> </div>
     </div>
     <ul id="flexiselDemo1">
         @foreach (var product in relatedProducts)
         {
+            var url = "/chi-tiet/" + product.Metatitle + "-" + product.ID;
             <li>
                 <img src="@product.Image" />
                 <div class="grid-flex">
-                    <a href="/@(product.Metatitle).p-@(product.ID).html">
-                        @product.Name
-                    </a>
+                    <a href="@url"> @product.Name</a>
                     <p>@product.Price</p>
                 </div>
             </li>

@@ -31,7 +31,7 @@ namespace BabyShop.Controllers
         [ChildActionOnly]
         public ActionResult Category()
         {
-            var model = new ProductCategoryDao().ListAll();
+            var model = new CategoryProductDao().ListAll();
             return PartialView(model);
         }
       

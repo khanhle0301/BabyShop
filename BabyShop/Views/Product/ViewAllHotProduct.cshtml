@@ -3,6 +3,11 @@
     ViewBag.Title = "ViewAllHotProduct";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section category{
+    @{Html.RenderAction("Category", "Home");}
+}
+
 <div class="women-product">
     @if (Model.Count() > 0)
     {
