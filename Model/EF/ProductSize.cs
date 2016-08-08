@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Model.EF
 {
-    [Table("SizeProduct")]
-    public class SizeProduct
+    [Table("ProductSizes")]
+    public class ProductSize
     {
         [Key]
         [Column(Order = 1)]

@@ -1,22 +1,22 @@
-﻿namespace Model.EF
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
+
+namespace Model.EF
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-    using System.Web.Mvc;
-    [Table("Footer")]
-    public partial class Footer
+    [Table("Footers")]
+    public class Footer
     {
-        public int ID { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { set; get; }
 
         [AllowHtml]
-        [Required(ErrorMessage = "Nhập nội dung")]
+        [Required(ErrorMessage = "Vui lòng nhập nội dung")]
         [Display(Name = "Nội dung")]
         [Column(TypeName = "ntext")]
-        public string Content { get; set; }
+        public string Content { set; get; }
 
-        public bool Status { get; set; }
+        public bool Status { set; get; }
     }
 }

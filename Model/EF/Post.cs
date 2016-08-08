@@ -1,61 +1,52 @@
-﻿namespace Model.EF
+﻿using Model.Abstract;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
+
+namespace Model.EF
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-    using System.Web.Mvc;
-    [Table("Post")]
-    public partial class Post
+    [Table("Posts")]
+    public class Post : Auditable
     {
-        public int ID { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID {  set; get; }
 
-        [Required(ErrorMessage = "Vui lòng nhập tiêu đề tin tức")]     
+        [Required(ErrorMessage = "Vui lòng nhập tiêu đề tin tức")]
+        [MaxLength(50)]
         [Display(Name = "Tiêu đề")]
-        public string Name { get; set; }
+        public string Name {  set; get; }
 
-        [StringLength(100)]
-        public string Metatitle { get; set; }
+        [MaxLength(50)]
+        [Column(TypeName = "varchar")]
+        public string Metatitle {  set; get; }
 
         [Display(Name = "Loại tin")]
-        public int CategoryID { get; set; }
+        public int CategoryID {  set; get; }
 
         [Display(Name = "Ảnh sản phẩm")]
-        [Required(ErrorMessage = "Vui lòng chọn ảnh")]     
-        public string Image { get; set; }
+        [MaxLength(250)]
+        [Required(ErrorMessage = "Vui lòng chọn ảnh")]
+        public string Image {  set; get; }
 
         [Display(Name = "Mô tả")]
+        [MaxLength(500)]
         [Required(ErrorMessage = "Vui lòng nhập mô tả")]
-        public string Description { get; set; }
+        public string Description {  set; get; }
 
         [Required(ErrorMessage = "Vui lòng nhập chi tiết")]
         [Display(Name = "Chi tiết")]
         [AllowHtml]
         [Column(TypeName = "ntext")]
-        public string Detail { get; set; }
+        public string Detail {  set; get; }
 
-        [StringLength(500)]
-        public string Tag { get; set; }
+        [MaxLength(500)]
+        public string Tag {  set; get; }
 
-        [Display(Name = "Ngày tạo")]
-        public DateTime? CreatedDate { get; set; }
+        [ForeignKey("CategoryID")]
+        public virtual PostCategory PostCategory { set; get; }
 
-        [Display(Name = "Tạo bởi")]
-        public string CreatedBy { get; set; }
-
-        [Display(Name = "Ngày cập nhật")]
-        public DateTime? UpdatedDate { get; set; }
-
-        [Display(Name = "Cập nhật bởi")]
-        public string UpdatedBy { get; set; }
-
-        [Display(Name = "Lượt xem")]
-        public int? ViewCount { get; set; }
-
-        [Display(Name = "Trạng thái")]
-        public bool Status { get; set; }
-
-        public virtual PostCategory PostCategory { get; set; }
+        public virtual IEnumerable<PostTag> PostTags { set; get; }
     }
 }

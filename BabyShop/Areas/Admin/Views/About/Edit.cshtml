@@ -8,7 +8,6 @@
     Cập nhật
 }
 
-
 @section jsFooter{
     <script>
         var editor = CKEDITOR.replace('txtContent', {
@@ -33,7 +32,7 @@
                             @Html.ValidationSummary(true, null, new { @class = "text-danger" })
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Detail)
-                                @Html.TextAreaFor(model => model.Detail, new { htmlAttributes = new { @class = "form-control" }, id = "txtContent" })
+                                @Html.TextAreaFor(model => model.Detail, new { htmlAttributes = new { @class = "form-control", @autofocus = "autofocus" }, id = "txtContent" })
                                 @Html.ValidationMessageFor(model => model.Detail, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
@@ -56,9 +55,7 @@
         </div>
     </div>
 </div>
-
-
 <div>
-    @Html.ActionLink("Về trang chủ", "Index")
+    @Html.ActionLink("Back to List", "Index")
 </div>
 

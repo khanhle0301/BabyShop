@@ -26,12 +26,20 @@ namespace BabyShop.Controllers
         {
             return PartialView();
         }
-    
-       
+
+        [ChildActionOnly]
+        public ActionResult TopHot()
+        {
+            int Top = int.Parse(ConfigHelper.GetByKey("TopHot"));
+            var model = new ProductDao().ListAllHotFlag(Top);
+            return PartialView(model);
+        }
+
+
         [ChildActionOnly]
         public ActionResult Category()
         {
-            var model = new CategoryProductDao().ListAll();
+            var model = new ProductCategoryDao().ListAll();
             return PartialView(model);
         }
       

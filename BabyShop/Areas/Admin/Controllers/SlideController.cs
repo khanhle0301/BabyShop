@@ -17,6 +17,21 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(model);
         }
 
+        public ActionResult Details(int id)
+        {
+            var result = new SlideDao().ViewDetail(id);
+            return View(result);
+        }
+
+        [HttpPost]
+        public JsonResult ChangeStatus(int id)
+        {
+            var result = new SlideDao().ChangeStatus(id);
+            return Json(new
+            {
+                status = result
+            });
+        }
 
         [HttpDelete]
         public ActionResult Delete(int id)

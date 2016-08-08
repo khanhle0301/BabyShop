@@ -17,7 +17,7 @@ namespace BabyShop.Areas.Admin.Controllers
     {
         // GET: Admin/Product
         public ActionResult Index()
-        {         
+        {
             var result = new ProductDao().ListAllPaging();
             return View(result);
         }
@@ -30,34 +30,24 @@ namespace BabyShop.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(ProductModel model)
+        public ActionResult Create(Product model)
         {
             if (ModelState.IsValid)
             {
-                var product = new Product();
-                if (model.PromotionPrice.HasValue && model.Price.Value <= decimal.Parse(model.PromotionPrice.HasValue.ToString()))
+                if (model.PromotionPrice.HasValue && model.Price <= model.PromotionPrice)
                 {
                     ModelState.AddModelError("", "Vui lòng kiểm tra lại giá khuyến mãi.");
                 }
                 else
                 {
-                    product.Name = model.Name;
-                    product.Metatitle = StringHelper.ToUnsignString(model.Name);
-                    product.CategoryID = model.CategoryID;
-                    product.Image = model.Image;                  
-                    product.Price = model.Price;
-                    product.PromotionPrice = model.PromotionPrice;
-                    product.Quantity = model.Quantity;
-                    product.Description = model.Description;
-                    product.Detail = model.Detail;
-                    product.Size = model.Size;
-                    product.Tag = model.Tag;                   
-                    product.CreatedDate = DateTime.Now;
+                    model.Metatitle = StringHelper.ToUnsignString(model.Name);
+                    model.CreatedDate = DateTime.Now;
                     var session = (AdminLogin)Session[Common.CommonConstants.ADMIN_SESSION];
                     var entity = new AdminDao().GetByID(session.UserName);
-                    product.CreatedBy = entity.UserName;
-                    product.Status = model.Status;
-                    var result = new ProductDao().Insert(product);
+                    model.CreatedBy = entity.UserName;
+                    model.ViewCount = 0;
+                    model.QuantitySold = 0;
+                    var result = new ProductDao().Insert(model);
                     if (result > 0)
                     {
                         SetAlert("Thêm danh thành công", "success");
@@ -86,7 +76,7 @@ namespace BabyShop.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var product = new Product();
-                if (model.PromotionPrice.HasValue && model.Price.Value <= decimal.Parse(model.PromotionPrice.HasValue.ToString()))
+                if (model.PromotionPrice.HasValue && model.Price <= model.PromotionPrice)
                 {
                     ModelState.AddModelError("", "Vui lòng kiểm tra lại giá khuyến mãi.");
                 }
@@ -120,24 +110,34 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(result);
         }
 
-        [HttpDelete]
+        [HttpGet]
         public ActionResult Delete(int id)
         {
-            new ProductDao().Delete(id);
-            return RedirectToAction("Index");
+            var result = new ProductDao().ViewDetail(id);
+            return View(result);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
+        {
+            var dao = new ProductDao().Delete(id);
+            if (dao)
+            {
+                SetAlert("Xóa thành công", "success");
+                return RedirectToAction("Index", "Product");
+            }
+            else
+            {
+                ViewData["Error"] = "Xóa thất bại!";
+                var result = new ProductDao().ViewDetail(id);
+                return View(result);
+            }
         }
 
         public void SetViewBag(long? selectedId = null)
         {
-            var dao = new CategoryProductDao();
-            ViewBag.CategoryID = new SelectList(dao.ListAll(), "ID", "Name", selectedId);
-        }
-
-        [HttpGet]
-        public JsonResult NameExists(string name)
-        {
-            var result = new ProductDao().NameExists(name);
-            return Json(!result, JsonRequestBehavior.AllowGet);
+            var dao = new ProductCategoryDao();
+            ViewBag.CategoryID = new SelectList(dao.ListByChild(), "ID", "Name", selectedId);
         }
 
         public JsonResult LoadImages(int id)

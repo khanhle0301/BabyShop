@@ -21,10 +21,10 @@ namespace Model.Dao
 
         public bool ChangeStatus(int id)
         {
-            var admin = db.Admins.Find(id);
-            admin.Status = !admin.Status;
+            var user = db.Admins.Find(id);
+            user.Status = !user.Status;
             db.SaveChanges();
-            return admin.Status;
+            return user.Status;
         }
 
         public int Insert(Admin entity)

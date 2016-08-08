@@ -17,6 +17,11 @@ namespace Model.Dao
             db = new BabyShopDbContext();
         }
 
+        public List<Product> ListAllHotFlag(int top)
+        {
+            return db.Products.Where(x => x.Status && x.HotFlag == true).OrderByDescending(x => x.CreatedDate).Take(top).ToList();
+        }
+
         public void UpdateImages(long productId, string images)
         {
             var product = db.Products.Find(productId);
@@ -121,7 +126,7 @@ namespace Model.Dao
 
         public List<Product> ListHotProduct(int top)
         {
-            return db.Products.Where(x => x.Status).OrderByDescending(x => x.QuantitySold).Take(top).ToList();
+            return db.Products.Where(x => x.Status && x.QuantitySold > 0).OrderByDescending(x => x.QuantitySold).Take(top).ToList();
         }
 
         public Product ViewDetail(int id)
@@ -229,7 +234,7 @@ namespace Model.Dao
 
         public IEnumerable<Product> ListAllHotProduct(int page, int pageSize, string sort, out int totalRow)
         {
-            var query = db.Products.Where(x => x.Status);
+            var query = db.Products.Where(x => x.Status && x.QuantitySold > 0);
             switch (sort)
             {
                 case "discount":
@@ -296,6 +301,25 @@ namespace Model.Dao
             return model.ToList();
         }
 
+        public List<Size> ListSize(int id)
+        {
+            var model = (from a in db.Sizes
+                         join b in db.ProductSizes
+                         on a.ID equals b.SizeID
+                         where b.ProductID == id
+                         select new
+                         {
+                             ID = b.SizeID,
+                             Name = a.Name
+                         }).AsEnumerable().Select(x => new Size()
+                         {
+                             ID = x.ID,
+                             Name = x.Name
+                         });
+            return model.ToList();
+        }
+
+
         public void InsertTag(string id, string name)
         {
             var tag = new Tag();
@@ -331,10 +355,10 @@ namespace Model.Dao
 
         public void InsertProductSize(int productId, string sizeId)
         {
-            SizeProduct productSize = new SizeProduct();
+            ProductSize productSize = new ProductSize();
             productSize.ProductID = productId;
             productSize.SizeID = sizeId;
-            db.SizeProducts.Add(productSize);
+            db.ProductSizes.Add(productSize);
             db.SaveChanges();
         }
 
@@ -409,6 +433,7 @@ namespace Model.Dao
                 model.Size = product.Size;
                 model.UpdatedDate = DateTime.Now;
                 model.UpdatedBy = product.UpdatedBy;
+                model.HotFlag = product.HotFlag;
                 model.Status = product.Status;
                 db.SaveChanges();
                 this.RemoveAllContentTag(product.ID);
@@ -465,7 +490,7 @@ namespace Model.Dao
 
         public void RemoveAllProductSize(int id)
         {
-            db.SizeProducts.RemoveRange(db.SizeProducts.Where(x => x.ProductID == id));
+            db.ProductSizes.RemoveRange(db.ProductSizes.Where(x => x.ProductID == id));
             db.SaveChanges();
         }
 

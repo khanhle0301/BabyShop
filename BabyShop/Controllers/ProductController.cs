@@ -1,10 +1,6 @@
 ﻿using Common;
 using Model.Dao;
-using PagedList;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BabyShop.Controllers
@@ -26,7 +22,7 @@ namespace BabyShop.Controllers
 
             int totalPage = (int)Math.Ceiling((double)totalRow / pageSize);
 
-            ViewBag.Category = new CategoryProductDao().ViewDetail(cateId);
+            ViewBag.Category = new ProductCategoryDao().ViewDetail(cateId);
 
             ViewBag.TotalPage = totalPage;
             ViewBag.TotalCount = totalRow;
@@ -39,13 +35,13 @@ namespace BabyShop.Controllers
         }
 
         public ActionResult Detail(int id)
-        {            
+        {
             var updateViewCount = new ProductDao().UpdateViewCount(id);
             var product = new ProductDao().ViewDetail(id);
             ViewBag.RelatedProducts = new ProductDao().ListRelatedProducts(id);
             ViewBag.MoreImage = new ProductDao().MoreImage(id);
             ViewBag.Tags = new ProductDao().ListTag(id);
-            ViewBag.ListSize = new ProductSizeDao().ListByIdProduct(id);
+            ViewBag.ListSize = new ProductDao().ListSize(id);
             return View(product);
         }
 
@@ -77,7 +73,6 @@ namespace BabyShop.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-
         public ActionResult Search(string keyword, int page = 1, string sort = "")
         {
             int pageSize = int.Parse(ConfigHelper.GetByKey("PageSize"));
@@ -98,7 +93,6 @@ namespace BabyShop.Controllers
             return View(productModel);
         }
 
-
         public ActionResult ViewAllProduct(int page = 1, string sort = "")
         {
             int pageSize = int.Parse(ConfigHelper.GetByKey("PageSize"));
@@ -115,7 +109,6 @@ namespace BabyShop.Controllers
             ViewBag.Prev = page - 1;
             return View(productModel);
         }
-
 
         public ActionResult ViewAllSaleOffProduct(int page = 1, string sort = "")
         {
@@ -150,9 +143,5 @@ namespace BabyShop.Controllers
             ViewBag.Prev = page - 1;
             return View(productModel);
         }
-
-
-
-
     }
 }

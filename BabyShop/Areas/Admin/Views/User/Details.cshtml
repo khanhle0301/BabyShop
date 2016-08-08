@@ -18,6 +18,13 @@
                 <div class="row">
                     <dl class="dl-horizontal">
                         <dt>
+                            @Html.DisplayNameFor(model => model.ID)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.ID)
+                        </dd> 
+                        <dt>
                             @Html.DisplayNameFor(model => model.UserName)
                         </dt>
 
@@ -78,7 +85,7 @@
                         </dt>
 
                         <dd>
-                            @Html.DisplayFor(model => model.Status)
+                            @Html.Raw(Model.Status ? "Kích hoạt" : "Khoá")
                         </dd>
 
                     </dl>

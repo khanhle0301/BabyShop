@@ -1,22 +1,24 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Model.EF
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-
-    [Table("PostTag")]
-    public partial class PostTag
+    [Table("PostTags")]
+    public class PostTag
     {
         [Key]
-        [Column(Order = 0)]
-        [StringLength(50)]
-        public string TagID { get; set; }
+        [Column(Order = 1)]
+        public int PostID { set; get; }
 
         [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int PostID { get; set; }
+        [Column(TypeName = "varchar", Order = 2)]
+        [MaxLength(50)]
+        public string TagID { set; get; }
+
+        [ForeignKey("PostID")]
+        public virtual Post Post { set; get; }
+
+        [ForeignKey("TagID")]
+        public virtual Tag Tag { set; get; }
     }
 }

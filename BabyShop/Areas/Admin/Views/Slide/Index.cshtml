@@ -4,14 +4,18 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 @section header{
-    Slide
+    Danh mục Slide
+}
+
+@section jsFooter{
+    <script src="/Assets/admin/js/controller/slideController.js"></script>
 }
 
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Slide
+                Danh sách Slide
                 <a class="btn btn-success" href="/Admin/Slide/Create">Thêm mới</a>
             </div>
             <!-- /.panel-heading -->
@@ -24,12 +28,12 @@
                                     ID
                                 </th>
                                 <th>
-                                    Nội dung
+                                    Hình ảnh
                                 </th>
                                 <th>
                                     Trạng thái
                                 </th>
-                                <th>#</th>
+                                <th>Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,10 +41,12 @@
                             {
                                 <tr id="row_@item.ID">
                                     <td>@item.ID</td>
-                                    <td>@Html.Raw(@item.Content)</td>
-                                    <td>@Html.Raw(item.Status ? "<strong>Kích hoạt</strong>" : "Khoá")</td>
+                                    <td><img src="@item.URL" width="100" alt="" /></td>
+                                    <td><a href="#" class="btn-active" data-id="@item.ID">@Html.Raw(item.Status ? "<strong>Kích hoạt</strong>" : "Khoá")</a></td>
                                     <td>
                                         <a href="/Admin/Slide/Edit/@item.ID">Sửa</a>
+                                        |
+                                        <a href="/Admin/Slide/Detail/@item.ID">Chi tiết</a>
                                         |
                                         @Ajax.ActionLink("Xoá", "Delete", new { @id = item.ID }, new AjaxOptions
                                    {

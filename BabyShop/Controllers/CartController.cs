@@ -146,7 +146,7 @@ namespace BabyShop.Controllers
                 else
                 {
                     detail.Price = item.Product.Price;
-                    total += (item.Product.Price.GetValueOrDefault(0) * item.Quantity);
+                    total += (item.Product.Price * item.Quantity);
                 }
                 detail.Note = item.Note;
                 detailDao.Insert(detail);

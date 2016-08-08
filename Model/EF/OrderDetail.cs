@@ -1,33 +1,30 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Model.EF
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-
-    [Table("OrderDetail")]
-    public partial class OrderDetail
+    [Table("OrderDetails")]
+    public class OrderDetail
     {
         [Key]
-        [Column(Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int OrderID { get; set; }
+        [Column(Order = 1)]
+        public int OrderID { set; get; }
 
         [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ProductID { get; set; }
+        [Column(Order = 2)]
+        public int ProductID { set; get; }
 
-        public int? Quantity { get; set; }
+        public int Quantity { set; get; }
 
-        public decimal? Price { get; set; }
+        public decimal? Price { set; get; }
 
-        public string Note { get; set; }
+        [MaxLength(100)]
+        public string Note { set; get; }
 
-        public virtual Order Order { get; set; }
+        [ForeignKey("OrderID")]
+        public virtual Order Order { set; get; }
 
-        public virtual Product Product { get; set; }
-
+        [ForeignKey("ProductID")]
+        public virtual Product Product { set; get; }
     }
 }

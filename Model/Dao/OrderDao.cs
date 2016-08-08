@@ -51,7 +51,7 @@ namespace Model.Dao
             }
         }
 
-        public IEnumerable<Order> ListAll()
+        public List<Order> ListAll()
         {
             return db.Orders.OrderByDescending(x => x.CreatedDate).ToList();
         }

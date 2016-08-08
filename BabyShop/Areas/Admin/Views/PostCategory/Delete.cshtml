@@ -17,7 +17,14 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <h3>Bạn có chắc chắn muốn xóa bản ghi này?</h3>
+                    @if (ViewData["Error"] != null)
+                    {
+                        <h3 style="color:red">Xóa thất bại!</h3>
+                    }
+                    else
+                    {
+                        <h3>Bạn có chắc chắn muốn xóa bản ghi này?</h3>
+                    }
                     <dl class="dl-horizontal">
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, null, new { @class = "text-danger" })
@@ -73,7 +80,7 @@
                         </dt>
 
                         <dd>
-                            @Html.Raw(Model.Status ? "<strong>Kích hoạt</strong>" : "Khoá")
+                            @Html.Raw(Model.Status ? "Kích hoạt" : "Khoá")
                         </dd>
                     </dl>
 

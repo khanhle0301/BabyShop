@@ -12,11 +12,18 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-               Thông tin sản phẩm.
+                Thông tin sản phẩm.
             </div>
             <div class="panel-body">
                 <div class="row">
                     <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ID)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.ID)
+                        </dd>
                         <dt>
                             @Html.DisplayNameFor(model => model.Name)
                         </dt>
@@ -30,7 +37,7 @@
                         </dt>
 
                         <dd>
-                            @Html.DisplayFor(model => model.CategoryProduct.Name)
+                            @Html.DisplayFor(model => model.CategoryID)
                         </dd>
 
                         <dt>
@@ -39,7 +46,7 @@
 
                         <dd>
                             <img src="@Html.DisplayFor(model => model.Image)" width="100" alt="" />
-                        </dd>                                            
+                        </dd>
 
                         <dt>
                             @Html.DisplayNameFor(model => model.Price)
@@ -66,6 +73,14 @@
                         </dd>
 
                         <dt>
+                            @Html.DisplayNameFor(model => model.QuantitySold)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.QuantitySold)
+                        </dd>
+
+                        <dt>
                             @Html.DisplayNameFor(model => model.Description)
                         </dt>
 
@@ -79,6 +94,14 @@
 
                         <dd>
                             @Html.Raw(Model.Detail)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Size)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Size)
                         </dd>
 
                         <dt>
@@ -120,13 +143,37 @@
                         <dd>
                             @Html.DisplayFor(model => model.UpdatedBy)
                         </dd>
-                       
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ViewCount)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.ViewCount)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.HomeFlag)
+                        </dt>
+
+                        <dd>
+                            @Html.Raw(Model.HomeFlag ? "Kích hoạt" : "Khoá")
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.HotFlag)
+                        </dt>
+
+                        <dd>
+                            @Html.Raw(Model.HotFlag ? "Kích hoạt" : "Khoá")
+                        </dd>
+
                         <dt>
                             @Html.DisplayNameFor(model => model.Status)
                         </dt>
 
                         <dd>
-                            @Html.DisplayFor(model => model.Status)
+                            @Html.Raw(Model.Status ? "Kích hoạt" : "Khoá")
                         </dd>
 
                     </dl>

@@ -25,43 +25,13 @@ namespace BabyShop.Areas.Admin.Controllers
             var model = new UserDao().ViewDetail(id);
             return View(model);
         }
-
-        [HttpGet]
-        public ActionResult Edit(int id)
-        {
-            var user = new UserDao().ViewDetail(id);
-            return View(user);
-        }
-
-        [HttpPost]
-        public ActionResult Edit(User user)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    var result = new UserDao().Update(user);
-                    if (result)
-                    {
-                        SetAlert("Cập nhật thành công", "success");
-                        return RedirectToAction("Index", "User");
-                    }
-                    else
-                        ModelState.AddModelError("", "Cập nhật thất bại");
-                }
-                return View(user);
-            }
-            catch
-            { return View(); }
-        }
-
+     
         [HttpDelete]
         public ActionResult Delete(int id)
         {
             new UserDao().Delete(id);
             return RedirectToAction("Index");
         }
-
 
         [HttpPost]
         public JsonResult ChangeStatus(int id)

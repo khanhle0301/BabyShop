@@ -1,43 +1,26 @@
-﻿namespace Model.EF
+﻿using Model.Abstract;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Model.EF
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-
-    [Table("PostCategory")]
-    public partial class PostCategory
+    [Table("PostCategories")]
+    public class PostCategory : Auditable
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PostCategory()
-        {
-            Posts = new HashSet<Post>();
-        }
-
-        public int ID { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { set; get; }
 
         [Required(ErrorMessage = "Vui lòng nhập tên danh mục")]
         [Display(Name = "Tên danh mục")]
-        public string Name { get; set; }
+        [MaxLength(50)]
+        public string Name { set; get; }
 
-        [StringLength(100)]
-        public string Metatitle { get; set; }    
+        [MaxLength(50)]
+        [Column(TypeName = "varchar")]
+        public string Metatitle { set; get; }
 
-        public DateTime? CreatedDate { get; set; }
-
-        [StringLength(50)]
-        public string CreatedBy { get; set; }
-
-        public DateTime? UpdatedDate { get; set; }
-
-        [StringLength(50)]
-        public string UpdatedBy { get; set; }
-
-        [Display(Name = "Trạng thái")]
-        public bool Status { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Post> Posts { get; set; }
+        public virtual IEnumerable<Post> Posts { set; get; }
     }
 }

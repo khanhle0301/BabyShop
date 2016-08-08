@@ -66,6 +66,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\Auditable.cs" />
+    <Compile Include="Abstract\IAuditable.cs" />
     <Compile Include="Dao\AboutDao.cs" />
     <Compile Include="Dao\AdminDao.cs" />
     <Compile Include="Dao\ContactDao.cs" />
@@ -75,7 +77,7 @@
     <Compile Include="Dao\OrderDetailDao.cs" />
     <Compile Include="Dao\PostCategoryDao.cs" />
     <Compile Include="Dao\PostDao.cs" />
-    <Compile Include="Dao\CategoryProductDao.cs" />
+    <Compile Include="Dao\ProductCategoryDao.cs" />
     <Compile Include="Dao\ProductDao.cs" />
     <Compile Include="Dao\ProductSizeDao.cs" />
     <Compile Include="Dao\SlideDao.cs" />
@@ -84,7 +86,7 @@
     <Compile Include="EF\About.cs" />
     <Compile Include="EF\Admin.cs" />
     <Compile Include="EF\BabyShopDbContext.cs" />
-    <Compile Include="EF\CategoryProduct.cs" />
+    <Compile Include="EF\ProductCategory.cs" />
     <Compile Include="EF\Contact.cs" />
     <Compile Include="EF\Feedback.cs" />
     <Compile Include="EF\Footer.cs" />
@@ -96,10 +98,23 @@
     <Compile Include="EF\Product.cs" />
     <Compile Include="EF\ProductTag.cs" />
     <Compile Include="EF\Size.cs" />
-    <Compile Include="EF\SizeProduct.cs" />
+    <Compile Include="EF\ProductSize.cs" />
     <Compile Include="EF\Slide.cs" />
     <Compile Include="EF\Tag.cs" />
     <Compile Include="EF\User.cs" />
+    <Compile Include="Migrations\201608070513447_InitialDB.cs" />
+    <Compile Include="Migrations\201608070513447_InitialDB.Designer.cs">
+      <DependentUpon>201608070513447_InitialDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608070634335_UpdateProduct.cs" />
+    <Compile Include="Migrations\201608070634335_UpdateProduct.Designer.cs">
+      <DependentUpon>201608070634335_UpdateProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608070953085_EditSize.cs" />
+    <Compile Include="Migrations\201608070953085_EditSize.Designer.cs">
+      <DependentUpon>201608070953085_EditSize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -109,12 +124,25 @@
   <ItemGroup>
     <Content Include="Content\PagedList.css" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201608070513447_InitialDB.resx">
+      <DependentUpon>201608070513447_InitialDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608070634335_UpdateProduct.resx">
+      <DependentUpon>201608070634335_UpdateProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608070953085_EditSize.resx">
+      <DependentUpon>201608070953085_EditSize.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{0C66FA12-CAA0-4D3D-AF04-66863B0FABAC}</Project>
       <Name>Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,30 +1,36 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Model.EF
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-
-    [Table("Feedback")]
-    public partial class Feedback
+    [Table("Feedbacks")]
+    public class Feedback
     {
-        public int ID { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID {  set; get; }
 
-        [StringLength(50)]
-        public string Name { get; set; }
+        [MaxLength(50)]
+        [Display(Name = "Tên")]
+        public string Name {  set; get; }
 
-        [StringLength(100)]
-        public string Email { get; set; }
+        [MaxLength(100)]
+        [Column(TypeName = "varchar")]
+        public string Email {  set; get; }
 
-        [StringLength(100)]
-        public string Subject { get; set; }
+        [MaxLength(100)]
+        [Display(Name = "Chủ đề")]
+        public string Subject {  set; get; }
 
         [Column(TypeName = "ntext")]
-        public string Message { get; set; }
+        [Display(Name = "Nội dung")]
+        public string Message {  set; get; }
 
-        public DateTime? CreateDate { get; set; }
+        [Display(Name = "Ngày tạo")]
+        public DateTime? CreateDate {  set; get; }
 
-        public bool Status { get; set; }
+        [Display(Name = "Trạng thái")]
+        public bool Status {  set; get; }
     }
 }

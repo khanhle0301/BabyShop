@@ -6,9 +6,11 @@
 @section header{
     Danh mục người dùng
 }
+
 @section jsFooter{
-    <script src="/Assets/admin/js/controller/adminController.js"></script>
+    <script src="~/Assets/admin/js/controller/adminController.js"></script>
 }
+
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -37,7 +39,7 @@
                                 <th>
                                     Trạng thái
                                 </th>
-                                <th>#</th>
+                                <th>Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,14 +55,9 @@
                                     <td>
                                         <a href="/Admin/Admin/Edit/@item.ID">Sửa</a>
                                         |
-                                        <a href="/Admin/Admin/Details/@item.ID">Chi tiết</a>
+                                        <a href="/Admin/Admin/Detail/@item.ID">Chi tiết</a>
                                         |
-                                        @Ajax.ActionLink("Xoá", "Delete", new { @id = item.ID }, new AjaxOptions
-                                   {
-                                       Confirm = "Bạn có muốn xoá bản ghi này?",
-                                       OnComplete = "$('#row_" + @item.ID + "').remove()",
-                                       HttpMethod = "Delete"
-                                   })
+                                        <a href="/Admin/Admin/Delete/@item.ID">Xóa</a>
                                     </td>
                                 </tr>
                             }

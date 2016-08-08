@@ -11,18 +11,18 @@ using System.Web.Mvc;
 
 namespace BabyShop.Areas.Admin.Controllers
 {
-    public class CategoryProductController : BaseController
+    public class ProductCategoryController : BaseController
     {
-        // GET: Admin/CategoryProduct
+        // GET: Admin/ProductCategory
         public ActionResult Index()
         {           
-            var result = new CategoryProductDao().ListAllPaging();
+            var result = new ProductCategoryDao().ListAllPaging();
             return View(result);
         }
         
         public ActionResult Details(int id)
         {
-            var result = new CategoryProductDao().ViewDetail(id);
+            var result = new ProductCategoryDao().ViewDetail(id);
             return View(result);
         }
 
@@ -34,25 +34,20 @@ namespace BabyShop.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(CategoryProductModel model)
+        public ActionResult Create(ProductCategory model)
         {
             if (ModelState.IsValid)
             {
-                var cateProduct = new CategoryProduct();
-                cateProduct.Name = model.Name;
-                cateProduct.MetaTitle = StringHelper.ToUnsignString(model.Name);
-                cateProduct.ParentID = model.ParentID;
-                cateProduct.CreatedDate = DateTime.Now;
-                cateProduct.DisplayOrder = model.DisplayOrder == null ? 1 : model.DisplayOrder;
+                model.MetaTitle = StringHelper.ToUnsignString(model.Name);                
+                model.CreatedDate = DateTime.Now;              
                 var session = (AdminLogin)Session[Common.CommonConstants.ADMIN_SESSION];
                 var entity = new AdminDao().GetByID(session.UserName);
-                cateProduct.CreatedBy = entity.UserName;
-                cateProduct.Status = model.Status;
-                var result = new CategoryProductDao().Insert(cateProduct);
+                model.CreatedBy = entity.UserName;               
+                var result = new ProductCategoryDao().Insert(model);
                 if (result > 0)
                 {
                     SetAlert("Thêm danh thành công", "success");
-                    return RedirectToAction("Index", "CategoryProduct");
+                    return RedirectToAction("Index", "ProductCategory");
                 }
                 else
                     ModelState.AddModelError("", "Thêm thất bại");
@@ -64,26 +59,26 @@ namespace BabyShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var dao = new CategoryProductDao();
+            var dao = new ProductCategoryDao();
             var result = dao.ViewDetail(id);
             SetViewBag(result.ParentID);
             return View(result);
         }
 
         [HttpPost]
-        public ActionResult Edit(CategoryProduct model)
+        public ActionResult Edit(ProductCategory model)
         {
             if (ModelState.IsValid)
             {
-                var cate = new CategoryProduct();
+                var cate = new ProductCategory();
                 var session = (AdminLogin)Session[Common.CommonConstants.ADMIN_SESSION];
                 var entity = new AdminDao().GetByID(session.UserName);
                 model.UpdatedBy = entity.UserName;
-                var result = new CategoryProductDao().Update(model);
+                var result = new ProductCategoryDao().Update(model);
                 if (result)
                 {
                     SetAlert("Cập nhật thành công", "success");
-                    return RedirectToAction("Index", "CategoryProduct");
+                    return RedirectToAction("Index", "ProductCategory");
                 }
                 else
                 {
@@ -96,23 +91,41 @@ namespace BabyShop.Areas.Admin.Controllers
 
         public void SetViewBag(int? selectedId = null)
         {
-            var dao = new CategoryProductDao();
-            ViewBag.ParentID = new SelectList(dao.ListAll(), "ID", "Name", selectedId);
+            var dao = new ProductCategoryDao();
+            ViewBag.ParentID = new SelectList(dao.ListAllParent(), "ID", "Name", selectedId);
         }
 
-        [HttpDelete]
         public ActionResult Delete(int id)
         {
-            new CategoryProductDao().Delete(id);
-            return RedirectToAction("Index");
+            var result = new ProductCategoryDao().ViewDetail(id);
+            return View(result);
         }
 
-        [HttpGet]
-        public JsonResult CateNameExists(string name)
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
         {
-            var result = new CategoryProductDao().NameExists(name);
-            return Json(!result, JsonRequestBehavior.AllowGet);
+            var dao= new ProductCategoryDao().Delete(id);
+            if (dao)
+            {
+                SetAlert("Xóa thành công", "success");
+                return RedirectToAction("Index", "ProductCategory");
+            }
+            else
+            {
+                ViewData["Error"] = "Xóa thất bại!";
+                var result = new ProductCategoryDao().ViewDetail(id);
+                return View(result);
+            }          
         }
 
+        [HttpPost]
+        public JsonResult ChangeStatus(int id)
+        {
+            var result = new ProductCategoryDao().ChangeStatus(id);
+            return Json(new
+            {
+                status = result
+            });
+        }
     }
 }

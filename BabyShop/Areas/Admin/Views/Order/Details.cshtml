@@ -12,7 +12,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Thông tin phản hồi.
+                Thông tin chi tiết.
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -77,8 +77,7 @@
                         </dt>
 
                         <dd>
-                            @Html.Raw(Model.Status ? "<strong>Kích hoạt</strong>" : "Khoá")
-                            @*@Html.DisplayFor(model => model.Status)*@
+                            @Html.Raw(Model.Status ? "Kích hoạt" : "Khoá")                           
                         </dd>
 
                     </dl>

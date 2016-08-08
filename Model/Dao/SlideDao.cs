@@ -14,6 +14,14 @@ namespace Model.Dao
             db = new BabyShopDbContext();
         }
 
+        public bool ChangeStatus(int id)
+        {
+            var slide = db.Slides.Find(id);
+            slide.Status = !slide.Status;
+            db.SaveChanges();
+            return slide.Status;
+        }
+
         public List<Slide> SelectAll()
         {
             return db.Slides.Where(x => x.Status == true).OrderByDescending(x => x.ID).ToList();

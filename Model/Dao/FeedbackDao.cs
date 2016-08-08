@@ -16,6 +16,15 @@ namespace Model.Dao
         {
             db = new BabyShopDbContext();
         }
+
+        public bool ChangeStatus(int id)
+        {
+            var user = db.Feedbacks.Find(id);
+            user.Status = !user.Status;
+            db.SaveChanges();
+            return user.Status;
+        }
+
         public int Insert(Feedback fb)
         {
             db.Feedbacks.Add(fb);

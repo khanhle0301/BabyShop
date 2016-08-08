@@ -1,4 +1,4 @@
-﻿@model BabyShop.Areas.Admin.Models.ProductModel
+﻿@model Model.EF.Product
 
 @{
     ViewBag.Title = "Create";
@@ -18,7 +18,7 @@
             };
             finder.popup();
         })
-       
+
         var editor = CKEDITOR.replace('txtContent', {
             customConfig: '/Assets/admin/js/plugins/ckeditor/config.js',
         });
@@ -83,31 +83,49 @@
                                 @Html.ValidationMessageFor(model => model.Detail, "", new { @class = "text-danger" })
                             </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Size)
-                                @Html.EditorFor(model => model.Size, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
-                            </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Size)
+                                    @Html.EditorFor(model => model.Size, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
+                                </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Tag)
-                                @Html.EditorFor(model => model.Tag, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Tag, "", new { @class = "text-danger" })
-                            </div>
-                                                        
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Status)
-                                @Html.DropDownListFor(model => model.Status, new List<SelectListItem>()
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Tag)
+                                    @Html.EditorFor(model => model.Tag, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Tag, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.HomeFlag)
+                                    @Html.DropDownListFor(model => model.HomeFlag, new List<SelectListItem>()
                                     {
                                         new SelectListItem(){Selected=true,Text="Kích hoạt",Value="true"},
                                         new SelectListItem(){Selected=true,Text="Khóa",Value="false"},
                                     }, new { @class = "form-control" })
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Tạo mới" class="btn btn-default" />
                                 </div>
-                            </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.HotFlag)
+                                    @Html.DropDownListFor(model => model.HotFlag, new List<SelectListItem>()
+                                    {
+                                        new SelectListItem(){Selected=true,Text="Kích hoạt",Value="true"},
+                                        new SelectListItem(){Selected=true,Text="Khóa",Value="false"},
+                                    }, new { @class = "form-control" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Status)
+                                    @Html.DropDownListFor(model => model.Status, new List<SelectListItem>()
+                                    {
+                                        new SelectListItem(){Selected=true,Text="Kích hoạt",Value="true"},
+                                        new SelectListItem(){Selected=true,Text="Khóa",Value="false"},
+                                    }, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Tạo mới" class="btn btn-default" />
+                                    </div>
+                                </div>
                         }
                     </div>
                 </div>

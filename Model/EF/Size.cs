@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model.EF
 {
-    [Table("Size")]
+    [Table("Sizes")]
     public class Size
-    {
+    {        
         [Key]
         [MaxLength(50)]
         [Column(TypeName = "varchar")]
@@ -18,6 +14,8 @@ namespace Model.EF
 
         [MaxLength(50)]
         [Required]
-        public string Name { set; get; }      
+        public string Name { set; get; }
+
+        public virtual IEnumerable<ProductSize> ProductSizes { set; get; }
     }
 }

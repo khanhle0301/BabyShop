@@ -17,6 +17,16 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public JsonResult ChangeStatus(int id)
+        {
+            var result = new FeedbackDao().ChangeStatus(id);
+            return Json(new
+            {
+                status = result
+            });
+        }
+
         [HttpDelete]
         public ActionResult Delete(int id)
         {
@@ -24,7 +34,7 @@ namespace BabyShop.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Detail(int id)
         {
             var result = new FeedbackDao().ViewDetail(id);
             return View(result);

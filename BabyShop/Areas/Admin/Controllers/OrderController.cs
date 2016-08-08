@@ -1,9 +1,4 @@
-﻿using Common;
-using Model.Dao;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Model.Dao;
 using System.Web.Mvc;
 
 namespace BabyShop.Areas.Admin.Controllers
@@ -12,7 +7,7 @@ namespace BabyShop.Areas.Admin.Controllers
     {
         // GET: Admin/Order
         public ActionResult Index()
-        {          
+        {
             var model = new OrderDao().ListAll();
             return View(model);
         }
@@ -30,7 +25,6 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(result);
         }
 
-
         [HttpPost]
         public JsonResult ChangeStatus(int id)
         {
@@ -40,6 +34,5 @@ namespace BabyShop.Areas.Admin.Controllers
                 status = result
             });
         }
-
     }
 }

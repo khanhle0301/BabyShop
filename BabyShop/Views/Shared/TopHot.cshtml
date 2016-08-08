@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Model.EF.Product>
+
+<div class="products">
+    <h5 class="latest-product">Sản phẩm Hot trong tuần</h5>    
+</div>
+@foreach (var item in Model)
+{
+    var url = "/chi-tiet/" + item.Metatitle + "-" + item.ID;
+    <div class="chain-grid menu-chain">
+        <a href="@url"><img class="img-responsive chain" src="@item.Image" alt="" /></a>
+        <div class="grid-chain-bottom chain-watch">
+            <span class="actual dolor-left-grid">@item.Price₫</span>
+            <span class="reducedfrom">@item.PromotionPrice₫</span>
+            <h6><a href="single.html">@item.Name</a></h6>
+        </div>
+    </div>
+}
+<a class="view-all all-product" href="/san-pham">XEM TẤT CẢ SẢN PHẨM<span> </span></a>

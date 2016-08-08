@@ -15,13 +15,6 @@ namespace BabyShop.Areas.Admin.Controllers
         {          
             var model = new OrderDetailDao().ListAll();
             return View(model);
-        }
-
-        [HttpDelete]
-        public ActionResult Delete(int id)
-        {
-            new OrderDetailDao().Delete(id);
-            return RedirectToAction("Index");
-        }       
+        }          
     }
 }

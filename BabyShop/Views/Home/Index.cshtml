@@ -16,6 +16,11 @@
     @{Html.RenderAction("Category", "Home");}
 }
 
+@section tophot{
+    @{Html.RenderAction("TopHot", "Home");}
+}
+
+
 <div class="shoes-grid">
     <!--banner-->
     <div class="wrap-in">
@@ -65,12 +70,12 @@
                     <div class="dolor-grid">
                         @if (product.PromotionPrice.HasValue)
                             {
-                        <span class="actual">@product.PromotionPrice.Value.ToString("N0")</span>
-                        <span class="reducedfrom">@product.Price.Value.ToString("N0")</span>
+                        <span class="actual">@product.PromotionPrice.Value.ToString("N0")₫</span>
+                        <span class="reducedfrom">@product.Price.ToString("N0")₫</span>
                         }
                         else
                         { 
-                            <span class="actual">@product.Price.Value.ToString("N0")</span>
+                            <span class="actual">@product.Price.ToString("N0")₫</span>
                         }                                             
                     </div>
                     @*<a class="now-get get-cart btnAddToCart" href="#" data-id="@product.ID">Mua hàng</a>*@
@@ -101,15 +106,15 @@
                     <div class="dolor-grid">
                         @if (product.PromotionPrice.HasValue)
                         {
-                            <span class="actual">@product.PromotionPrice.Value.ToString("N0")</span>
-                            <span class="reducedfrom">@product.Price.Value.ToString("N0")</span>
+                            <span class="actual">@product.PromotionPrice.Value.ToString("N0")₫</span>
+                            <span class="reducedfrom">@product.Price.ToString("N0")₫</span>
                         }
                         else
                         {
-                            <span class="actual">@product.Price.Value.ToString("N0")</span>
+                            <span class="actual">@product.Price.ToString("N0")₫</span>
                         }                          
                     </div>
-                    <a class="now-get get-cart btnAddToCart" href="#" data-id="@product.ID">Mua hàng</a>
+                    @*<a class="now-get get-cart btnAddToCart" href="#" data-id="@product.ID">Mua hàng</a>*@
                     <div class="clearfix"> </div>
                 </div>
             </div>
@@ -136,15 +141,15 @@
                     <div class="dolor-grid">
                         @if (product.PromotionPrice.HasValue)
                         {
-                            <span class="actual">@product.PromotionPrice.Value.ToString("N0")</span>
-                            <span class="reducedfrom">@product.Price.Value.ToString("N0")</span>
+                            <span class="actual">@product.PromotionPrice.Value.ToString("N0")₫</span>
+                            <span class="reducedfrom">@product.Price.ToString("N0")₫</span>
                         }
                         else
                         {
-                            <span class="actual">@product.Price.Value.ToString("N0")</span>
+                            <span class="actual">@product.Price.ToString("N0")₫</span>
                         }                        
                     </div>
-                    <a class="now-get get-cart btnAddToCart" href="#" data-id="@product.ID">Mua hàng</a>
+                    @*<a class="now-get get-cart btnAddToCart" href="#" data-id="@product.ID">Mua hàng</a>*@
                     <div class="clearfix"> </div>
                 </div>
             </div>

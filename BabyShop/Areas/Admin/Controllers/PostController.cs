@@ -95,5 +95,15 @@ namespace BabyShop.Areas.Admin.Controllers
             var dao = new PostCategoryDao();
             ViewBag.CategoryID = new SelectList(dao.ListAll(), "ID", "Name", selectedId);
         }
+
+        [HttpPost]
+        public JsonResult ChangeStatus(int id)
+        {
+            var result = new PostDao().ChangeStatus(id);
+            return Json(new
+            {
+                status = result
+            });
+        }
     }
 }

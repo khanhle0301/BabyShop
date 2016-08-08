@@ -77,13 +77,13 @@
         <div class="desc1 span_3_of_2">
 
             <h4>@Model.Name</h4>
-            <div class="cart-b">
+            <div class="cart-b">                           
                 @if (Model.PromotionPrice.HasValue)
                 {
-                    <div class="left-n ">@(Model.PromotionPrice == 0 ? "Liên hệ" : Model.PromotionPrice.Value.ToString("N0"))</div>
+                    <div class="left-n ">@Model.PromotionPrice.Value.ToString("N0")₫</div>
                     <div style="margin-left:20px" class="left-m ">
                         Size <select id="txtSize">
-                            @foreach (var item in (List<Model.EF.SizeProduct>)ViewBag.ListSize)
+                            @foreach (var item in (List<Model.EF.ProductSize>)ViewBag.ListSize)
                             {
                                 <option value="@item.Size.Name">@item.Size.Name</option>
                             }
@@ -92,12 +92,12 @@
                 }
                 else
                 {
-                    <div class="left-n ">@(Model.Price == 0 ? "Liên hệ" : Model.Price.Value.ToString("N0"))</div>
+                    <div class="left-n ">@Model.Price.ToString("N0")₫</div>
                     <div style="margin-left:20px" class="left-m ">
                         Size <select id="txtSize">
-                            @foreach (var item in (List<Model.EF.SizeProduct>)ViewBag.ListSize)
+                            @foreach (var item in (List<Model.EF.Size>)ViewBag.ListSize)
                             {
-                                <option value="@item.Size.Name">@item.Size.Name</option>
+                                <option value="@item.ID">@item.Name</option>
                             }
                         </select>
                     </div>
@@ -105,7 +105,7 @@
                 <a class="now-get get-cart-in btnAddToCart" href="#" data-id="@Model.ID">Thêm vào giỏ hàng</a>
                 <div class="clearfix"></div>
             </div>
-            @if (@Model.Quantity.HasValue && @Model.Quantity > 0)
+            @if (@Model.Quantity > 0)
             {
                 <h6>Còn hàng</h6>
             }

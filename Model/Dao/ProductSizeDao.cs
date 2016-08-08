@@ -13,11 +13,6 @@ namespace Model.Dao
         public ProductSizeDao()
         {
             db = new BabyShopDbContext();
-        }
-
-        public List<SizeProduct> ListByIdProduct(int id)
-        {
-            return db.SizeProducts.Where(x => x.ProductID == id).ToList();
-        }
+        }       
     }
 }

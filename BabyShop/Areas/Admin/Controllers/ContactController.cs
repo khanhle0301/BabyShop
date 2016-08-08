@@ -1,9 +1,5 @@
 ﻿using Model.Dao;
 using Model.EF;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BabyShop.Areas.Admin.Controllers
@@ -17,42 +13,12 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(model);
         }
 
-
-        [HttpDelete]
-        public ActionResult Delete(int id)
+        public ActionResult Detail(int id)
         {
-            new ContactDao().Delete(id);
-            return RedirectToAction("Index");
+            var model = new ContactDao().ViewDetail(id);
+            return View(model);
         }
-
-        [HttpGet]
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Create(Contact model)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    int id = new ContactDao().Insert(model);
-                    if (id > 0)
-                    {
-                        SetAlert("Thêm thành công", "success");
-                        return RedirectToAction("Index", "Contact");
-                    }
-                    else
-                        ModelState.AddModelError("", "Thêm thất bại");
-                }
-                return View(model);
-            }
-            catch
-            { return View(); }
-        }
-
+      
         [HttpGet]
         public ActionResult Edit(int id)
         {

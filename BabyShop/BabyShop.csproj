@@ -156,7 +156,7 @@
     <Compile Include="Areas\Admin\Controllers\AboutController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
-    <Compile Include="Areas\Admin\Controllers\CategoryProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductCategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\ContactController.cs" />
     <Compile Include="Areas\Admin\Controllers\FeedbackController.cs" />
     <Compile Include="Areas\Admin\Controllers\FooterController.cs" />
@@ -170,9 +170,7 @@
     <Compile Include="Areas\Admin\Controllers\SlideController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Models\AdminModel.cs" />
-    <Compile Include="Areas\Admin\Models\CategoryProductModel.cs" />
     <Compile Include="Areas\Admin\Models\LoginModel.cs" />
-    <Compile Include="Areas\Admin\Models\ProductModel.cs" />
     <Compile Include="Common\AdminLogin.cs" />
     <Compile Include="Common\CommonConstants.cs" />
     <Compile Include="Common\Encryptor.cs" />
@@ -636,8 +634,13 @@
     <Content Include="Assets\admin\dist\css\timeline.css" />
     <Content Include="Assets\admin\dist\js\sb-admin-2.js" />
     <Content Include="Assets\admin\js\controller\adminController.js" />
+    <Content Include="Assets\admin\js\controller\cateProductController.js" />
+    <Content Include="Assets\admin\js\controller\feebackController.js" />
     <Content Include="Assets\admin\js\controller\orderController.js" />
+    <Content Include="Assets\admin\js\controller\post.js" />
+    <Content Include="Assets\admin\js\controller\postCate.js" />
     <Content Include="Assets\admin\js\controller\productController.js" />
+    <Content Include="Assets\admin\js\controller\slideController.js" />
     <Content Include="Assets\admin\js\controller\userController.js" />
     <Content Include="Assets\admin\js\flot-data.js" />
     <Content Include="Assets\admin\js\morris-data.js" />
@@ -2282,20 +2285,18 @@
     <Content Include="Assets\admin\js\plugins\ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
     <Content Include="Assets\admin\js\plugins\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
     <Content Include="Assets\admin\js\plugins\ckeditor\skins\moono\readme.md" />
-    <Content Include="Areas\Admin\Views\CategoryProduct\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\CategoryProduct\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\CategoryProduct\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ProductCategory\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ProductCategory\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ProductCategory\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\User\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\User\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\User\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\CategoryProduct\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\ProductCategory\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Details.cshtml" />
     <Content Include="Areas\Admin\Views\About\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\About\Create.cshtml" />
     <Content Include="Areas\Admin\Views\About\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Footer\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Footer\Edit.cshtml" />
@@ -2307,7 +2308,7 @@
     <Content Include="Areas\Admin\Views\Contact\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Contact\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Feedback\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Feedback\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Feedback\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Order\Details.cshtml" />
     <Content Include="Areas\Admin\Views\OrderDetail\Index.cshtml" />
@@ -2323,6 +2324,16 @@
     <Content Include="Content\DataTables\css\semanticui.scss" />
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
+    <Content Include="Areas\Admin\Views\ProductCategory\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\About\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Contact\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Contact\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Feedback\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Footer\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Footer\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Slide\Details.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
@@ -2442,6 +2453,7 @@
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\Product\ViewAllSaleOffProduct.cshtml" />
     <Content Include="Views\Product\ViewAllHotProduct.cshtml" />
+    <Content Include="Views\Shared\TopHot.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

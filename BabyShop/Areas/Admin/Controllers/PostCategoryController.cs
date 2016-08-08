@@ -100,10 +100,20 @@ namespace BabyShop.Areas.Admin.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Xóa thất bại");
+                ViewData["Error"] = "Xóa thất bại!";
                 var postCate = new PostCategoryDao().ViewDetail(id);
                 return View(postCate);
             }           
+        }
+
+        [HttpPost]
+        public JsonResult ChangeStatus(int id)
+        {
+            var result = new PostCategoryDao().ChangeStatus(id);
+            return Json(new
+            {
+                status = result
+            });
         }
     }
 }

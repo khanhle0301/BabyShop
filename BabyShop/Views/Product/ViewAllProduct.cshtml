@@ -8,6 +8,11 @@
     @{Html.RenderAction("Category", "Home");}
 }
 
+@section tophot{
+    @{Html.RenderAction("TopHot", "Home");}
+}
+
+
 <div class="women-product">
     <div class="w_content">
         <div class="women">
@@ -44,8 +49,8 @@
                     <p>It is a long established fact that a reader</p>
                     @if (product.PromotionPrice.HasValue)
                     {
-                        <span class="actual">@product.PromotionPrice.Value.ToString("N0")</span>
-                        <span class="reducedfrom">@product.Price.Value.ToString("N0")</span>
+                        <span class="actual">@product.PromotionPrice.Value.ToString("N0")₫</span>
+                        <span class="reducedfrom">@product.Price.Value.ToString("N0")₫</span>
                     }
                     else
                     {

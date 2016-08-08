@@ -17,6 +17,14 @@ namespace Model.Dao
             db = new BabyShopDbContext();
         }
 
+        public bool ChangeStatus(int id)
+        {
+            var cate = db.PostCategories.Find(id);
+            cate.Status = !cate.Status;
+            db.SaveChanges();
+            return cate.Status;
+        }
+
         public PostCategory ViewDetail(int id)
         {
             return db.PostCategories.Find(id);

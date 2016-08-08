@@ -16,7 +16,15 @@ namespace Model.Dao
         public PostDao()
         {
             db = new BabyShopDbContext();
-        }      
+        }
+
+        public bool ChangeStatus(int id)
+        {
+            var cate = db.Posts.Find(id);
+            cate.Status = !cate.Status;
+            db.SaveChanges();
+            return cate.Status;
+        }
 
         public void InsertTag(string id, string name)
         {

@@ -2,21 +2,15 @@
 using BabyShop.Common;
 using Model.Dao;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Model.EF;
-using Common;
 
 namespace BabyShop.Areas.Admin.Controllers
 {
     public class AdminController : BaseController
     {
-
         // GET: Admin/AdminUser
         public ActionResult Index()
-        {           
+        {
             var result = new AdminDao().ListAllPaging();
             return View(result);
         }
@@ -96,17 +90,49 @@ namespace BabyShop.Areas.Admin.Controllers
             { return View(); }
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Detail(int id)
         {
             var result = new AdminDao().ViewDetail(id);
             return View(result);
         }
 
-        [HttpDelete]
+        [HttpGet]
         public ActionResult Delete(int id)
         {
-            new AdminDao().Delete(id);
-            return RedirectToAction("Index");
+            var result = new AdminDao().ViewDetail(id);
+            return View(result);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
+        {
+            var result = new AdminDao().Delete(id);
+            if (result)
+            {
+                SetAlert("Xóa thành công", "success");
+                return RedirectToAction("Index", "Admin");
+            }
+            else
+            {
+                ViewData["Error"] = "Xóa thất bại!";
+                var model = new AdminDao().ViewDetail(id);
+                return View(model);
+            }
+            
+        }
+
+        [HttpGet]
+        public JsonResult UserNameExists(string username)
+        {
+            var result = new AdminDao().UserNameExists(username);
+            return Json(!result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult EmailExists(string email)
+        {
+            var result = new AdminDao().EmailExists(email);
+            return Json(!result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -117,22 +143,6 @@ namespace BabyShop.Areas.Admin.Controllers
             {
                 status = result
             });
-        }
-
-
-        [HttpGet]
-        public JsonResult UserNameExists(string username)
-        {
-            var result = new AdminDao().UserNameExists(username);
-            return Json(!result, JsonRequestBehavior.AllowGet);
-        }
-
-
-        [HttpGet]
-        public JsonResult EmailExists(string email)
-        {
-            var result = new AdminDao().EmailExists(email);
-            return Json(!result, JsonRequestBehavior.AllowGet);
         }
     }
 }
