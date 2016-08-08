@@ -61,7 +61,7 @@ namespace BabyShop.Controllers
                     userSession.Email = user.Email;
                     userSession.Phone = user.Phone;
                     userSession.Address = user.Address;
-                    Session.Add(CommonConstants.USER_SESSION, userSession);
+                    Session.Add(Constants.USER_SESSION, userSession);
                     return Redirect("/");
                 }
                 else if (result == 0)
@@ -82,7 +82,7 @@ namespace BabyShop.Controllers
 
         public ActionResult Logout()
         {
-            Session[CommonConstants.USER_SESSION] = null;
+            Session[Constants.USER_SESSION] = null;
             return Redirect("/");
         }
         [HttpPost]
@@ -170,7 +170,7 @@ namespace BabyShop.Controllers
                     userSession.Email = user.Email;
                     userSession.Phone = user.Phone;
                     userSession.Address = user.Address;
-                    Session.Add(CommonConstants.USER_SESSION, userSession);
+                    Session.Add(Constants.USER_SESSION, userSession);
                 }
             }
             return Redirect("/");

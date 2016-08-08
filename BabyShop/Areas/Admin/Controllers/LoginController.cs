@@ -33,7 +33,11 @@ namespace BabyShop.Areas.Admin.Controllers
                     userSession.Email = user.Email;
                     userSession.Phone = user.Phone;
                     userSession.Address = user.Address;
-                    Session.Add(CommonConstants.ADMIN_SESSION, userSession);
+                    userSession.GroupID = user.GroupID;
+                    var listCredentials = dao.GetListCredential(model.UserName);
+
+                    Session.Add(Constants.SESSION_CREDENTIALS, listCredentials);
+                    Session.Add(Constants.ADMIN_SESSION, userSession);
                     return RedirectToAction("Index", "Home");
                 }
                 else if (result == 0)

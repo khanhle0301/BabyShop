@@ -14,6 +14,6 @@ namespace BabyShop.Common
         public string Email { set; get; }
         public string Address { set; get; }
         public string Phone { set; get; }
-
+        public string GroupID { set; get; }
     }
 }

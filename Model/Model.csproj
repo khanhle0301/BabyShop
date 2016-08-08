@@ -85,7 +85,9 @@
     <Compile Include="Dao\UserDao.cs" />
     <Compile Include="EF\About.cs" />
     <Compile Include="EF\Admin.cs" />
+    <Compile Include="EF\AdminGroup.cs" />
     <Compile Include="EF\BabyShopDbContext.cs" />
+    <Compile Include="EF\Credential.cs" />
     <Compile Include="EF\ProductCategory.cs" />
     <Compile Include="EF\Contact.cs" />
     <Compile Include="EF\Feedback.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="EF\PostTag.cs" />
     <Compile Include="EF\Product.cs" />
     <Compile Include="EF\ProductTag.cs" />
+    <Compile Include="EF\Role.cs" />
     <Compile Include="EF\Size.cs" />
     <Compile Include="EF\ProductSize.cs" />
     <Compile Include="EF\Slide.cs" />
@@ -113,6 +116,14 @@
     <Compile Include="Migrations\201608070953085_EditSize.cs" />
     <Compile Include="Migrations\201608070953085_EditSize.Designer.cs">
       <DependentUpon>201608070953085_EditSize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608080803225_Credential.cs" />
+    <Compile Include="Migrations\201608080803225_Credential.Designer.cs">
+      <DependentUpon>201608080803225_Credential.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608080806587_Credential2.cs" />
+    <Compile Include="Migrations\201608080806587_Credential2.Designer.cs">
+      <DependentUpon>201608080806587_Credential2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -133,6 +144,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608070953085_EditSize.resx">
       <DependentUpon>201608070953085_EditSize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608080803225_Credential.resx">
+      <DependentUpon>201608080803225_Credential.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608080806587_Credential2.resx">
+      <DependentUpon>201608080806587_Credential2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

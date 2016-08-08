@@ -12,7 +12,7 @@ namespace BabyShop.Areas.Admin.Controllers
     {
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var session = (AdminLogin)Session[CommonConstants.ADMIN_SESSION];
+            var session = (AdminLogin)Session[Constants.ADMIN_SESSION];
             if (session == null)
             {
                 filterContext.Result = new RedirectToRouteResult(new

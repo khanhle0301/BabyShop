@@ -20,6 +20,10 @@ namespace Model.EF
         [Column(TypeName = "varchar")]
         public string Password { set; get; }
 
+        [MaxLength(20)]
+        [Column(TypeName = "varchar")]
+        public string GroupID { set; get; }
+
         [Required(ErrorMessage = "Vui lòng nhập họ tên.")]
         [MaxLength(50, ErrorMessage = "Họ tên không được quá 50 ký tự.")]
         [Display(Name = "Họ tên")]
@@ -40,5 +44,8 @@ namespace Model.EF
         [RegularExpression(@"^\+?\d{1,3}?[- .]?\(?(?:\d{2,3})\)?[- .]?\d\d\d[- .]?\d\d\d\d$", ErrorMessage = "Vui lòng kiểm tra lại số điện thoại.")]
         [Display(Name = "Điện thoại")]
         public string Phone { set; get; }
+
+        [ForeignKey("GroupID")]
+        public virtual AdminGroup AdminGroup { set; get; }
     }
 }

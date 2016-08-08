@@ -13,6 +13,7 @@ namespace Model.EF
 
         public virtual DbSet<About> Abouts { get; set; }
         public virtual DbSet<Admin> Admins { get; set; }
+        public virtual DbSet<AdminGroup> AdminGroups { get; set; }
         public virtual DbSet<ProductCategory> CategoryProducts { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
@@ -29,6 +30,8 @@ namespace Model.EF
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Size> Sizes { get; set; }
         public virtual DbSet<ProductSize> ProductSizes { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Credential> Credentials { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

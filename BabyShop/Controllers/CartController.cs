@@ -18,7 +18,7 @@ namespace BabyShop.Controllers
         //GET: Cart
         public ActionResult Index()
         {
-            var cart = Session[BabyShop.Common.CommonConstants.CartSession];
+            var cart = Session[BabyShop.Common.Constants.CartSession];
             var list = new List<CartItem>();
             if (cart != null)
             {
@@ -29,7 +29,7 @@ namespace BabyShop.Controllers
 
         public JsonResult GetUser()
         {
-            var session = (UserLogin)Session[BabyShop.Common.CommonConstants.USER_SESSION];
+            var session = (UserLogin)Session[BabyShop.Common.Constants.USER_SESSION];
             if (session != null)
             {
                 var userId = session.UserID;
@@ -49,7 +49,7 @@ namespace BabyShop.Controllers
         [HttpPost]
         public JsonResult Add(int productId, string Size)
         {
-            var cart = (List<CartItem>)Session[BabyShop.Common.CommonConstants.CartSession];
+            var cart = (List<CartItem>)Session[BabyShop.Common.Constants.CartSession];
             var product = new ProductDao().ViewDetail(productId);
             if (cart == null)
             {
@@ -83,7 +83,7 @@ namespace BabyShop.Controllers
                 cart.Add(newItem);
             }
 
-            Session[BabyShop.Common.CommonConstants.CartSession] = cart;
+            Session[BabyShop.Common.Constants.CartSession] = cart;
             return Json(new
             {
                 status = true
@@ -103,7 +103,7 @@ namespace BabyShop.Controllers
             orderNew.CustomerMessage = order.Message;
             orderDao.Insert(orderNew);
             var detailDao = new Model.Dao.OrderDetailDao();
-            var sessionCart = (List<CartItem>)Session[BabyShop.Common.CommonConstants.CartSession];
+            var sessionCart = (List<CartItem>)Session[BabyShop.Common.Constants.CartSession];
 
             var cart = new List<CartInsert>();
             foreach (var session in sessionCart)
@@ -161,7 +161,7 @@ namespace BabyShop.Controllers
             //var adminEmail = ConfigHelper.GetByKey("AdminEmail");
             MailHelper.SendMail(order.Email, "Đơn hàng mới từ BabyShop", content);
             //MailHelper.SendMail(adminEmail, "Đơn hàng mới từ BabyShop", content);
-            Session[BabyShop.Common.CommonConstants.CartSession] = null;
+            Session[BabyShop.Common.Constants.CartSession] = null;
 
             return Json(new
             {
@@ -171,7 +171,7 @@ namespace BabyShop.Controllers
 
         public JsonResult DeleteAll()
         {
-            Session[BabyShop.Common.CommonConstants.CartSession] = null;
+            Session[BabyShop.Common.Constants.CartSession] = null;
             return Json(new
             {
                 status = true
@@ -180,9 +180,9 @@ namespace BabyShop.Controllers
 
         public JsonResult Delete(int id, string Size)
         {
-            var sessionCart = (List<CartItem>)Session[BabyShop.Common.CommonConstants.CartSession];
+            var sessionCart = (List<CartItem>)Session[BabyShop.Common.Constants.CartSession];
             sessionCart.RemoveAll(x => x.Product.ID == id && x.Size == Size);
-            Session[BabyShop.Common.CommonConstants.CartSession] = sessionCart;
+            Session[BabyShop.Common.Constants.CartSession] = sessionCart;
             return Json(new
             {
                 status = true
@@ -192,7 +192,7 @@ namespace BabyShop.Controllers
         public JsonResult Update(string cartModel)
         {
             var jsonCart = new JavaScriptSerializer().Deserialize<List<CartItem>>(cartModel);
-            var sessionCart = (List<CartItem>)Session[BabyShop.Common.CommonConstants.CartSession];
+            var sessionCart = (List<CartItem>)Session[BabyShop.Common.Constants.CartSession];
             foreach (var item in sessionCart)
             {
                 var jsonItem = jsonCart.SingleOrDefault(x => x.Product.ID == item.Product.ID && x.Size == item.Size);
@@ -202,7 +202,7 @@ namespace BabyShop.Controllers
                     item.Size = jsonItem.Size;
                 }
             }
-            Session[BabyShop.Common.CommonConstants.CartSession] = sessionCart;
+            Session[BabyShop.Common.Constants.CartSession] = sessionCart;
             return Json(new
             {
                 status = true

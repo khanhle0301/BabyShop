@@ -46,7 +46,7 @@ namespace BabyShop.Controllers
         [ChildActionOnly]
         public ActionResult HeaderCart()
         {
-            var cart = Session[BabyShop.Common.CommonConstants.CartSession];
+            var cart = Session[BabyShop.Common.Constants.CartSession];
             var list = new List<CartItem>();
             if (cart != null)
             {

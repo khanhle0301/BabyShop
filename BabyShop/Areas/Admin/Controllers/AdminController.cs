@@ -9,18 +9,21 @@ namespace BabyShop.Areas.Admin.Controllers
     public class AdminController : BaseController
     {
         // GET: Admin/AdminUser
+        [HasCredential(RoleID = "VIEW_ADMIN")]
         public ActionResult Index()
         {
             var result = new AdminDao().ListAllPaging();
             return View(result);
         }
 
+        [HasCredential(RoleID = "ADD_ADMIN")]
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
+        [HasCredential(RoleID = "ADD_ADMIN")]
         [HttpPost]
         public ActionResult Create(AdminModel adminModel)
         {
@@ -38,7 +41,7 @@ namespace BabyShop.Areas.Admin.Controllers
                     admin.Email = adminModel.Email;
                     admin.Phone = adminModel.Phone;
                     admin.CreatedDate = DateTime.Now;
-                    var session = (AdminLogin)Session[Common.CommonConstants.ADMIN_SESSION];
+                    var session = (AdminLogin)Session[Common.Constants.ADMIN_SESSION];
                     var entity = dao.GetByID(session.UserName);
                     admin.CreatedBy = entity.UserName;
                     admin.Status = adminModel.Status;
@@ -57,6 +60,7 @@ namespace BabyShop.Areas.Admin.Controllers
             { return View(); }
         }
 
+        [HasCredential(RoleID = "EDIT_ADMIN")]
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -64,6 +68,7 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(user);
         }
 
+        [HasCredential(RoleID = "EDIT_ADMIN")]
         [HttpPost]
         public ActionResult Edit(Model.EF.Admin admin)
         {
@@ -72,7 +77,7 @@ namespace BabyShop.Areas.Admin.Controllers
                 if (ModelState.IsValid)
                 {
                     var dao = new AdminDao();
-                    var session = (AdminLogin)Session[Common.CommonConstants.ADMIN_SESSION];
+                    var session = (AdminLogin)Session[Common.Constants.ADMIN_SESSION];
                     var entity = dao.GetByID(session.UserName);
                     admin.UpdatedBy = entity.UserName;
                     var result = dao.Update(admin);
@@ -90,12 +95,14 @@ namespace BabyShop.Areas.Admin.Controllers
             { return View(); }
         }
 
+        [HasCredential(RoleID = "DETAIL_ADMIN")]
         public ActionResult Detail(int id)
         {
             var result = new AdminDao().ViewDetail(id);
             return View(result);
         }
 
+        [HasCredential(RoleID = "DELETE_ADMIN")]
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -103,6 +110,7 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(result);
         }
 
+        [HasCredential(RoleID = "DELETE_ADMIN")]
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

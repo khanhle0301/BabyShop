@@ -19,6 +19,27 @@ namespace Model.Dao
             db = new BabyShopDbContext();
         }
 
+
+        public List<string> GetListCredential(string userName)
+        {
+            var user = db.Admins.Single(x => x.UserName == userName);
+            var data = (from a in db.Credentials
+                        join b in db.AdminGroups on a.AdminGroupID equals b.ID
+                        join c in db.Roles on a.RoleID equals c.ID
+                        where b.ID == user.GroupID
+                        select new
+                        {
+                            RoleID = a.RoleID,
+                            UserGroupID = a.AdminGroupID
+                        }).AsEnumerable().Select(x => new Credential()
+                        {
+                            RoleID = x.RoleID,
+                            AdminGroupID = x.UserGroupID
+                        });
+            return data.Select(x => x.RoleID).ToList();
+
+        }
+
         public bool ChangeStatus(int id)
         {
             var user = db.Admins.Find(id);
