@@ -69,7 +69,9 @@
     <Compile Include="Abstract\Auditable.cs" />
     <Compile Include="Abstract\IAuditable.cs" />
     <Compile Include="Dao\AboutDao.cs" />
-    <Compile Include="Dao\AdminDao.cs" />
+    <Compile Include="Dao\CredentialDao.cs" />
+    <Compile Include="Dao\RoleDao.cs" />
+    <Compile Include="Dao\UserDao.cs" />
     <Compile Include="Dao\ContactDao.cs" />
     <Compile Include="Dao\FeedbackDao.cs" />
     <Compile Include="Dao\FooterDao.cs" />
@@ -82,10 +84,11 @@
     <Compile Include="Dao\ProductSizeDao.cs" />
     <Compile Include="Dao\SlideDao.cs" />
     <Compile Include="Dao\TagDao.cs" />
-    <Compile Include="Dao\UserDao.cs" />
+    <Compile Include="Dao\CustomerDao.cs" />
+    <Compile Include="Dao\UserGroupDao.cs" />
     <Compile Include="EF\About.cs" />
-    <Compile Include="EF\Admin.cs" />
-    <Compile Include="EF\AdminGroup.cs" />
+    <Compile Include="EF\User.cs" />
+    <Compile Include="EF\UserGroup.cs" />
     <Compile Include="EF\BabyShopDbContext.cs" />
     <Compile Include="EF\Credential.cs" />
     <Compile Include="EF\ProductCategory.cs" />
@@ -104,7 +107,7 @@
     <Compile Include="EF\ProductSize.cs" />
     <Compile Include="EF\Slide.cs" />
     <Compile Include="EF\Tag.cs" />
-    <Compile Include="EF\User.cs" />
+    <Compile Include="EF\Customer.cs" />
     <Compile Include="Migrations\201608070513447_InitialDB.cs" />
     <Compile Include="Migrations\201608070513447_InitialDB.Designer.cs">
       <DependentUpon>201608070513447_InitialDB.cs</DependentUpon>
@@ -125,8 +128,29 @@
     <Compile Include="Migrations\201608080806587_Credential2.Designer.cs">
       <DependentUpon>201608080806587_Credential2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608090229385_update_Credentials.cs" />
+    <Compile Include="Migrations\201608090229385_update_Credentials.Designer.cs">
+      <DependentUpon>201608090229385_update_Credentials.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608090247389_customer.cs" />
+    <Compile Include="Migrations\201608090247389_customer.Designer.cs">
+      <DependentUpon>201608090247389_customer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608090254084_edit_User.cs" />
+    <Compile Include="Migrations\201608090254084_edit_User.Designer.cs">
+      <DependentUpon>201608090254084_edit_User.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608090541174_update_userGroup.cs" />
+    <Compile Include="Migrations\201608090541174_update_userGroup.Designer.cs">
+      <DependentUpon>201608090541174_update_userGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608090854582_update_database.cs" />
+    <Compile Include="Migrations\201608090854582_update_database.Designer.cs">
+      <DependentUpon>201608090854582_update_database.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\CredentialViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -151,6 +175,21 @@
     <EmbeddedResource Include="Migrations\201608080806587_Credential2.resx">
       <DependentUpon>201608080806587_Credential2.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608090229385_update_Credentials.resx">
+      <DependentUpon>201608090229385_update_Credentials.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608090247389_customer.resx">
+      <DependentUpon>201608090247389_customer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608090254084_edit_User.resx">
+      <DependentUpon>201608090254084_edit_User.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608090541174_update_userGroup.resx">
+      <DependentUpon>201608090541174_update_userGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608090854582_update_database.resx">
+      <DependentUpon>201608090854582_update_database.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
@@ -158,9 +197,7 @@
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

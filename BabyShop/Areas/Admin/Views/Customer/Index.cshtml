@@ -1,25 +1,23 @@
-﻿@model List<Model.EF.Admin>
+﻿@model List<Model.EF.Customer>
 @{
-    ViewBag.Title = "Danh mục người dùng";
+    ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
 @section header{
-    Danh mục người dùng
+    Danh mục khách hàng
 }
-
 @section jsFooter{
-    <script src="~/Assets/admin/js/controller/adminController.js"></script>
+    <script src="/Assets/admin/js/controller/userController.js"></script>
 }
-
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Danh sách người dùng
-                <a class="btn btn-success" href="/Admin/Admin/Create">Thêm mới</a>
+                Danh sách khách hàng              
             </div>
             <!-- /.panel-heading -->
-            <div class="panel-body">
+            <div class="panel-body">           
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover" id="myTable">
                         <thead>
@@ -46,18 +44,20 @@
                             @foreach (var item in Model)
                             {
                                 <tr id="row_@item.ID">
-
                                     <td>@item.UserName</td>
                                     <td>@item.Name</td>
                                     <td>@item.Email</td>
                                     <td>@item.CreatedDate</td>
                                     <td><a href="#" class="btn-active" data-id="@item.ID">@Html.Raw(item.Status ? "<strong>Kích hoạt</strong>" : "Khoá")</a></td>
-                                    <td>
-                                        <a href="/Admin/Admin/Edit/@item.ID">Sửa</a>
+                                    <td>                                       
+                                        <a href="/Admin/User/Details/@item.ID">Chi tiết</a>
                                         |
-                                        <a href="/Admin/Admin/Detail/@item.ID">Chi tiết</a>
-                                        |
-                                        <a href="/Admin/Admin/Delete/@item.ID">Xóa</a>
+                                        @Ajax.ActionLink("Xoá", "Delete", new { @id = item.ID }, new AjaxOptions
+                                   {
+                                       Confirm = "Bạn có muốn xoá bản ghi này?",
+                                       OnComplete = "$('#row_" + @item.ID + "').remove()",
+                                       HttpMethod = "Delete"
+                                   })
                                     </td>
                                 </tr>
                             }

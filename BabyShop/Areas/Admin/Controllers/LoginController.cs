@@ -21,7 +21,7 @@ namespace BabyShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var dao = new AdminDao();
+                var dao = new UserDao();
                 var result = dao.Login(model.UserName, Encryptor.MD5Hash(model.PassWord));
                 if (result == 1)
                 {

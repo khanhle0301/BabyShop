@@ -33,7 +33,7 @@ namespace BabyShop.Controllers
             if (session != null)
             {
                 var userId = session.UserID;
-                var user = new UserDao().GetID(userId);
+                var user = new CustomerDao().GetID(userId);
                 return Json(new
                 {
                     data = user,

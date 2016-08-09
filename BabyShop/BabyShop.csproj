@@ -154,7 +154,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AboutController.cs" />
-    <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CredentialController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PermissionController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductCategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\ContactController.cs" />
@@ -168,13 +170,15 @@
     <Compile Include="Areas\Admin\Controllers\PostController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\SlideController.cs" />
-    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CustomerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserGroupController.cs" />
     <Compile Include="Areas\Admin\Models\AdminModel.cs" />
     <Compile Include="Areas\Admin\Models\LoginModel.cs" />
     <Compile Include="Common\AdminLogin.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\Encryptor.cs" />
     <Compile Include="Common\HasCredentialAttribute.cs" />
+    <Compile Include="Common\UserGroupCredential.cs" />
     <Compile Include="Common\UserLogin.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\CartController.cs" />
@@ -643,6 +647,7 @@
     <Content Include="Assets\admin\js\controller\productController.js" />
     <Content Include="Assets\admin\js\controller\slideController.js" />
     <Content Include="Assets\admin\js\controller\userController.js" />
+    <Content Include="Assets\admin\js\controller\userGroupController.js" />
     <Content Include="Assets\admin\js\flot-data.js" />
     <Content Include="Assets\admin\js\morris-data.js" />
     <Content Include="Assets\admin\js\plugins\ckeditor\adapters\jquery.js" />
@@ -2262,8 +2267,8 @@
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Navigation.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Create.cshtml" />
     <Content Include="Assets\admin\js\plugins\ckfinder\plugins\fileeditor\codemirror\LICENSE" />
     <Content Include="Assets\admin\js\plugins\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.eot" />
@@ -2289,10 +2294,10 @@
     <Content Include="Areas\Admin\Views\ProductCategory\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ProductCategory\Create.cshtml" />
     <Content Include="Areas\Admin\Views\ProductCategory\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\User\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\Detail.cshtml" />
-    <Content Include="Areas\Admin\Views\User\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\Details.cshtml" />
     <Content Include="Areas\Admin\Views\ProductCategory\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
@@ -2328,7 +2333,7 @@
     <Content Include="Areas\Admin\Views\ProductCategory\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\About\Detail.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Contact\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Contact\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Feedback\Delete.cshtml" />
@@ -2336,6 +2341,12 @@
     <Content Include="Areas\Admin\Views\Footer\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Slide\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\401.cshtml" />
+    <Content Include="Areas\Admin\Views\UserGroup\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Credential\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Credential\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\UserGroup\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\UserGroup\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\UserGroup\Delete.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
@@ -2459,6 +2470,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Views\Permission\" />
     <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>

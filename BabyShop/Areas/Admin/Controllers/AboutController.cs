@@ -36,7 +36,7 @@ namespace BabyShop.Areas.Admin.Controllers
                 if (ModelState.IsValid)
                 {
                     var session = (AdminLogin)Session[Constants.ADMIN_SESSION];
-                    var entity = new AdminDao().GetByID(session.UserName);
+                    var entity = new UserDao().GetByID(session.UserName);
                     about.UpdatedBy = entity.UserName;
                     var result = new AboutDao().Update(about);
                     if (result)

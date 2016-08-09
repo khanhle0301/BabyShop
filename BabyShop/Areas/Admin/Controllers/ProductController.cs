@@ -43,7 +43,7 @@ namespace BabyShop.Areas.Admin.Controllers
                     model.Metatitle = StringHelper.ToUnsignString(model.Name);
                     model.CreatedDate = DateTime.Now;
                     var session = (AdminLogin)Session[Common.Constants.ADMIN_SESSION];
-                    var entity = new AdminDao().GetByID(session.UserName);
+                    var entity = new UserDao().GetByID(session.UserName);
                     model.CreatedBy = entity.UserName;
                     model.ViewCount = 0;
                     model.QuantitySold = 0;
@@ -85,7 +85,7 @@ namespace BabyShop.Areas.Admin.Controllers
                     if (ModelState.IsValid)
                     {
                         var session = (AdminLogin)Session[Common.Constants.ADMIN_SESSION];
-                        var entity = new AdminDao().GetByID(session.UserName);
+                        var entity = new UserDao().GetByID(session.UserName);
                         model.UpdatedBy = entity.UserName;
                         var result = new ProductDao().Update(model);
                         if (result)

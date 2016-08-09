@@ -14,15 +14,18 @@ namespace Model.EF
         [Key]
         [Column(TypeName = "varchar", Order = 1)]
         [MaxLength(20)]
-        public string AdminGroupID { set; get; }
+        public string UserGroupID { set; get; }
 
         [Key]
         [Column(TypeName = "varchar", Order = 2)]
         [MaxLength(50)]
         public string RoleID { set; get; }
 
-        [ForeignKey("AdminGroupID")]
-        public virtual AdminGroup Post { set; get; }
+        [Display(Name = "Trạng thái")]
+        public bool Status { set; get; }
+
+        [ForeignKey("UserGroupID")]
+        public virtual UserGroup UserGroup { set; get; }
 
         [ForeignKey("RoleID")]
         public virtual Role Role { set; get; }

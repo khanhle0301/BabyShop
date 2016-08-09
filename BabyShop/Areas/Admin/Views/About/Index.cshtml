@@ -25,10 +25,7 @@
                                 </th>
                                 <th>
                                     Ngày tạo
-                                </th>
-                                <th>
-                                    Trạng thái
-                                </th>
+                                </th>                               
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
@@ -37,8 +34,7 @@
                             {
                                 <tr id="row_@item.ID">
                                     <td>@item.ID</td>
-                                    <td>@item.CreatedDate</td>
-                                    <td>@Html.Raw(item.Status ? "<strong>Kích hoạt</strong>" : "Khoá")</td>
+                                    <td>@item.CreatedDate</td>                                  
                                     <td>
                                         <a href="/Admin/About/Edit/@item.ID">Sửa</a>
                                         |

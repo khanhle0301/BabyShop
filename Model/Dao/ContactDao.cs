@@ -16,7 +16,7 @@ namespace Model.Dao
 
         public Contact GetActiveContact()
         {
-            return db.Contacts.Single(x => x.Status == true);
+            return db.Contacts.Single();
         }      
 
         public Contact ViewDetail(int id)
@@ -51,8 +51,7 @@ namespace Model.Dao
                 Contact.Website = entity.Website;
                 Contact.Address = entity.Address;
                 Contact.Lat = entity.Lat;
-                Contact.Lng = entity.Lng;
-                Contact.Status = entity.Status;
+                Contact.Lng = entity.Lng;              
                 db.SaveChanges();
                 return true;
             }

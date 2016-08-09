@@ -7,6 +7,7 @@ namespace BabyShop.Common
 {
     public static class Constants
     {
+        public static string USERGROUP_SESSION = "USERGROUP_SESSION";
         public static string USER_SESSION = "USER_SESSION";
         public static string ADMIN_SESSION = "ADMIN_SESSION";
         public static string CartSession = "CartSession";

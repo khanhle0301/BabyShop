@@ -45,7 +45,7 @@ namespace Model.Dao
                 about.Detail = entity.Detail;
                 about.UpdatedDate = DateTime.Now;
                 about.UpdatedBy = entity.UpdatedBy;
-                about.Status = entity.Status;
+                about.Status = true;
                 db.SaveChanges();
                 return true;
             }

@@ -42,9 +42,6 @@ namespace Model.EF
         public double Lat { set; get; }
 
         [Required(ErrorMessage = "Vui lòng nhập Lng")]
-        public double Lng { set; get; }
-
-        [Display(Name = "Trạng thái")]
-        public bool Status { set; get; }
+        public double Lng { set; get; }      
     }
 }

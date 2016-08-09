@@ -16,7 +16,7 @@ namespace Model.Dao
 
         public Footer GetFooter()
         {
-            return db.Footers.SingleOrDefault(x => x.Status == true);
+            return db.Footers.SingleOrDefault();
         }
 
         public Footer ViewDetail(int id)
@@ -45,8 +45,7 @@ namespace Model.Dao
             try
             {
                 var Footer = db.Footers.Find(entity.ID);
-                Footer.Content = entity.Content;             
-                Footer.Status = entity.Status;
+                Footer.Content = entity.Content;                           
                 db.SaveChanges();
                 return true;
             }

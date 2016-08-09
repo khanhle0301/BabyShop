@@ -15,8 +15,6 @@ namespace Model.EF
         [Required(ErrorMessage = "Vui lòng nhập nội dung")]
         [Display(Name = "Nội dung")]
         [Column(TypeName = "ntext")]
-        public string Content { set; get; }
-
-        public bool Status { set; get; }
+        public string Content { set; get; }      
     }
 }

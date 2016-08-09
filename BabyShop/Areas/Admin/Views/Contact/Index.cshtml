@@ -30,10 +30,7 @@
                                 </th>
                                 <th>
                                     Địa chỉ
-                                </th>
-                                <th>
-                                    Trạng thái
-                                </th>
+                                </th>                                
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
@@ -44,8 +41,7 @@
                                     <td>@item.Name</td>
                                     <td>@item.Phone</td>
                                     <td>@item.Email</td>
-                                    <td>@item.Address</td>
-                                    <td>@Html.Raw(item.Status ? "<strong>Kích hoạt</strong>" : "Khoá")</td>
+                                    <td>@item.Address</td>                                   
                                     <td>
                                         <a href="/Admin/Contact/Edit/@item.ID">Sửa</a>
                                         |

@@ -49,7 +49,7 @@ namespace BabyShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                var dao = new UserDao();
+                var dao = new CustomerDao();
                 var result = dao.Login(model.UserName, Encryptor.MD5Hash(model.Password));
                 if (result == 1)
                 {
@@ -91,7 +91,7 @@ namespace BabyShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                var dao = new UserDao();
+                var dao = new CustomerDao();
                 if (dao.CheckUserName(model.UserName))
                 {
                     ModelState.AddModelError("", "Tên đăng nhập đã tồn tại");
@@ -102,7 +102,7 @@ namespace BabyShop.Controllers
                 }
                 else
                 {
-                    var user = new User();
+                    var user = new Customer();
                     user.UserName = model.UserName;
                     user.Password = Encryptor.MD5Hash(model.Password);
                     user.Name = model.Name;
@@ -155,12 +155,12 @@ namespace BabyShop.Controllers
                 string middlename = me.middle_name;
                 string lastname = me.last_name;
 
-                var user = new User();
+                var user = new Customer();
                 user.Email = email;
                 user.UserName = email;
                 user.Status = true;
                 user.Name = firstname + " " + middlename + " " + lastname;
-                var resultInsert = new UserDao().InsertForFacebook(user);
+                var resultInsert = new CustomerDao().InsertForFacebook(user);
                 if (resultInsert > 0)
                 {
                     var userSession = new UserLogin();
