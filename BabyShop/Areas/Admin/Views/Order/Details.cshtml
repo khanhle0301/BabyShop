@@ -1,7 +1,7 @@
 ﻿@model Model.EF.Order
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Trang chi tiết chi tiết hóa đơn " + Model.ID;
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 @section header{
@@ -41,7 +41,7 @@
                         </dd>
 
                         <dt>
-                           Email
+                            Email
                         </dt>
 
                         <dd>
@@ -77,7 +77,7 @@
                         </dt>
 
                         <dd>
-                            @Html.Raw(Model.Status ? "Kích hoạt" : "Khoá")                           
+                            @Html.Raw(Model.Status ? "Kích hoạt" : "Khoá")
                         </dd>
 
                     </dl>

@@ -88,6 +88,7 @@ namespace Model.Dao
                 model.Name = post.Name;
                 model.Metatitle = StringHelper.ToUnsignString(post.Name);
                 model.CategoryID = post.CategoryID;
+                model.Metakeyword = post.Metakeyword;
                 model.Image = post.Image;              
                 model.Description = post.Description;
                 model.Detail = post.Detail;
@@ -156,7 +157,14 @@ namespace Model.Dao
         public bool NameExists(string name)
         {
             return db.Posts.Any(x => x.Name == name);
-        }      
+        }
+
+        public IEnumerable<Post> ListAllByCateID(int id,int page, int pageSize, out int totalRow)
+        {
+            var query = db.Posts.Where(x => x.Status && x.CategoryID== id);
+            totalRow = query.Count();
+            return query.OrderByDescending(x => x.CreatedDate).Skip((page - 1) * pageSize).Take(pageSize);
+        }
 
         public IEnumerable<Post> ListAll(int page, int pageSize, out int totalRow)
         {

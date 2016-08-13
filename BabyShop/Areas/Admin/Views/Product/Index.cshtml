@@ -1,7 +1,7 @@
 ﻿@model List<Model.EF.Product>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Trang sản phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -28,6 +28,9 @@
                         <thead>
                             <tr>
                                 <th>
+                                    ID
+                                </th>
+                                <th>
                                     Tên sản phẩm
                                 </th>
                                 <th>
@@ -49,12 +52,13 @@
                             @foreach (var item in Model)
                             {
                                 <tr id="row_@item.ID">
+                                    <td width=40>@item.ID</td>
                                     <td>@item.Name</td>
                                     <td><img src="@item.Image" width="100" alt="" /></td>
-                                    <td>@item.Price.ToString("N0")</td>                                  
-                                    <td>@item.CreatedDate</td>
-                                    <td><a href="#" class="btn-active" data-id="@item.ID">@Html.Raw(item.Status ? "<strong>Kích hoạt</strong>" : "Khoá")</a></td>
-                                    <td>
+                                    <td width=70>@item.Price.ToString("N0")</td>                                  
+                                    <td width=90>@item.CreatedDate</td>
+                                    <td width=100><a href="#" class="btn-active" data-id="@item.ID">@Html.Raw(item.Status ? "<strong>Kích hoạt</strong>" : "Khoá")</a></td>
+                                    <td width=130>
                                         <a href="#" data-id="@item.ID" class="btn-images">Quản lý ảnh</a>
                                         |
                                         <a href="/Admin/Product/Edit/@item.ID">Sửa</a>

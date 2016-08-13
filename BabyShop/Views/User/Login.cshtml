@@ -1,6 +1,6 @@
 ﻿@model BabyShop.Models.LoginModel
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Đăng nhập";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -16,14 +16,18 @@
             @Html.ValidationSummary(false, null, new { @class = "text-danger" })
             <div>
                 <span>Tài khoản<label>*</label></span>
-                @Html.TextBoxFor(model => model.UserName)
+                @Html.TextBoxFor(model => model.UserName)               
             </div>
             <div>
                 <span>Password<label>*</label></span>
-                @Html.PasswordFor(model => model.Password)
+                @Html.PasswordFor(model => model.Password)                
             </div>
-            <a class="forgot" href="#">Bạn quên mật khẩu?</a>
+            <a class="forgot" href="quen-mat-khau">Bạn quên mật khẩu?</a>
             <input type="submit" value="Đăng nhập">
+            <a class="btn btn-facebook" href="/User/LoginFacebook">
+                <i class="fa fa-facebook"></i>
+                Đăng nhập bằng Facebook
+            </a>
         }
     </div>
     <div class="login-left">

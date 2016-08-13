@@ -1,4 +1,5 @@
-﻿using Model.Dao;
+﻿using BabyShop.Common;
+using Model.Dao;
 using Model.EF;
 using System;
 using System.Collections.Generic;
@@ -11,25 +12,23 @@ namespace BabyShop.Areas.Admin.Controllers
     public class UserGroupController : BaseController
     {
         // GET: Admin/UserGroup
+        [HasCredential(RoleID = "VIEW_USERGROUP")]
         public ActionResult Index()
         {
             var result = new UserGroupDao().ListAll();
             return View(result);
         }
 
-        [HttpGet]
-        public JsonResult CheckID(string id)
-        {
-            var result = new UserGroupDao().CheckID(id);
-            return Json(!result, JsonRequestBehavior.AllowGet);
-        }
+        [HasCredential(RoleID = "VIEW_USER")]       
 
+        [HasCredential(RoleID = "ADD_USERGROUP")]
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
+        [HasCredential(RoleID = "ADD_USERGROUP")]
         [HttpPost]
         public ActionResult Create(UserGroup model)
         {
@@ -37,14 +36,22 @@ namespace BabyShop.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    bool id = new UserGroupDao().Insert(model);
-                    if (id)
+                    var check = new UserGroupDao().CheckID(model.ID);
+                    if (check)
                     {
-                        SetAlert("Thêm thành công", "success");
-                        return RedirectToAction("Index", "UserGroup");
+                        ModelState.AddModelError("", "ID đã tồn tại");
                     }
                     else
-                        ModelState.AddModelError("", "Thêm thất bại");
+                    {
+                        bool id = new UserGroupDao().Insert(model);
+                        if (id)
+                        {
+                            SetAlert("Thêm thành công", "success");
+                            return RedirectToAction("Index", "UserGroup");
+                        }
+                        else
+                            ModelState.AddModelError("", "Thêm thất bại");
+                    }
                 }
                 return View(model);
             }
@@ -52,6 +59,7 @@ namespace BabyShop.Areas.Admin.Controllers
             { return View(); }
         }
 
+        [HasCredential(RoleID = "EDIT_USERGROUP")]
         [HttpGet]
         public ActionResult Edit(string id)
         {
@@ -59,6 +67,7 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(user);
         }
 
+        [HasCredential(RoleID = "EDIT_USERGROUP")]
         [HttpPost]
         public ActionResult Edit(UserGroup UserGroup)
         {
@@ -81,13 +90,15 @@ namespace BabyShop.Areas.Admin.Controllers
             { return View(); }
         }
 
+        [HasCredential(RoleID = "DELETE_USERGROUP")]
         [HttpGet]
         public ActionResult Delete(string id)
         {
             var result = new UserGroupDao().ViewDetail(id);
             return View(result);
         }
-     
+
+        [HasCredential(RoleID = "DELETE_USERGROUP")]
         [HttpPost]
         public ActionResult Delete(string id, FormCollection collection)
         {

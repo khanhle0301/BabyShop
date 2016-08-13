@@ -9,18 +9,21 @@ namespace BabyShop.Areas.Admin.Controllers
     public class AboutController : BaseController
     {
         // GET: Admin/About
+        [HasCredential(RoleID = "VIEW_ABOUT")]
         public ActionResult Index()
         {
             var model = new AboutDao().ListAll();
             return View(model);
-        }      
+        }
 
+        [HasCredential(RoleID = "DETAIL_ABOUT")]
         public ActionResult Detail(int id)
         {
             var model = new AboutDao().ViewDetail(id);
             return View(model);
-        }    
+        }
 
+        [HasCredential(RoleID = "EDIT_ABOUT")]
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -28,7 +31,9 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(model);
         }
 
+        [HasCredential(RoleID = "EDIT_ABOUT")]
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Edit(About about)
         {
             try

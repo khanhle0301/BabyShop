@@ -51,9 +51,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Web.Mvc">
-      <HintPath>..\..\BabyShop\BabyShop\bin\System.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Mvc.Extensions, Version=1.1.0.6, Culture=neutral, PublicKeyToken=d631f4e4b226a032, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Web.Mvc.Extensions.1.1.1.2\lib\net45\System.Web.Mvc.Extensions.dll</HintPath>
       <Private>True</Private>
@@ -148,9 +145,43 @@
     <Compile Include="Migrations\201608090854582_update_database.Designer.cs">
       <DependentUpon>201608090854582_update_database.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608110532382_updatePromotionFlag.cs" />
+    <Compile Include="Migrations\201608110532382_updatePromotionFlag.Designer.cs">
+      <DependentUpon>201608110532382_updatePromotionFlag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608110755414_createMetaKeyword.cs" />
+    <Compile Include="Migrations\201608110755414_createMetaKeyword.Designer.cs">
+      <DependentUpon>201608110755414_createMetaKeyword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608110833561_MetaKeyword_Post.cs" />
+    <Compile Include="Migrations\201608110833561_MetaKeyword_Post.Designer.cs">
+      <DependentUpon>201608110833561_MetaKeyword_Post.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608120258077_update_auditable.cs" />
+    <Compile Include="Migrations\201608120258077_update_auditable.Designer.cs">
+      <DependentUpon>201608120258077_update_auditable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608120628538_update_about.cs" />
+    <Compile Include="Migrations\201608120628538_update_about.Designer.cs">
+      <DependentUpon>201608120628538_update_about.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608120639085_update_about1.cs" />
+    <Compile Include="Migrations\201608120639085_update_about1.Designer.cs">
+      <DependentUpon>201608120639085_update_about1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608130244486_update_slide_1.cs" />
+    <Compile Include="Migrations\201608130244486_update_slide_1.Designer.cs">
+      <DependentUpon>201608130244486_update_slide_1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608131457177_update-user.cs" />
+    <Compile Include="Migrations\201608131457177_update-user.Designer.cs">
+      <DependentUpon>201608131457177_update-user.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\Changepass.cs" />
     <Compile Include="ViewModel\CredentialViewModel.cs" />
+    <Compile Include="ViewModel\UserEditModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -189,6 +220,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608090854582_update_database.resx">
       <DependentUpon>201608090854582_update_database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608110532382_updatePromotionFlag.resx">
+      <DependentUpon>201608110532382_updatePromotionFlag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608110755414_createMetaKeyword.resx">
+      <DependentUpon>201608110755414_createMetaKeyword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608110833561_MetaKeyword_Post.resx">
+      <DependentUpon>201608110833561_MetaKeyword_Post.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608120258077_update_auditable.resx">
+      <DependentUpon>201608120258077_update_auditable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608120628538_update_about.resx">
+      <DependentUpon>201608120628538_update_about.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608120639085_update_about1.resx">
+      <DependentUpon>201608120639085_update_about1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608130244486_update_slide_1.resx">
+      <DependentUpon>201608130244486_update_slide_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608131457177_update-user.resx">
+      <DependentUpon>201608131457177_update-user.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

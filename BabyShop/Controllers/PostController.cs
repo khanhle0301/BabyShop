@@ -11,15 +11,19 @@ namespace BabyShop.Controllers
     public class PostController : Controller
     {
         // GET: Post        
+        public ActionResult Index()
+        {
+            return View();
+        }
 
-        public ActionResult Index(int page = 1)
+        public ActionResult Category(int cateId, int page = 1)
         {
             int pageSize = int.Parse(ConfigHelper.GetByKey("PageSize"));
             int totalRow = 0;
             int MaxPage = int.Parse(ConfigHelper.GetByKey("MaxPage"));
-            var model = new PostDao().ListAll(page, pageSize, out totalRow);
+            var model = new PostDao().ListAllByCateID(cateId, page, pageSize, out totalRow);
             int totalPage = (int)Math.Ceiling((double)totalRow / pageSize);
-
+            ViewBag.Category = new PostCategoryDao().ViewDetail(cateId);
             ViewBag.TotalPage = totalPage;
             ViewBag.TotalCount = totalRow;
             ViewBag.MaxPage = MaxPage;

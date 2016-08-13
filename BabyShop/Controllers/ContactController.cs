@@ -30,7 +30,7 @@ namespace BabyShop.Controllers
                 feedback.CreateDate = DateTime.Now;
                 feedback.Subject = feedbackViewModel.Subject;
                 feedback.Message = feedbackViewModel.Message;
-                feedback.Status = true;
+                feedback.Status = false;
 
                 string content = System.IO.File.ReadAllText(Server.MapPath("/Assets/client/template/feedback.html"));
                 content = content.Replace("{{name}}", feedbackViewModel.Name);
@@ -39,7 +39,7 @@ namespace BabyShop.Controllers
                 content = content.Replace("{{message}}", feedbackViewModel.Message);
 
                 var adminEmail = ConfigHelper.GetByKey("AdminEmail");
-                var mail = MailHelper.SendMail(adminEmail, "Thông tin liên hệ từ website", content);
+                MailHelper.SendMail(adminEmail, "Thông tin liên hệ từ Hellokids", content);              
                 var id = new FeedbackDao().Insert(feedback);
                 ViewData["SuccessMsg"] = "Gửi phản hồi thành công";
             }
@@ -48,7 +48,6 @@ namespace BabyShop.Controllers
             return View("Index", feedbackViewModel);
         }
       
-
         private Contact GetDetail()
         {
             var model = new ContactDao().GetActiveContact();

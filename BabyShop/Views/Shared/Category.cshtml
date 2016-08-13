@@ -8,26 +8,26 @@
                 var childCategories = Model.Where(x => x.ParentID == category.ID);
                 if (childCategories.Count() > 0)
                 {
-            <li>
-                <a href="/san-pham/@category.MetaTitle-@category.ID">@category.Name<img class="arrow-img" src="/Assets/client/images/arrow1.png" alt="" /></a>
-                <ul class="cute">
-                    @foreach (var childCategory in childCategories)
-                            {
+                <li>
+                    <a href="/san-pham/@category.MetaTitle-@category.ID">@category.Name<img class="arrow-img" src="/Assets/client/images/arrow1.png" alt="" /></a>
+                    <ul class="cute">
+                        @foreach (var childCategory in childCategories)
+                        {
                             <li class="subitem3"><a href="/san-pham/@childCategory.MetaTitle-@childCategory.ID">@childCategory.Name</a></li>
-                            }
+                        }
 
-                </ul>
-            </li>
-                }
-                else
-                {
-            <li>
-                <ul class="kid-menu">
-                    <li><a href="/san-pham/@category.MetaTitle-@category.ID">@category.Name</a></li>
-                </ul>
-            </li>
-                }
+                    </ul>
+                </li>
             }
+            else
+            {
+                <li>
+                    <ul class="kid-menu">
+                        <li><a href="/san-pham/@category.MetaTitle-@category.ID">@category.Name</a></li>
+                    </ul>
+                </li>
+            }
+        }
 
     </ul>
 </div>
@@ -48,7 +48,6 @@
                 $(this).next().stop(true, true).slideUp('normal');
             }
         });
-
     });
 </script>
 

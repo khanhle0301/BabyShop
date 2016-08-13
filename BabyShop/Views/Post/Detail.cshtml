@@ -1,5 +1,8 @@
-﻿@{
-    ViewBag.Title = "Detail";
+﻿@model Model.EF.Post
+@{    
+    ViewBag.Title = Model.Name;
+    ViewBag.Keywords = Model.Metakeyword;
+    ViewBag.Descriptions = Model.Description;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container">
@@ -17,7 +20,7 @@
                 <b>Tag :</b>
                 @foreach (var tag in (List<Model.EF.Tag>)ViewBag.Tags)
                 {
-                    <a href="/tag/@tag.ID">@(tag.Name), </a>
+                    <a href="/bai-viet/tag/@tag.ID">@(tag.Name), </a>
                 }
             </div>
         </div>

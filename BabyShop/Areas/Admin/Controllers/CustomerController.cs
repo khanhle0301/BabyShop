@@ -1,31 +1,28 @@
 ﻿using BabyShop.Common;
-using Common;
 using Model.Dao;
-using Model.EF;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BabyShop.Areas.Admin.Controllers
 {
     public class CustomerController : BaseController
     {
-        // GET:  Customer/User        
+        // GET:  Customer/User
 
+        [HasCredential(RoleID = "VIEW_CUSTOMER")]
         public ActionResult Index()
         {
             var result = new CustomerDao().ListAll();
             return View(result);
         }
 
+        [HasCredential(RoleID = "DETAIL_CUSTOMER")]
         public ActionResult Details(int id)
         {
             var model = new CustomerDao().ViewDetail(id);
             return View(model);
         }
-     
+
+        [HasCredential(RoleID = "DELETE_CUSTOMER")]
         [HttpDelete]
         public ActionResult Delete(int id)
         {
@@ -33,6 +30,7 @@ namespace BabyShop.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        [HasCredential(RoleID = "CHANGESTATUS_CUSTOMER")]
         [HttpPost]
         public JsonResult ChangeStatus(int id)
         {

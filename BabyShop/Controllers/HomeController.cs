@@ -1,9 +1,8 @@
-﻿using Model.Dao;
-using BabyShop.Common;
-using BabyShop.Models;
+﻿using BabyShop.Models;
+using Common;
+using Model.Dao;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using Common;
 
 namespace BabyShop.Controllers
 {
@@ -18,13 +17,19 @@ namespace BabyShop.Controllers
             ViewBag.NewProduct = productdao.ListNewProduct(Top);
             ViewBag.HotProduct = productdao.ListHotProduct(Top);
             ViewBag.PromotionProduct = productdao.ListPromotionProduct(Top);
+
+            ViewBag.Title = ConfigHelper.GetByKey("HomeTitle");
+            ViewBag.Keywords = ConfigHelper.GetByKey("HomeKeyword");
+            ViewBag.Descriptions = ConfigHelper.GetByKey("HomeDescription");
+
             return View();
         }
 
         [ChildActionOnly]
         public ActionResult Header()
         {
-            return PartialView();
+            var model = new PostCategoryDao().ListAll();
+            return PartialView(model);
         }
 
         [ChildActionOnly]
@@ -35,14 +40,13 @@ namespace BabyShop.Controllers
             return PartialView(model);
         }
 
-
         [ChildActionOnly]
         public ActionResult Category()
         {
             var model = new ProductCategoryDao().ListAll();
             return PartialView(model);
         }
-      
+
         [ChildActionOnly]
         public ActionResult HeaderCart()
         {
@@ -51,9 +55,9 @@ namespace BabyShop.Controllers
             if (cart != null)
             {
                 list = (List<CartItem>)cart;
-            }
+            }          
             return PartialView(list);
-        }       
+        }
 
         [ChildActionOnly]
         public ActionResult Footer()

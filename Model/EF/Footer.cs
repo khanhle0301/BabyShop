@@ -10,8 +10,7 @@ namespace Model.EF
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { set; get; }
-
-        [AllowHtml]
+     
         [Required(ErrorMessage = "Vui lòng nhập nội dung")]
         [Display(Name = "Nội dung")]
         [Column(TypeName = "ntext")]

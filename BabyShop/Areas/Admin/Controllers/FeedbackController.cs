@@ -1,9 +1,5 @@
-﻿using Common;
+﻿using BabyShop.Common;
 using Model.Dao;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BabyShop.Areas.Admin.Controllers
@@ -11,12 +7,14 @@ namespace BabyShop.Areas.Admin.Controllers
     public class FeedbackController : BaseController
     {
         // GET: Admin/Feedback
+        [HasCredential(RoleID = "VIEW_FEEDBACK")]
         public ActionResult Index()
-        {           
+        {
             var model = new FeedbackDao().ListAll();
             return View(model);
         }
 
+        [HasCredential(RoleID = "CHANGESTATUS_FEEDBACK")]
         [HttpPost]
         public JsonResult ChangeStatus(int id)
         {
@@ -27,6 +25,7 @@ namespace BabyShop.Areas.Admin.Controllers
             });
         }
 
+        [HasCredential(RoleID = "DELETE_FEEDBACK")]
         [HttpDelete]
         public ActionResult Delete(int id)
         {
@@ -34,6 +33,7 @@ namespace BabyShop.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        [HasCredential(RoleID = "DETAIL_FEEDBACK")]
         public ActionResult Detail(int id)
         {
             var result = new FeedbackDao().ViewDetail(id);

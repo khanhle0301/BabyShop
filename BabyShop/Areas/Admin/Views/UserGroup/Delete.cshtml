@@ -1,7 +1,7 @@
 ﻿@model Model.EF.UserGroup
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Trang xóa nhóm người dùng " + @Model.ID;
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -39,7 +39,7 @@
 
                         <dd>
                             @Html.DisplayFor(model => model.Name)
-                        </dd>                      
+                        </dd>
 
                         <dt>
                             @Html.DisplayNameFor(model => model.Status)

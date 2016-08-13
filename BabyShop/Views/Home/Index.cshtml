@@ -1,6 +1,5 @@
-﻿@{
-    ViewBag.Title = "Trang chủ";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@{ 
+    Layout = "~/Views/Shared/_Layout.cshtml";    
     var listSlide = (List<Model.EF.Slide>)ViewBag.ListSlide;
     var newProduct = (List<Model.EF.Product>)ViewBag.NewProduct;
     var hotProduct = (List<Model.EF.Product>)ViewBag.HotProduct;
@@ -28,19 +27,20 @@
             <div class="wmuSliderWrapper">
                 @foreach (var item in listSlide)
                 {
-                <article style="position: absolute; width: 100%; opacity: 0;">
-                    <div class="banner-matter">
-                        <div class="col-md-5 banner-bag">
-                            <img class="img-responsive " src="@item.URL" alt=" " />
-                        </div>
-                        <div class="col-md-7 banner-off">
-                            @Html.Raw(item.Content)
+                    <article style="position: absolute; width: 100%; opacity: 0;">
+                        <div class="banner-matter">
+                            <img class="img-responsive " src="@item.URL" alt="@item.Name" />
+                            @*<div class="col-md-5 banner-bag">
+                                <img class="img-responsive " src="@item.URL" alt="@item.Name" />
+                            </div>
+                            <div class="col-md-7 banner-off">
+                                @Html.Raw(item.Content)
+                            </div>*@
+
+                            <div class="clearfix"> </div>
                         </div>
 
-                        <div class="clearfix"> </div>
-                    </div>
-
-                </article>
+                    </article>
                 }
             </div>
             <ul class="wmuSliderPagination">
@@ -54,35 +54,26 @@
     <!--End banner-->
     <!--Sản phẩm mới-->
     <div class="products">
-        <h5 class="latest-product">Sản phẩm mới nhất</h5>
+        <h5 class="latest-product">Sản phẩm mới về</h5>
         <a class="view-all" href="/san-pham">Xem tất cả<span> </span></a>
     </div>
     <div class="product-left">
         @foreach (var product in newProduct)
         {
             var url = "/chi-tiet/" + product.Metatitle + "-" + product.ID;
-        <div class="col-md-4 chain-grid">
-            <a href="@url"><img class="img-responsive chain" src="@product.Image" /></a>
-            <span class="star"> </span>
-            <div class="grid-chain-bottom">
-                <h6><a href="@url">@product.Name</a></h6>
-                <div class="star-price">
-                    <div class="dolor-grid">
-                        @if (product.PromotionPrice.HasValue)
-                            {
-                        <span class="actual">@product.PromotionPrice.Value.ToString("N0")₫</span>
-                        <span class="reducedfrom">@product.Price.ToString("N0")₫</span>
-                        }
-                        else
-                        { 
+            <div class="col-md-4 chain-grid">
+                <a href="@url"><img class="img-responsive chain" src="@product.Image" /></a>
+                <span class="star"> </span>
+                <div class="grid-chain-bottom">
+                    <h6><a href="@url">@product.Name</a></h6>
+                    <div class="star-price">
+                        <div class="dolor-grid">
                             <span class="actual">@product.Price.ToString("N0")₫</span>
-                        }                                             
+                        </div>
+                        <div class="clearfix"> </div>
                     </div>
-                    @*<a class="now-get get-cart btnAddToCart" href="#" data-id="@product.ID">Mua hàng</a>*@
-                    <div class="clearfix"> </div>
                 </div>
             </div>
-        </div>
         }
 
         <div class="clearfix"> </div>
@@ -97,28 +88,18 @@
         @foreach (var product in hotProduct)
         {
             var url = "/chi-tiet/" + product.Metatitle + "-" + product.ID;
-        <div class="col-md-4 chain-grid">
-            <a href="@url"><img class="img-responsive chain" src="@product.Image" /></a>
-            @*<span class="star"> </span>*@
-            <div class="grid-chain-bottom">
-                <h6><a href="@url">@product.Name</a></h6>
-                <div class="star-price">
-                    <div class="dolor-grid">
-                        @if (product.PromotionPrice.HasValue)
-                        {
-                            <span class="actual">@product.PromotionPrice.Value.ToString("N0")₫</span>
-                            <span class="reducedfrom">@product.Price.ToString("N0")₫</span>
-                        }
-                        else
-                        {
+            <div class="col-md-4 chain-grid">
+                <a href="@url"><img class="img-responsive chain" src="@product.Image" /></a>                                          
+                <div class="grid-chain-bottom">
+                    <h6><a href="@url">@product.Name</a></h6>
+                    <div class="star-price">
+                        <div class="dolor-grid">
                             <span class="actual">@product.Price.ToString("N0")₫</span>
-                        }                          
+                        </div>
+                        <div class="clearfix"> </div>
                     </div>
-                    @*<a class="now-get get-cart btnAddToCart" href="#" data-id="@product.ID">Mua hàng</a>*@
-                    <div class="clearfix"> </div>
                 </div>
             </div>
-        </div>
         }
         <div class="clearfix"> </div>
     </div>
@@ -132,28 +113,20 @@
         @foreach (var product in promotionProduct)
         {
             var url = "/chi-tiet/" + product.Metatitle + "-" + product.ID;
-        <div class="col-md-4 chain-grid">
-            <a href="@url"><img class="img-responsive chain" src="@product.Image" /></a>
-            @*<span class="star"> </span>*@
-            <div class="grid-chain-bottom">
-                <h6><a href="@url">@product.Name</a></h6>
-                <div class="star-price">
-                    <div class="dolor-grid">
-                        @if (product.PromotionPrice.HasValue)
-                        {
+            <div class="col-md-4 chain-grid">
+                <a href="@url"><img class="img-responsive chain" src="@product.Image" /></a> 
+                <span class="starsale"> </span>                
+                <div class="grid-chain-bottom">
+                    <h6><a href="@url">@product.Name</a></h6>
+                    <div class="star-price">
+                        <div class="dolor-grid">
                             <span class="actual">@product.PromotionPrice.Value.ToString("N0")₫</span>
                             <span class="reducedfrom">@product.Price.ToString("N0")₫</span>
-                        }
-                        else
-                        {
-                            <span class="actual">@product.Price.ToString("N0")₫</span>
-                        }                        
+                        </div>                     
+                        <div class="clearfix"> </div>
                     </div>
-                    @*<a class="now-get get-cart btnAddToCart" href="#" data-id="@product.ID">Mua hàng</a>*@
-                    <div class="clearfix"> </div>
                 </div>
             </div>
-        </div>
         }
         <div class="clearfix"> </div>
     </div>

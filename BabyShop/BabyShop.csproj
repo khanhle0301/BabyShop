@@ -155,7 +155,6 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AboutController.cs" />
     <Compile Include="Areas\Admin\Controllers\CredentialController.cs" />
-    <Compile Include="Areas\Admin\Controllers\PermissionController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductCategoryController.cs" />
@@ -192,7 +191,9 @@
     </Compile>
     <Compile Include="Models\CartInsert.cs" />
     <Compile Include="Models\CartItem.cs" />
+    <Compile Include="Models\ChangepassUser.cs" />
     <Compile Include="Models\FeedbackViewModel.cs" />
+    <Compile Include="Models\Forgotpassword.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
@@ -1672,6 +1673,7 @@
     <Content Include="Assets\admin\js\plugins\ckfinder\_samples\skin_v1.html" />
     <Content Include="Assets\admin\js\plugins\ckfinder\_samples\standalone.html" />
     <Content Include="Assets\admin\js\plugins\ckfinder\_samples\standalone_v1.html" />
+    <Content Include="Assets\client\css\boostrap-social.css" />
     <Content Include="Assets\client\css\bootstrap.css" />
     <Content Include="Assets\client\css\custom.css" />
     <Content Include="Assets\client\css\customPost.css" />
@@ -1698,11 +1700,13 @@
     <Content Include="Assets\client\images\ch.jpg" />
     <Content Include="Assets\client\images\facebook.png" />
     <Content Include="Assets\client\images\gpluse.png" />
+    <Content Include="Assets\client\images\img-sprite-hot.png" />
+    <Content Include="Assets\client\images\img-sprite-sale.png" />
     <Content Include="Assets\client\images\img-sprite.png" />
     <Content Include="Assets\client\images\label_new.png" />
     <Content Include="Assets\client\images\lien-quan-cotton-gau-boo-dep-cho-be-so-sinh-7641.jpg" />
     <Content Include="Assets\client\images\lien-quan-kem-ao-khi-leo-nau-de-thuong-cho-be-so-sinh-single1.jpg" />
-    <Content Include="Assets\client\images\logo.png" />
+    <Content Include="Assets\client\images\logo1.png" />
     <Content Include="Assets\client\images\pi.jpg" />
     <Content Include="Assets\client\images\pi1.jpg" />
     <Content Include="Assets\client\images\pi2.jpg" />
@@ -1749,6 +1753,7 @@
     <Content Include="Assets\client\js\jquery.validate.js" />
     <Content Include="Assets\client\js\jquery.wmuSlider.js" />
     <Content Include="Assets\client\template\feedback.html" />
+    <Content Include="Assets\client\template\forgotpass.html" />
     <Content Include="Assets\client\template\neworder.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -2306,12 +2311,10 @@
     <Content Include="Areas\Admin\Views\About\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Footer\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Footer\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Footer\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Slide\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Slide\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Slide\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Contact\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Contact\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Contact\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Feedback\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Feedback\Detail.cshtml" />
@@ -2334,10 +2337,7 @@
     <Content Include="Areas\Admin\Views\Product\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\About\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\User\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Contact\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Contact\Detail.cshtml" />
-    <Content Include="Areas\Admin\Views\Feedback\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Footer\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Footer\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Slide\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\401.cshtml" />
@@ -2347,6 +2347,12 @@
     <Content Include="Areas\Admin\Views\UserGroup\Create.cshtml" />
     <Content Include="Areas\Admin\Views\UserGroup\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\UserGroup\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Info.cshtml" />
+    <Content Include="Areas\Admin\Views\User\EditInfo.cshtml" />
+    <Content Include="Areas\Admin\Views\User\ChangePass.cshtml" />
+    <None Include="Properties\PublishProfiles\git.pubxml" />
+    <None Include="Properties\PublishProfiles\project.pubxml" />
+    <None Include="Properties\PublishProfiles\shop.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
@@ -2463,14 +2469,24 @@
     <Content Include="Views\Post\Detail.cshtml" />
     <Content Include="Views\Post\Tag.cshtml" />
     <Content Include="Views\Product\Tag.cshtml" />
-    <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\Product\ViewAllSaleOffProduct.cshtml" />
     <Content Include="Views\Product\ViewAllHotProduct.cshtml" />
     <Content Include="Views\Shared\TopHot.cshtml" />
+    <Content Include="Views\Post\Category.cshtml" />
+    <Content Include="Views\About\Chinhsachbaomat.cshtml" />
+    <Content Include="Views\About\About.cshtml" />
+    <Content Include="Views\About\Dieukhoansudung.cshtml" />
+    <Content Include="Views\About\Huongdanmuahang.cshtml" />
+    <Content Include="Views\About\Hinhthucthanhtoan.cshtml" />
+    <Content Include="Views\About\Chinhsachgiaohang.cshtml" />
+    <Content Include="Views\About\Chinhsachbaohanh.cshtml" />
+    <Content Include="Views\About\Chinhsachdoitrahang.cshtml" />
+    <Content Include="Views\User\Info.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Changepass.cshtml" />
+    <Content Include="Views\User\Forgotpassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\Permission\" />
     <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>

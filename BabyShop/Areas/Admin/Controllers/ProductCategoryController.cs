@@ -1,12 +1,8 @@
-﻿using BabyShop.Areas.Admin.Models;
-using BabyShop.Common;
+﻿using BabyShop.Common;
 using Common;
 using Model.Dao;
 using Model.EF;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BabyShop.Areas.Admin.Controllers
@@ -14,18 +10,21 @@ namespace BabyShop.Areas.Admin.Controllers
     public class ProductCategoryController : BaseController
     {
         // GET: Admin/ProductCategory
+        [HasCredential(RoleID = "VIEW_PRODUCTCATEGORY")]
         public ActionResult Index()
-        {           
+        {
             var result = new ProductCategoryDao().ListAllPaging();
             return View(result);
         }
-        
+
+        [HasCredential(RoleID = "DETAIL_PRODUCTCATEGORY")]
         public ActionResult Details(int id)
         {
             var result = new ProductCategoryDao().ViewDetail(id);
             return View(result);
         }
 
+        [HasCredential(RoleID = "ADD_PRODUCTCATEGORY")]
         [HttpGet]
         public ActionResult Create()
         {
@@ -33,16 +32,17 @@ namespace BabyShop.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HasCredential(RoleID = "ADD_PRODUCTCATEGORY")]
+        [HttpPost]    
         public ActionResult Create(ProductCategory model)
         {
             if (ModelState.IsValid)
             {
-                model.MetaTitle = StringHelper.ToUnsignString(model.Name);                
-                model.CreatedDate = DateTime.Now;              
+                model.MetaTitle = StringHelper.ToUnsignString(model.Name);
+                model.CreatedDate = DateTime.Now;
                 var session = (AdminLogin)Session[Common.Constants.ADMIN_SESSION];
                 var entity = new UserDao().GetByID(session.UserName);
-                model.CreatedBy = entity.UserName;               
+                model.CreatedBy = entity.UserName;
                 var result = new ProductCategoryDao().Insert(model);
                 if (result > 0)
                 {
@@ -56,6 +56,7 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(model);
         }
 
+        [HasCredential(RoleID = "EDIT_PRODUCTCATEGORY")]
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -65,7 +66,8 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(result);
         }
 
-        [HttpPost]
+        [HasCredential(RoleID = "EDIT_PRODUCTCATEGORY")]
+        [HttpPost]      
         public ActionResult Edit(ProductCategory model)
         {
             if (ModelState.IsValid)
@@ -95,16 +97,18 @@ namespace BabyShop.Areas.Admin.Controllers
             ViewBag.ParentID = new SelectList(dao.ListAllParent(), "ID", "Name", selectedId);
         }
 
+        [HasCredential(RoleID = "DELETE_PRODUCTCATEGORY")]
         public ActionResult Delete(int id)
         {
             var result = new ProductCategoryDao().ViewDetail(id);
             return View(result);
         }
 
+        [HasCredential(RoleID = "DELETE_PRODUCTCATEGORY")]
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
-            var dao= new ProductCategoryDao().Delete(id);
+            var dao = new ProductCategoryDao().Delete(id);
             if (dao)
             {
                 SetAlert("Xóa thành công", "success");
@@ -115,9 +119,10 @@ namespace BabyShop.Areas.Admin.Controllers
                 ViewData["Error"] = "Xóa thất bại!";
                 var result = new ProductCategoryDao().ViewDetail(id);
                 return View(result);
-            }          
+            }
         }
 
+        [HasCredential(RoleID = "CHANGESTATUS_PRODUCTCATEGORY")]
         [HttpPost]
         public JsonResult ChangeStatus(int id)
         {

@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Model.EF.Product>
 @{
-    ViewBag.Title = "ViewAllProduct";
+    ViewBag.Title = "Tất cả sản phẩm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -18,11 +18,15 @@
         <div class="women">
             <a href="/san-pham"><h4>Tất cả sản phẩm - <span>@ViewBag.TotalCount sản phẩm</span> </h4></a>
             <ul class="w_nav">
-                <li>Sắp xếp : </li>
-                <li><a class="active" href="?page=@ViewBag.Page&sort=popular">Phổ biến</a></li> |
-                <li><a href="?page=@ViewBag.Page&sort=new">Mới </a></li> |
-                <li><a href="?page=@ViewBag.Page&sort=discount">Khuyến mãi</a></li> |
-                <li><a href="?page=@ViewBag.Page&sort=price">Giá: Thấp -> Cao </a></li>
+                <li>Sắp xếp: </li>
+                <li><a class="active" href="?page=@ViewBag.Page&sort=hot">Nỗi bật</a></li> |
+                <li><a href="?page=@ViewBag.Page&sort=price">Giá &uarr;</a></li> |
+                <li><a href="?page=@ViewBag.Page&sort=price_desc">Giá &darr;</a></li> |
+                <li><a href="?page=@ViewBag.Page&sort=name">Tên A&rarr;Z</a></li> |
+                <li><a href="?page=@ViewBag.Page&sort=name_desc">Tên Z&rarr;A</a></li> |
+                <li><a href="?page=@ViewBag.Page&sort=new_desc">Mới nhất</a></li> |
+                <li><a href="?page=@ViewBag.Page&sort=new">Cũ nhất</a></li> |
+                <li><a href="?page=@ViewBag.Page&sort=popular">Bán chạy</a></li>
                 <div class="clearfix"> </div>
             </ul>
             <div class="clearfix"> </div>
@@ -46,16 +50,16 @@
                         </a>
                     </div>
                     <h4><a href="@url">@product.Name</a></h4>
-                    <p>It is a long established fact that a reader</p>
+                    <p>@product.Description</p>
                     @if (product.PromotionPrice.HasValue)
                     {
                         <span class="actual">@product.PromotionPrice.Value.ToString("N0")₫</span>
-                        <span class="reducedfrom">@product.Price.Value.ToString("N0")₫</span>
+                        <span class="reducedfrom">@product.Price.ToString("N0")₫</span>
                     }
                     else
                     {
-                        <span class="actual">@product.Price.Value.ToString("N0")</span>
-                    }                    
+                        <span class="actual">@product.Price.ToString("N0")</span>
+                    }
                 </div>
             }
             <div class="clearfix"> </div>
@@ -79,7 +83,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="?page=@(currentPage-1)" aria-label="Previous">
+                                <a href="?page=@(currentPage-1)&sort=@ViewBag.Sort" aria-label="Previous">
                                     <i class="fa fa-angle-left"></i>
                                 </a>
                             </li>
@@ -89,22 +93,22 @@
                         {
                             if (currentPage == i)
                             {
-                                <li class="active"><a href="?page=@i" title="Trang @i">@i</a></li>
+                                <li class="active"><a href="?page=@i&sort=@ViewBag.Sort" title="Trang @i">@i</a></li>
                             }
                             else
                             {
-                                <li><a href="?page=@i" title="Trang @i">@i</a></li>
+                                <li><a href="?page=@i&sort=@ViewBag.Sort" title="Trang @i">@i</a></li>
                             }
                         }
                         @if (currentPage < totalPage)
                         {
                             <li>
-                                <a href="?page=@(currentPage+1)" aria-label="Next">
+                                <a href="?page=@(currentPage+1)&sort=@ViewBag.Sort" aria-label="Next">
                                     <i class="fa fa-angle-right"></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="?page=@totalPage" aria-label="Last">
+                                <a href="?page=@totalPage&sort=@ViewBag.Sort" aria-label="Last">
                                     <i class="fa fa-angle-double-right"></i>
                                 </a>
                             </li>

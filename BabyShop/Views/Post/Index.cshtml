@@ -13,7 +13,7 @@
         {
             <div class="image group">
                 <div class="grid images_3_of_1">
-                    <img src="@item.Image" alt="" />
+                    <img src="@item.Image" alt="@item.Name" />
                 </div>
                 <div class="grid news_desc">
                     <h3><a href="/cam-nang-cho-be/@item.Metatitle-@item.ID">@item.Name </a></h3>
@@ -42,11 +42,11 @@
                                 <i class="fa fa-angle-double-left"></i>
                             </a>
                         </li>
-                            <li>
-                                <a href="?page=@(currentPage-1)" aria-label="Previous">
-                                    <i class="fa fa-angle-left"></i>
-                                </a>
-                            </li>
+                        <li>
+                            <a href="?page=@(currentPage-1)" aria-label="Previous">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        </li>
                     }
 
                     @for (int i = startPageIndex; i <= endPageIndex; i++)
@@ -67,11 +67,11 @@
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         </li>
-                            <li>
-                                <a href="?page=@totalPage" aria-label="Last">
-                                    <i class="fa fa-angle-double-right"></i>
-                                </a>
-                            </li>
+                        <li>
+                            <a href="?page=@totalPage" aria-label="Last">
+                                <i class="fa fa-angle-double-right"></i>
+                            </a>
+                        </li>
                     }
                 </ul>
             </nav>

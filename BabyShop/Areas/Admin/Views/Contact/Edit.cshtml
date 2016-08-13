@@ -1,6 +1,6 @@
 ﻿@model Model.EF.Contact
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Trang cập nhật thông tin liên hệ";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -55,15 +55,7 @@
                                 @Html.LabelFor(model => model.Lng)
                                 @Html.TextBoxFor(model => model.Lng, new { @class = "form-control", @type = "number" })
                                 @Html.ValidationMessageFor(model => model.Lng, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Status)
-                                @Html.DropDownListFor(model => model.Status, new List<SelectListItem>()
-                                    {
-                                        new SelectListItem(){Selected=true,Text="Kích hoạt",Value="true"},
-                                        new SelectListItem(){Selected=true,Text="Khóa",Value="false"},
-                                    }, new { @class = "form-control" })
-                            </div>
+                            </div>                           
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
                                     <input type="submit" value="Cập nhật" class="btn btn-success" />

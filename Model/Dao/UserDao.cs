@@ -1,4 +1,5 @@
 ﻿using Model.EF;
+using Model.ViewModel;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -74,6 +75,22 @@ namespace Model.Dao
                 admin.UpdatedDate = DateTime.Now;
                 admin.UpdatedBy = entity.UpdatedBy;
                 admin.Status = entity.Status;
+                admin.GroupID = entity.GroupID;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }       
+
+        public bool ChangePass(User entity)
+        {
+            try
+            {
+                var admin = db.Users.Find(entity.ID);                
+                admin.Password = entity.Password;
                 db.SaveChanges();
                 return true;
             }
@@ -82,7 +99,6 @@ namespace Model.Dao
                 return false;
             }
         }
-
 
         public bool Delete(int id)
         {
@@ -112,7 +128,7 @@ namespace Model.Dao
         public User GetByID(string userName)
         {
             return db.Users.SingleOrDefault(x => x.UserName == userName);
-        }
+        }      
 
         public bool UserNameExists(string userName)
         {

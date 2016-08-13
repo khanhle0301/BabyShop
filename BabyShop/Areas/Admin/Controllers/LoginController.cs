@@ -1,10 +1,6 @@
 ﻿using BabyShop.Areas.Admin.Models;
 using BabyShop.Common;
 using Model.Dao;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BabyShop.Areas.Admin.Controllers
@@ -54,6 +50,12 @@ namespace BabyShop.Areas.Admin.Controllers
                 }
             }
             return View("Index");
+        }
+
+        public ActionResult Logout()
+        {
+            Session[Constants.ADMIN_SESSION] = null;
+            return RedirectToAction("Index", "Login");
         }
     }
 }

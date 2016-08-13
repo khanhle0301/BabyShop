@@ -3,26 +3,23 @@
 <link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl"
       rel="stylesheet" type="text/css" />
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Đăng ký";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section category{
     @{Html.RenderAction("Category", "Home");}
 }
-
-
 @if (ViewData["SuccessMsg"] != null)
 {
     <div class="single_top">
         <div class="single_grid">
             <div class="alert alert-success" role="alert">
                 <strong>Chúc mừng bạn! </strong> đã đăng ký thành công.
-                <br />Vui lòng click <a href="/dang-nhap">vào đây </a>để đăng nhập.
+                <br />Click <a href="/dang-nhap">vào đây </a>để đăng nhập.
             </div>
         </div>
     </div>
-
 }
 else
 {
@@ -30,15 +27,7 @@ else
         @using (Html.BeginForm("Register", "User", FormMethod.Post))
         {
             @Html.AntiForgeryToken();
-            @Html.ValidationSummary(false, "", new { @class = "error" })
-
-            if (ViewData["SuccessMsg"] != null)
-            {
-                <div class="alert alert-success" role="alert">
-                    <strong>Chúc mừng bạn! </strong> đã đăng ký thành công.
-                    <br />Vui lòng click <a href="/dang-nhap.html">vào đây </a>để đăng nhập.
-                </div>
-            }
+            @Html.ValidationSummary(false, "", new { @class = "error" })          
             <div class="register-top-grid">
                 <h3>Thông tin cá nhân</h3>
                 <div class="mation">
@@ -59,6 +48,8 @@ else
 
                     <span>Mật khẩu<label>*</label></span>
                     @Html.PasswordFor(model => model.Password)
+                    <span>Xác nhận mật khẩu<label>*</label></span>
+                    @Html.PasswordFor(model => model.ConfirmPassword)
                     @{
                         MvcCaptcha registerCaptcha = new MvcCaptcha("registerCaptcha");
                     }

@@ -158,9 +158,9 @@ namespace BabyShop.Controllers
             content = content.Replace("{{Email}}", order.Email);
             content = content.Replace("{{Address}}", order.Address);
             content = content.Replace("{{Total}}", total.ToString("N0"));
-            //var adminEmail = ConfigHelper.GetByKey("AdminEmail");
-            MailHelper.SendMail(order.Email, "Đơn hàng mới từ BabyShop", content);
-            //MailHelper.SendMail(adminEmail, "Đơn hàng mới từ BabyShop", content);
+            var adminEmail = ConfigHelper.GetByKey("AdminEmail");
+            MailHelper.SendMail(order.Email, "Đơn hàng mới từ Hellokids", content);
+            MailHelper.SendMail(adminEmail, "Đơn hàng mới từ Hellokids", content);
             Session[BabyShop.Common.Constants.CartSession] = null;
 
             return Json(new

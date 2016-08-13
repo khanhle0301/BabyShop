@@ -58,7 +58,8 @@ namespace Model.Dao
             try
             {
                 var Slide = db.Slides.Find(entity.ID);
-                Slide.Content = entity.Content;
+                Slide.Name = entity.Name;              
+                Slide.URL = entity.URL;
                 Slide.Status = entity.Status;
                 db.SaveChanges();
                 return true;

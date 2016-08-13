@@ -1,7 +1,7 @@
 ﻿@model Model.EF.Feedback
 
 @{
-    ViewBag.Title = "Detail";
+    ViewBag.Title = "Trang chi tiết phản hồi " + @Model.ID;
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -71,7 +71,7 @@
                         </dt>
 
                         <dd>
-                            @Html.Raw(Model.Status ? "Kích hoạt" : "Khoá")                            
+                            @Html.Raw(Model.Status ? "Kích hoạt" : "Khoá")
                         </dd>
 
                     </dl>
@@ -80,6 +80,6 @@
         </div>
     </div>
 </div>
-<p>   
+<p>
     @Html.ActionLink("Back to List", "Index")
 </p>

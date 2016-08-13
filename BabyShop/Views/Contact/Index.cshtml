@@ -1,7 +1,7 @@
 ﻿@model BabyShop.Models.FeedbackViewModel
 @using BotDetect.Web.Mvc;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Liên hệ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -11,8 +11,8 @@
 
 
 @section footerJS{
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDf5goklh5E5Uj-gSmaNdTBtqPoyy1-iv8"></script>
-    <script src="~/Assets/client/js/controller/contactController.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8vtHidX-APfMgLAAfUvYW-3efxBqykr0"></script>
+    <script src="/Assets/client/js/controller/contactController.js"></script>
     <script>
         function timDuongDi() {
             var latlng = new google.maps.LatLng(@Model.ContactDetail.Lat, @Model.ContactDetail.Lng); //Vị trí của cửa hàng

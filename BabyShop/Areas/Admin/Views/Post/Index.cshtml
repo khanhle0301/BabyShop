@@ -1,7 +1,7 @@
 ﻿@model List<Model.EF.Post>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Trang tin tức";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 @section header{
@@ -27,6 +27,9 @@
                         <thead>
                             <tr>
                                 <th>
+                                    ID
+                                </th>
+                                <th>
                                     Tiêu đề
                                 </th>
                                 <th>
@@ -48,12 +51,13 @@
                             @foreach (var item in Model)
                             {
                                 <tr id="row_@item.ID">
-                                    <td width=100>@item.Name</td>
-                                    <td><img src="@item.Image" width="100" alt="" /></td>
-                                    <td width=400>@item.Description</td>
-                                    <td>@item.CreatedDate</td>
-                                    <td><a href="#" class="btn-active" data-id="@item.ID">@Html.Raw(item.Status ? "<strong>Kích hoạt</strong>" : "Khoá")</a></td>
-                                    <td>
+                                    <td width=40>@item.ID</td>
+                                    <td>@item.Name</td>
+                                    <td><img src="@item.Image" width="100" alt="@item.Name" /></td>
+                                    <td>@item.Description</td>
+                                    <td width=90>@item.CreatedDate</td>
+                                    <td width=100><a href="#" class="btn-active" data-id="@item.ID">@Html.Raw(item.Status ? "<strong>Kích hoạt</strong>" : "Khoá")</a></td>
+                                    <td width=120>
                                         <a href="/Admin/Post/Edit/@item.ID">Sửa</a>
                                         |
                                         <a href="/Admin/Post/Details/@item.ID">Chi tiết</a>

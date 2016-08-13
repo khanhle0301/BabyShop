@@ -1,6 +1,6 @@
 ﻿@model List<Model.EF.About>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Trang about";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -24,6 +24,9 @@
                                     ID
                                 </th>
                                 <th>
+                                   Tiêu đề
+                                </th>
+                                <th>
                                     Ngày tạo
                                 </th>                               
                                 <th>Thao tác</th>
@@ -34,6 +37,7 @@
                             {
                                 <tr id="row_@item.ID">
                                     <td>@item.ID</td>
+                                    <td>@item.Name</td>
                                     <td>@item.CreatedDate</td>                                  
                                     <td>
                                         <a href="/Admin/About/Edit/@item.ID">Sửa</a>

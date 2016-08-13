@@ -32,6 +32,11 @@ namespace Model.Dao
             return db.UserGroups.Where(x => x.ID != "ADMIN").ToList();
         }
 
+        public List<UserGroup> List_All()
+        {
+            return db.UserGroups.ToList();
+        }
+
         public UserGroup ViewDetail(string id)
         {
             return db.UserGroups.Find(id);

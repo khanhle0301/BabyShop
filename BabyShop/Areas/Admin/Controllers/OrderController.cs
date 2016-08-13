@@ -1,4 +1,5 @@
-﻿using Model.Dao;
+﻿using BabyShop.Common;
+using Model.Dao;
 using System.Web.Mvc;
 
 namespace BabyShop.Areas.Admin.Controllers
@@ -6,12 +7,14 @@ namespace BabyShop.Areas.Admin.Controllers
     public class OrderController : BaseController
     {
         // GET: Admin/Order
+        [HasCredential(RoleID = "VIEW_ORDER")]
         public ActionResult Index()
         {
             var model = new OrderDao().ListAll();
             return View(model);
         }
 
+        [HasCredential(RoleID = "DELETE_ORDER")]
         [HttpDelete]
         public ActionResult Delete(int id)
         {
@@ -19,12 +22,14 @@ namespace BabyShop.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        [HasCredential(RoleID = "DETAIL_ORDER")]
         public ActionResult Details(int id)
         {
             var result = new OrderDao().ViewDetail(id);
             return View(result);
         }
 
+        [HasCredential(RoleID = "CHANGESTATUS_ORDER")]
         [HttpPost]
         public JsonResult ChangeStatus(int id)
         {

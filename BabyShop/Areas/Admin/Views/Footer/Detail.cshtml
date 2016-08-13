@@ -1,7 +1,7 @@
 ﻿@model Model.EF.Footer
 
 @{
-    ViewBag.Title = "Detail";
+    ViewBag.Title = "Trang chi tiết footer";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -32,15 +32,7 @@
 
                         <dd>
                             @Html.Raw(Model.Content)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Status)
-                        </dt>
-
-                        <dd>
-                            @Html.Raw(Model.Status ? "Kích hoạt" : "Khoá")
-                        </dd>
+                        </dd>                     
 
                     </dl>
                 </div>

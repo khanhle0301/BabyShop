@@ -1,7 +1,7 @@
 ﻿@model Model.EF.Product
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Trang cập nhật sản phẩm "+@Model.Name;
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -11,44 +11,29 @@
 }
 @section jsFooter{
     <script>
-        $('#btnSelectImageHome').on('click', function (e) {
+        $('#btnSelectImage').on('click', function (e) {
             e.preventDefault();
             var finder = new CKFinder();
             finder.selectActionFunction = function (url) {
-                $('#txtImageHome').val(url);
-            };
-            finder.popup();
-        })
-
-        $('#btnSelectImageProduct').on('click', function (e) {
-            e.preventDefault();
-            var finder = new CKFinder();
-            finder.selectActionFunction = function (url) {
-                $('#txtImageProduct').val(url);
-            };
-            finder.popup();
-        })
-
-        $('#btnSelectImageDetails').on('click', function (e) {
-            e.preventDefault();
-            var finder = new CKFinder();
-            finder.selectActionFunction = function (url) {
-                $('#txtImageDetails').val(url);
-            };
-            finder.popup();
-        })
-
-        $('#btnSelectImageRelated').on('click', function (e) {
-            e.preventDefault();
-            var finder = new CKFinder();
-            finder.selectActionFunction = function (url) {
-                $('#txtImageRelated').val(url);
+                $('#txtImage').val(url);
             };
             finder.popup();
         })
 
         var editor = CKEDITOR.replace('txtContent', {
             customConfig: '/Assets/admin/js/plugins/ckeditor/config.js',
+        });
+
+        $(document).ready(function () {
+            $("#txt").click(function () {
+                var e = $(this).val();
+                if (e == "true") {
+                    $("#txtPromotionPrice").show();
+                }
+                else {
+                    $("#txtPromotionPrice").hide();
+                }
+            });
         });
     </script>
 }
@@ -80,8 +65,8 @@
 
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Image)
-                                @Html.TextBoxFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" }, id = "txtImageHome", style = "width: 600px" })
-                                <a id="btnSelectImageHome" href="#">Chọn ảnh</a>
+                                @Html.TextBoxFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" }, id = "txtImage", style = "width: 600px" })
+                                <a id="btnSelectImage" href="#">Chọn ảnh</a>
                                 @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
                             </div>                           
 
@@ -92,10 +77,20 @@
                             </div>
 
                             <div class="form-group">
+                                @Html.LabelFor(model => model.PromotionFlag)
+                                @Html.DropDownListFor(model => model.PromotionFlag, new List<SelectListItem>()
+                                    {
+                                        new SelectListItem(){Selected=true,Text="Kích hoạt",Value="true"},
+                                        new SelectListItem(){Selected=true,Text="Khóa",Value="false"},
+                                    }, new { @class = "form-control", @id = "txt" })
+                            </div>
+
+                            <div class="form-group" id="txtPromotionPrice" style="display:none;">
                                 @Html.LabelFor(model => model.PromotionPrice)
                                 @Html.EditorFor(model => model.PromotionPrice, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "1" } })
                                 @Html.ValidationMessageFor(model => model.PromotionPrice, "", new { @class = "text-danger" })
                             </div>
+
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Quantity)
                                 @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
@@ -110,6 +105,12 @@
                                 @Html.LabelFor(model => model.Detail)
                                 @Html.TextAreaFor(model => model.Detail, new { htmlAttributes = new { @class = "form-control" }, id = "txtContent" })
                                 @Html.ValidationMessageFor(model => model.Detail, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Metakeyword)
+                                @Html.EditorFor(model => model.Metakeyword, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Metakeyword, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="form-group">

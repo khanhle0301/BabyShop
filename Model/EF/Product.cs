@@ -22,6 +22,11 @@ namespace Model.EF
         [Column(TypeName = "varchar")]
         public string Metatitle {set; get;}
 
+        [Display(Name = "Từ khóa")]
+        [Required(ErrorMessage = "Vui lòng nhập từ khóa")]
+        [MaxLength(200)]        
+        public string Metakeyword { set; get; }
+
         [Display(Name = "Loại sản phẩm")]
         public int CategoryID {set; get;}
 
@@ -53,8 +58,7 @@ namespace Model.EF
         public string Description {set; get;}
 
         [Required(ErrorMessage = "Vui lòng nhập chi tiết sản phẩm")]
-        [Display(Name = "Chi tiết")]
-        [AllowHtml]
+        [Display(Name = "Chi tiết")]      
         [Column(TypeName = "ntext")]
         public string Detail {set; get;}
 
@@ -69,7 +73,10 @@ namespace Model.EF
         public bool HomeFlag {set; get;}
 
         [Display(Name = "Sản phẩm Hot")]
-        public bool HotFlag {set; get;}
+        public bool HotFlag { set; get; }
+
+        [Display(Name = "Sản phẩm khuyến mãi")]
+        public bool PromotionFlag { set; get;}
 
         [Display(Name = "Lượt xem")]
         public int ViewCount {set; get;}

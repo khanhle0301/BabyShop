@@ -16,20 +16,92 @@ namespace BabyShop
             routes.IgnoreRoute("{*botdetect}",
     new { botdetect = @"(.*)BotDetectCaptcha\.ashx" });
 
+            routes.MapRoute(
+name: "Taikhoan",
+url: "tai-khoan",
+defaults: new { controller = "User", action = "Info", id = UrlParameter.Optional },
+namespaces: new[] { "BabyShop.Controllers" }
+);
+
+            routes.MapRoute(
+name: "Quenpass",
+url: "quen-mat-khau",
+defaults: new { controller = "User", action = "Forgotpassword", id = UrlParameter.Optional },
+namespaces: new[] { "BabyShop.Controllers" }
+);
+
+
+            routes.MapRoute(
+name: "capnhatthongtin",
+url: "cap-nhat-thong-tin",
+defaults: new { controller = "User", action = "Edit", id = UrlParameter.Optional },
+namespaces: new[] { "BabyShop.Controllers" }
+);
+
+
+            routes.MapRoute(
+name: "doimatkhau",
+url: "doi-mat-khau",
+defaults: new { controller = "User", action = "Changepass", id = UrlParameter.Optional },
+namespaces: new[] { "BabyShop.Controllers" }
+);
 
             routes.MapRoute(
   name: "About",
   url: "gioi-thieu",
-  defaults: new { controller = "About", action = "Index", id = UrlParameter.Optional },
+  defaults: new { controller = "About", action = "About", id = UrlParameter.Optional },
   namespaces: new[] { "BabyShop.Controllers" }
 );
 
             routes.MapRoute(
-             name: "Content Detail",
-             url: "cam-nang-cho-be/{metatitle}-{id}",
-             defaults: new { controller = "Post", action = "Detail", id = UrlParameter.Optional },
-             namespaces: new[] { "BabyShop.Controllers" }
-         );
+name: "Chinh sach bao mat",
+url: "chinh-sach-bao-mat",
+defaults: new { controller = "About", action = "Chinhsachbaomat", id = UrlParameter.Optional },
+namespaces: new[] { "BabyShop.Controllers" }
+);
+
+            routes.MapRoute(
+  name: "Dieukhoansudung",
+  url: "dieu-khoan-su-dung",
+  defaults: new { controller = "About", action = "Dieukhoansudung", id = UrlParameter.Optional },
+  namespaces: new[] { "BabyShop.Controllers" }
+);
+
+            routes.MapRoute(
+name: "Huongdanmuahang",
+url: "huong-dan-mua-hang",
+defaults: new { controller = "About", action = "Huongdanmuahang", id = UrlParameter.Optional },
+namespaces: new[] { "BabyShop.Controllers" }
+);
+
+            routes.MapRoute(
+  name: "Hinhthucthanhtoan",
+  url: "hinh-thuc-thanh-toan",
+  defaults: new { controller = "About", action = "Hinhthucthanhtoan", id = UrlParameter.Optional },
+  namespaces: new[] { "BabyShop.Controllers" }
+);
+
+            routes.MapRoute(
+name: "Chinhsachgiaohang",
+url: "chinh-sach-giao-hang",
+defaults: new { controller = "About", action = "Chinhsachgiaohang", id = UrlParameter.Optional },
+namespaces: new[] { "BabyShop.Controllers" }
+);
+
+
+            routes.MapRoute(
+  name: "Chinhsachbaohanh",
+  url: "chinh-sach-bao-hanh",
+  defaults: new { controller = "About", action = "Chinhsachbaohanh", id = UrlParameter.Optional },
+  namespaces: new[] { "BabyShop.Controllers" }
+);
+
+            routes.MapRoute(
+name: "Chinhsachdoitrahang",
+url: "chinh-sach-doi-tra-hang",
+defaults: new { controller = "About", action = "Chinhsachdoitrahang", id = UrlParameter.Optional },
+namespaces: new[] { "BabyShop.Controllers" }
+);
 
             routes.MapRoute(
      name: "Contact",
@@ -39,11 +111,23 @@ namespace BabyShop
  );
             routes.MapRoute(
            name: "Tags",
-           url: "tag/{tagId}",
+           url: "bai-viet/tag/{tagId}",
            defaults: new { controller = "Post", action = "Tag", id = UrlParameter.Optional },
            namespaces: new[] { "BabyShop.Controllers" }
        );
 
+            routes.MapRoute(
+  name: "Post",
+  url: "bai-viet/{metatitle}-{cateId}",
+  defaults: new { controller = "Post", action = "Category", id = UrlParameter.Optional },
+  namespaces: new[] { "BabyShop.Controllers" }
+);
+            routes.MapRoute(
+             name: "Content Detail",
+             url: "chi-tiet-bai-viet/{metatitle}-{id}",
+             defaults: new { controller = "Post", action = "Detail", id = UrlParameter.Optional },
+             namespaces: new[] { "BabyShop.Controllers" }
+         );
 
             routes.MapRoute(
            name: "Tags Product",
@@ -51,13 +135,6 @@ namespace BabyShop
            defaults: new { controller = "Product", action = "Tag", id = UrlParameter.Optional },
            namespaces: new[] { "BabyShop.Controllers" }
        );
-
-            routes.MapRoute(
-      name: "Post",
-      url: "cam-nang-cho-be",
-      defaults: new { controller = "Post", action = "Index", id = UrlParameter.Optional },
-      namespaces: new[] { "BabyShop.Controllers" }
-  );
 
             routes.MapRoute(
          name: "Login",

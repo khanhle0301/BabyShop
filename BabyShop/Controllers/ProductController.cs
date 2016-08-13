@@ -19,15 +19,13 @@ namespace BabyShop.Controllers
             int totalRow = 0;
             int MaxPage = int.Parse(ConfigHelper.GetByKey("MaxPage"));
             var productModel = new ProductDao().GetListProductByCategoryIdPaging(cateId, page, pageSize, sort, out totalRow);
-
             int totalPage = (int)Math.Ceiling((double)totalRow / pageSize);
-
             ViewBag.Category = new ProductCategoryDao().ViewDetail(cateId);
-
             ViewBag.TotalPage = totalPage;
             ViewBag.TotalCount = totalRow;
             ViewBag.MaxPage = MaxPage;
             ViewBag.Page = page;
+            ViewBag.Sort = sort;
             ViewBag.Last = totalPage;
             ViewBag.Next = page + 1;
             ViewBag.Prev = page - 1;
@@ -45,18 +43,19 @@ namespace BabyShop.Controllers
             return View(product);
         }
 
-        public ActionResult Tag(string tagId, int page = 1)
+        public ActionResult Tag(string tagId, int page = 1, string sort = "")
         {
             int pageSize = int.Parse(ConfigHelper.GetByKey("PageSize"));
             int totalRow = 0;
             int MaxPage = int.Parse(ConfigHelper.GetByKey("MaxPage"));
             ViewBag.Tag = new PostDao().GetTag(tagId);
-            var model = new ProductDao().ListAllByTag(tagId, page, pageSize, out totalRow);
+            var model = new ProductDao().ListAllByTag(tagId, page, pageSize, sort, out totalRow);
             int totalPage = (int)Math.Ceiling((double)totalRow / pageSize);
             ViewBag.TotalPage = totalPage;
             ViewBag.TotalCount = totalRow;
             ViewBag.MaxPage = MaxPage;
             ViewBag.Page = page;
+            ViewBag.Sort = sort;
             ViewBag.Last = totalPage;
             ViewBag.Next = page + 1;
             ViewBag.Prev = page - 1;
@@ -79,14 +78,13 @@ namespace BabyShop.Controllers
             int totalRow = 0;
             int MaxPage = int.Parse(ConfigHelper.GetByKey("MaxPage"));
             var productModel = new ProductDao().Search(keyword, page, pageSize, sort, out totalRow);
-
             int totalPage = (int)Math.Ceiling((double)totalRow / pageSize);
-
             ViewBag.Keyword = keyword;
             ViewBag.TotalPage = totalPage;
             ViewBag.TotalCount = totalRow;
             ViewBag.MaxPage = MaxPage;
             ViewBag.Page = page;
+            ViewBag.Sort = sort;
             ViewBag.Last = totalPage;
             ViewBag.Next = page + 1;
             ViewBag.Prev = page - 1;
@@ -104,6 +102,7 @@ namespace BabyShop.Controllers
             ViewBag.TotalCount = totalRow;
             ViewBag.MaxPage = MaxPage;
             ViewBag.Page = page;
+            ViewBag.Sort = sort;
             ViewBag.Last = totalPage;
             ViewBag.Next = page + 1;
             ViewBag.Prev = page - 1;
@@ -121,6 +120,7 @@ namespace BabyShop.Controllers
             ViewBag.TotalCount = totalRow;
             ViewBag.MaxPage = MaxPage;
             ViewBag.Page = page;
+            ViewBag.Sort = sort;
             ViewBag.Last = totalPage;
             ViewBag.Next = page + 1;
             ViewBag.Prev = page - 1;
@@ -138,6 +138,7 @@ namespace BabyShop.Controllers
             ViewBag.TotalCount = totalRow;
             ViewBag.MaxPage = MaxPage;
             ViewBag.Page = page;
+            ViewBag.Sort = sort;
             ViewBag.Last = totalPage;
             ViewBag.Next = page + 1;
             ViewBag.Prev = page - 1;

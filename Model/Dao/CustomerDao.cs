@@ -1,4 +1,5 @@
 ﻿using Model.EF;
+using Model.ViewModel;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,69 @@ namespace Model.Dao
         {
             db = new BabyShopDbContext();
         }
+
         public Customer ViewDetail(int id)
         {
             return db.Customers.Find(id);
+        }
+
+        public UserEditModel ViewDetailEdit(int id)
+        {
+            var model = (from a in db.Customers
+                         where a.ID == id
+                         select new
+                         {
+                             ID = a.ID,
+                             Name = a.Name,
+                             Address = a.Address,
+                             Email = a.Email,
+                             Phone = a.Phone
+                         }).AsEnumerable().Select(x => new UserEditModel()
+                         {
+                             ID = x.ID,
+                             Name = x.Name,
+                             Address = x.Address,
+                             Email = x.Email,
+                             Phone = x.Phone
+                         });
+            return model.FirstOrDefault();
+        }
+
+        public bool ChangePass(Customer entity)
+        {
+            try
+            {
+                var admin = db.Customers.Find(entity.ID);
+                admin.Password = entity.Password;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool Forgotpassword(Customer entity)
+        {
+            try
+            {
+                var admin = db.Customers.SingleOrDefault(x => x.Email == entity.Email);
+                admin.Password = entity.Password;
+                db.SaveChanges();
+                return true;
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                    }
+                }
+                return false;
+            }
         }
 
         public bool ChangeStatus(int id)
@@ -32,52 +93,6 @@ namespace Model.Dao
         public List<Customer> ListAll()
         {
             return db.Customers.ToList();
-        }
-
-        public IEnumerable<Customer> ListAllPaging(string sortOrder, string searchString, int page, int pageSize)
-        {
-            IQueryable<Customer> query = db.Customers;
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                query = query.Where(x => x.Name.Contains(searchString) || x.Email.Contains(searchString) || x.UserName.Contains(searchString));
-            }
-            switch (sortOrder)
-            {
-                case "name":
-                    query = query.OrderBy(x => x.Name);
-                    break;
-                case "name_desc":
-                    query = query.OrderByDescending(x => x.Name);
-                    break;
-                case "email":
-                    query = query.OrderBy(x => x.Email);
-                    break;
-                case "email_desc":
-                    query = query.OrderByDescending(x => x.Email);
-                    break;
-                case "username":
-                    query = query.OrderBy(x => x.UserName);
-                    break;
-                case "username_desc":
-                    query = query.OrderByDescending(x => x.UserName);
-                    break;
-                case "date":
-                    query = query.OrderBy(x => x.CreatedDate);
-                    break;
-                case "date_desc":
-                    query = query.OrderByDescending(x => x.CreatedDate);
-                    break;
-                case "status":
-                    query = query.OrderBy(x => x.Status);
-                    break;
-                case "status_desc":
-                    query = query.OrderByDescending(x => x.Status);
-                    break;
-                default:
-                    query = query.OrderByDescending(x => x.CreatedDate);
-                    break;
-            }
-            return query.ToPagedList(page, pageSize);
         }
 
         public int Login(string userName, string passWord)
@@ -133,7 +148,6 @@ namespace Model.Dao
             return db.Customers.SingleOrDefault(x => x.UserName == userName);
         }
 
-
         public Customer GetID(int id)
         {
             return db.Customers.SingleOrDefault(x => x.ID == id);
@@ -157,12 +171,18 @@ namespace Model.Dao
                 db.SaveChanges();
                 return entity.ID;
             }
-            catch (Exception)
+            catch (DbEntityValidationException dbEx)
             {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                    }
+                }
                 return 0;
             }
         }
-
 
         public bool Update(Customer entity)
         {
@@ -174,7 +194,7 @@ namespace Model.Dao
                 admin.Email = entity.Email;
                 admin.Phone = entity.Phone;
                 admin.UpdatedDate = DateTime.Now;
-                admin.Status = entity.Status;
+                admin.Status = true;
                 db.SaveChanges();
                 return true;
             }
@@ -183,7 +203,6 @@ namespace Model.Dao
                 return false;
             }
         }
-
 
         public bool Delete(int id)
         {

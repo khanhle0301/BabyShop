@@ -1,10 +1,9 @@
 ﻿@model List<BabyShop.Models.CartItem>
 @using Model.Dao;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Giỏ hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var session = (UserLogin)Session[BabyShop.Common.CommonConstants.USER_SESSION];
-
+    var session = (UserLogin)Session[BabyShop.Common.Constants.USER_SESSION];
 }
 <script>
     $(function () {
@@ -28,7 +27,7 @@
     }
     else
     {
-        var tongtien = (@item.Product.Price* @item.Quantity);
+        var tongtien = (@item.Product.Price * @item.Quantity);
         thanhtien += tongtien;
     }
 }
@@ -59,7 +58,7 @@
                             var Sizes = new ProductDao().ListSize(@item.ProductId);
                             <tr>
                                 <td>@item.Product.Name</td>
-                                <td><img src="@item.Product.Image" width="100" /></td>
+                                <td><img src="@item.Product.Image" alt="@item.Product.Name" width="100" /></td>
                                 <td>@item.Size</td>
                                 <td>
                                     <input type="number" style="width:50px" min="1" class="txtQuantity" data-id="@item.Product.ID" data-size="@item.Size" value="@item.Quantity" />
@@ -124,5 +123,4 @@
         </div>
         <div class="clearfix"> </div>
     </div>
-
 </div>

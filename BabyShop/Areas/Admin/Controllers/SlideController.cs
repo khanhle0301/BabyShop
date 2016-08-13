@@ -1,4 +1,5 @@
-﻿using Model.Dao;
+﻿using BabyShop.Common;
+using Model.Dao;
 using Model.EF;
 using System;
 using System.Collections.Generic;
@@ -11,18 +12,21 @@ namespace BabyShop.Areas.Admin.Controllers
     public class SlideController : BaseController
     {
         // GET: Admin/Slide
+        [HasCredential(RoleID = "VIEW_SLIDE")]
         public ActionResult Index()
         {
             var model = new SlideDao().ListAll();
             return View(model);
         }
 
+        [HasCredential(RoleID = "DETAIL_SLIDE")]
         public ActionResult Details(int id)
         {
             var result = new SlideDao().ViewDetail(id);
             return View(result);
         }
 
+        [HasCredential(RoleID = "CHANGESTATUS_SLIDE")]
         [HttpPost]
         public JsonResult ChangeStatus(int id)
         {
@@ -33,6 +37,7 @@ namespace BabyShop.Areas.Admin.Controllers
             });
         }
 
+        [HasCredential(RoleID = "DELETE_SLIDE")]
         [HttpDelete]
         public ActionResult Delete(int id)
         {
@@ -40,13 +45,15 @@ namespace BabyShop.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        [HasCredential(RoleID = "ADD_SLIDE")]
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
-        [HttpPost]
+        [HasCredential(RoleID = "ADD_SLIDE")]
+        [HttpPost]     
         public ActionResult Create(Slide model)
         {
             try
@@ -68,6 +75,7 @@ namespace BabyShop.Areas.Admin.Controllers
             { return View(); }
         }
 
+        [HasCredential(RoleID = "EDIT_SLIDE")]
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -75,7 +83,8 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(user);
         }
 
-        [HttpPost]
+        [HasCredential(RoleID = "EDIT_SLIDE")]
+        [HttpPost]    
         public ActionResult Edit(Slide Slide)
         {
             try

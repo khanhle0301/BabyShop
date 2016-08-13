@@ -10,16 +10,14 @@ namespace Model.Abstract
         [Display(Name = "Ngày tạo")]
         public DateTime? CreatedDate { set; get; }
 
-        [Display(Name = "Tạo bởi")]
-        [Column(TypeName = "varchar")]
+        [Display(Name = "Tạo bởi")]    
         [MaxLength(50)]
         public string CreatedBy { set; get; }
 
         [Display(Name = "Ngày cập nhật")]
         public DateTime? UpdatedDate { set; get; }
 
-        [Display(Name = "Cập nhật bởi")]
-        [Column(TypeName = "varchar")]
+        [Display(Name = "Cập nhật bởi")]   
         [MaxLength(50)]
         public string UpdatedBy { set; get; }
 

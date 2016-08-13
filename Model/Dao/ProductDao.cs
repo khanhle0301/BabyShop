@@ -17,6 +17,14 @@ namespace Model.Dao
             db = new BabyShopDbContext();
         }
 
+        public bool ChangeStatus(int id)
+        {
+            var cate = db.Products.Find(id);
+            cate.Status = !cate.Status;
+            db.SaveChanges();
+            return cate.Status;
+        }
+
         public List<Product> ListAllHotFlag(int top)
         {
             return db.Products.Where(x => x.Status && x.HotFlag == true).OrderByDescending(x => x.CreatedDate).Take(top).ToList();
@@ -61,9 +69,9 @@ namespace Model.Dao
             return entity.ID;
         }
 
-        public IEnumerable<Product> ListAllByTag(string tag, int page, int pageSize, out int totalRow)
+        public IEnumerable<Product> ListAllByTag(string tag, int page, int pageSize, string sort, out int totalRow)
         {
-            var model = (from a in db.Products
+            var query = (from a in db.Products
                          join b in db.ProductTags
                          on a.ID equals b.ProductID
                          where b.TagID == tag
@@ -105,8 +113,38 @@ namespace Model.Dao
                              ViewCount = x.ViewCount,
                              Status = x.Status
                          });
-            totalRow = model.Count();
-            return model.OrderByDescending(x => x.CreatedDate).Skip((page - 1) * pageSize).Take(pageSize);
+            switch (sort)
+            {
+                case "hot":
+                    query = query.OrderByDescending(x => x.ViewCount);
+                    break;
+                case "price":
+                    query = query.OrderBy(x => x.Price);
+                    break;
+                case "price_desc":
+                    query = query.OrderByDescending(x => x.Price);
+                    break;
+                case "name":
+                    query = query.OrderBy(x => x.Name);
+                    break;
+                case "name_desc":
+                    query = query.OrderByDescending(x => x.Name);
+                    break;
+                case "new_desc":
+                    query = query.OrderByDescending(x => x.CreatedDate);
+                    break;
+                case "new":
+                    query = query.OrderBy(x => x.CreatedDate);
+                    break;
+                case "popular":
+                    query = query.OrderByDescending(x => x.QuantitySold);
+                    break;
+                default:
+                    query = query.OrderByDescending(x => x.CreatedDate);
+                    break;
+            }
+            totalRow = query.Count();
+            return query.Skip((page - 1) * pageSize).Take(pageSize);
         }
 
         public List<string> ListName(string keyword)
@@ -116,17 +154,17 @@ namespace Model.Dao
 
         public List<Product> ListNewProduct(int top)
         {
-            return db.Products.Where(x => x.Status).OrderByDescending(x => x.CreatedDate).Take(top).ToList();
+            return db.Products.Where(x => x.Status && x.HomeFlag == true).OrderByDescending(x => x.CreatedDate).Take(top).ToList();
         }
 
         public List<Product> ListPromotionProduct(int top)
         {
-            return db.Products.Where(x => x.Status && x.PromotionPrice.HasValue && x.PromotionPrice > 0).OrderByDescending(x => x.CreatedDate).Take(top).ToList();
+            return db.Products.Where(x => x.Status && x.PromotionFlag == true && x.HomeFlag == true).OrderByDescending(x => x.CreatedDate).Take(top).ToList();
         }
 
         public List<Product> ListHotProduct(int top)
         {
-            return db.Products.Where(x => x.Status && x.QuantitySold > 0).OrderByDescending(x => x.QuantitySold).Take(top).ToList();
+            return db.Products.Where(x => x.Status && x.QuantitySold > 0 && x.HomeFlag == true).OrderByDescending(x => x.QuantitySold).Take(top).ToList();
         }
 
         public Product ViewDetail(int id)
@@ -145,71 +183,109 @@ namespace Model.Dao
             var query = db.Products.Where(x => x.Status);
             switch (sort)
             {
-                case "popular":
+                case "hot":
                     query = query.OrderByDescending(x => x.ViewCount);
-                    break;
-                case "discount":
-                    query = query.OrderByDescending(x => x.PromotionPrice.HasValue);
                     break;
                 case "price":
                     query = query.OrderBy(x => x.Price);
+                    break;
+                case "price_desc":
+                    query = query.OrderByDescending(x => x.Price);
+                    break;
+                case "name":
+                    query = query.OrderBy(x => x.Name);
+                    break;
+                case "name_desc":
+                    query = query.OrderByDescending(x => x.Name);
+                    break;
+                case "new_desc":
+                    query = query.OrderByDescending(x => x.CreatedDate);
+                    break;
+                case "new":
+                    query = query.OrderBy(x => x.CreatedDate);
+                    break;
+                case "popular":
+                    query = query.OrderByDescending(x => x.QuantitySold);
                     break;
                 default:
                     query = query.OrderByDescending(x => x.CreatedDate);
                     break;
             }
             totalRow = query.Count();
-
             return query.Skip((page - 1) * pageSize).Take(pageSize);
         }
 
         public IEnumerable<Product> GetListProductByCategoryIdPaging(int categoryId, int page, int pageSize, string sort, out int totalRow)
         {
             var query = db.Products.Where(x => x.Status && x.CategoryID == categoryId);
-
             switch (sort)
             {
-                case "popular":
+                case "hot":
                     query = query.OrderByDescending(x => x.ViewCount);
-                    break;
-                case "discount":
-                    query = query.OrderByDescending(x => x.PromotionPrice.HasValue);
                     break;
                 case "price":
                     query = query.OrderBy(x => x.Price);
+                    break;
+                case "price_desc":
+                    query = query.OrderByDescending(x => x.Price);
+                    break;
+                case "name":
+                    query = query.OrderBy(x => x.Name);
+                    break;
+                case "name_desc":
+                    query = query.OrderByDescending(x => x.Name);
+                    break;
+                case "new_desc":
+                    query = query.OrderByDescending(x => x.CreatedDate);
+                    break;
+                case "new":
+                    query = query.OrderBy(x => x.CreatedDate);
+                    break;
+                case "popular":
+                    query = query.OrderByDescending(x => x.QuantitySold);
                     break;
                 default:
                     query = query.OrderByDescending(x => x.CreatedDate);
                     break;
             }
-
             totalRow = query.Count();
-
             return query.Skip((page - 1) * pageSize).Take(pageSize);
         }
 
         public IEnumerable<Product> Search(string keyword, int page, int pageSize, string sort, out int totalRow)
         {
             var query = db.Products.Where(x => x.Status && x.Name.Contains(keyword));
-
             switch (sort)
             {
-                case "popular":
+                case "hot":
                     query = query.OrderByDescending(x => x.ViewCount);
-                    break;
-                case "discount":
-                    query = query.OrderByDescending(x => x.PromotionPrice.HasValue);
                     break;
                 case "price":
                     query = query.OrderBy(x => x.Price);
+                    break;
+                case "price_desc":
+                    query = query.OrderByDescending(x => x.Price);
+                    break;
+                case "name":
+                    query = query.OrderBy(x => x.Name);
+                    break;
+                case "name_desc":
+                    query = query.OrderByDescending(x => x.Name);
+                    break;
+                case "new_desc":
+                    query = query.OrderByDescending(x => x.CreatedDate);
+                    break;
+                case "new":
+                    query = query.OrderBy(x => x.CreatedDate);
+                    break;
+                case "popular":
+                    query = query.OrderByDescending(x => x.QuantitySold);
                     break;
                 default:
                     query = query.OrderByDescending(x => x.CreatedDate);
                     break;
             }
-
             totalRow = query.Count();
-
             return query.Skip((page - 1) * pageSize).Take(pageSize);
         }
 
@@ -218,11 +294,29 @@ namespace Model.Dao
             var query = db.Products.Where(x => x.Status && x.PromotionPrice.HasValue && x.PromotionPrice > 0);
             switch (sort)
             {
-                case "popular":
+                case "hot":
                     query = query.OrderByDescending(x => x.ViewCount);
                     break;
                 case "price":
                     query = query.OrderBy(x => x.Price);
+                    break;
+                case "price_desc":
+                    query = query.OrderByDescending(x => x.Price);
+                    break;
+                case "name":
+                    query = query.OrderBy(x => x.Name);
+                    break;
+                case "name_desc":
+                    query = query.OrderByDescending(x => x.Name);
+                    break;
+                case "new_desc":
+                    query = query.OrderByDescending(x => x.CreatedDate);
+                    break;
+                case "new":
+                    query = query.OrderBy(x => x.CreatedDate);
+                    break;
+                case "popular":
+                    query = query.OrderByDescending(x => x.QuantitySold);
                     break;
                 default:
                     query = query.OrderByDescending(x => x.CreatedDate);
@@ -237,11 +331,29 @@ namespace Model.Dao
             var query = db.Products.Where(x => x.Status && x.QuantitySold > 0);
             switch (sort)
             {
-                case "discount":
-                    query = query.OrderByDescending(x => x.PromotionPrice.HasValue);
+                case "hot":
+                    query = query.OrderByDescending(x => x.ViewCount);
                     break;
                 case "price":
                     query = query.OrderBy(x => x.Price);
+                    break;
+                case "price_desc":
+                    query = query.OrderByDescending(x => x.Price);
+                    break;
+                case "name":
+                    query = query.OrderBy(x => x.Name);
+                    break;
+                case "name_desc":
+                    query = query.OrderByDescending(x => x.Name);
+                    break;
+                case "new_desc":
+                    query = query.OrderByDescending(x => x.CreatedDate);
+                    break;
+                case "new":
+                    query = query.OrderBy(x => x.CreatedDate);
+                    break;
+                case "popular":
+                    query = query.OrderByDescending(x => x.QuantitySold);
                     break;
                 default:
                     query = query.OrderByDescending(x => x.CreatedDate);
@@ -319,7 +431,6 @@ namespace Model.Dao
             return model.ToList();
         }
 
-
         public void InsertTag(string id, string name)
         {
             var tag = new Tag();
@@ -366,7 +477,6 @@ namespace Model.Dao
         {
             return db.Sizes.Count(x => x.ID == id) > 0;
         }
-
 
         public int Insert(Product product)
         {
@@ -422,6 +532,7 @@ namespace Model.Dao
                 var model = db.Products.Find(product.ID);
                 model.Name = product.Name;
                 model.Metatitle = StringHelper.ToUnsignString(product.Name);
+                model.Metakeyword = product.Metakeyword;
                 model.CategoryID = product.CategoryID;
                 model.Image = product.Image;
                 model.Price = product.Price;
@@ -433,8 +544,10 @@ namespace Model.Dao
                 model.Size = product.Size;
                 model.UpdatedDate = DateTime.Now;
                 model.UpdatedBy = product.UpdatedBy;
+                model.HomeFlag = product.HomeFlag;
                 model.HotFlag = product.HotFlag;
                 model.Status = product.Status;
+                model.PromotionFlag = product.PromotionFlag;
                 db.SaveChanges();
                 this.RemoveAllContentTag(product.ID);
                 //Xử lý tag
@@ -486,7 +599,6 @@ namespace Model.Dao
             db.ProductTags.RemoveRange(db.ProductTags.Where(x => x.ProductID == id));
             db.SaveChanges();
         }
-
 
         public void RemoveAllProductSize(int id)
         {

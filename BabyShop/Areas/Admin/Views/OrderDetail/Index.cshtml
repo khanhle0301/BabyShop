@@ -1,7 +1,7 @@
 ﻿@model List<Model.EF.OrderDetail>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Trang chi tiết hóa đơn";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 @section header{
@@ -23,16 +23,19 @@
                         <thead>
                             <tr>
                                 <th>
-                                    ID
+                                    OrderID
                                 </th>
                                 <th>
-                                    Tên sản phẩm
+                                    ProductID
                                 </th>
                                 <th>
                                     Số lượng
                                 </th>
                                 <th>
                                     Đơn giá
+                                </th>
+                                <th>
+                                   Ghi chú
                                 </th>
                             </tr>
                         </thead>
@@ -41,9 +44,10 @@
                             {
                                 <tr id="row_@item.OrderID">
                                     <td>@item.OrderID</td>
-                                    <td>@item.Product.Name</td>
+                                    <td>@item.ProductID</td>
                                     <td>@item.Quantity</td>
                                     <td>@item.Price</td>
+                                    <td>@item.Note</td>
                                 </tr>
                             }
                         </tbody>

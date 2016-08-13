@@ -3,9 +3,6 @@ using Common;
 using Model.Dao;
 using Model.EF;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BabyShop.Areas.Admin.Controllers
@@ -13,23 +10,28 @@ namespace BabyShop.Areas.Admin.Controllers
     public class PostCategoryController : BaseController
     {
         // GET: Admin/PostCategory
+        [HasCredential(RoleID = "VIEW_POSTCATEGORY")]
         public ActionResult Index()
-        {          
+        {
             var result = new PostCategoryDao().ListAllPaging();
             return View(result);
         }
 
+        [HasCredential(RoleID = "DETAIL_POSTCATEGORY")]
         public ActionResult Details(int id)
         {
             var result = new PostCategoryDao().ViewDetail(id);
             return View(result);
         }
+
+        [HasCredential(RoleID = "ADD_POSTCATEGORY")]
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
+        [HasCredential(RoleID = "ADD_POSTCATEGORY")]
         [HttpPost]
         public ActionResult Create(PostCategory model)
         {
@@ -39,7 +41,7 @@ namespace BabyShop.Areas.Admin.Controllers
                 model.CreatedDate = DateTime.Now;
                 var session = (AdminLogin)Session[Common.Constants.ADMIN_SESSION];
                 var entity = new UserDao().GetByID(session.UserName);
-                model.CreatedBy = entity.UserName;
+                model.CreatedBy = entity.Name;
                 var result = new PostCategoryDao().Insert(model);
                 if (result > 0)
                 {
@@ -52,6 +54,7 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(model);
         }
 
+        [HasCredential(RoleID = "EDIT_POSTCATEGORY")]
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -60,6 +63,7 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(result);
         }
 
+        [HasCredential(RoleID = "EDIT_POSTCATEGORY")]
         [HttpPost]
         public ActionResult Edit(PostCategory model)
         {
@@ -67,7 +71,7 @@ namespace BabyShop.Areas.Admin.Controllers
             {
                 var session = (AdminLogin)Session[Common.Constants.ADMIN_SESSION];
                 var entity = new UserDao().GetByID(session.UserName);
-                model.UpdatedBy = entity.UserName;
+                model.UpdatedBy = entity.Name;
                 var result = new PostCategoryDao().Update(model);
                 if (result)
                 {
@@ -82,6 +86,7 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(model);
         }
 
+        [HasCredential(RoleID = "DELETE_POSTCATEGORY")]
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -89,6 +94,7 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(result);
         }
 
+        [HasCredential(RoleID = "DELETE_POSTCATEGORY")]
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
@@ -103,9 +109,10 @@ namespace BabyShop.Areas.Admin.Controllers
                 ViewData["Error"] = "Xóa thất bại!";
                 var postCate = new PostCategoryDao().ViewDetail(id);
                 return View(postCate);
-            }           
+            }
         }
 
+        [HasCredential(RoleID = "CHANGESTATUS_POSTCATEGORY")]
         [HttpPost]
         public JsonResult ChangeStatus(int id)
         {

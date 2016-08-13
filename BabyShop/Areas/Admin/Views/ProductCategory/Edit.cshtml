@@ -1,6 +1,6 @@
 ﻿@model Model.EF.ProductCategory
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Trang cập nhật danh mục sản phẩm " + @Model.Name;
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -31,18 +31,30 @@
                                 @Html.DropDownList("ParentID", "-----None-----")
                                 @Html.ValidationMessageFor(model => model.ParentID, "", new { @class = "text-danger" })
                             </div>
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.DisplayOrder)
-                                    @Html.TextBoxFor(model => model.DisplayOrder, new { @class = "form-control", @type = "number", @min = "1" })
-                                </div>
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.Status)
-                                    @Html.DropDownListFor(model => model.Status, new List<SelectListItem>()
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.DisplayOrder)
+                                @Html.TextBoxFor(model => model.DisplayOrder, new { @class = "form-control", @type = "number", @min = "1" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Metakeyword)
+                                @Html.EditorFor(model => model.Metakeyword, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Metakeyword, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Description)
+                                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" }, style = "width: 970px; height: 80px;" })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Status)
+                                @Html.DropDownListFor(model => model.Status, new List<SelectListItem>()
                                     {
                                         new SelectListItem(){Selected=true,Text="Kích hoạt",Value="true"},
                                         new SelectListItem(){Selected=true,Text="Khóa",Value="false"},
                                     }, new { @class = "form-control" })
-                                </div>
+                            </div>
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-10">
                                         <input type="submit" value="Cập nhật" class="btn btn-default" />

@@ -12,8 +12,11 @@ namespace Model.EF
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { set; get; }
 
-        [Display(Name = "Nội dung")]
-        [AllowHtml]
+        [Required(ErrorMessage = "Vui lòng nhập tiêu đề")]
+        [MaxLength(50)]
+        public string Name { set; get; }
+
+        [Display(Name = "Nội dung")]       
         [Required(ErrorMessage = "Vui lòng nhập nội dung")]
         [Column(TypeName = "ntext")]
         public string Detail { set; get; }

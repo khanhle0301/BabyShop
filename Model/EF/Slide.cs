@@ -11,15 +11,15 @@ namespace Model.EF
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
+        [Required(ErrorMessage = "Vui lòng nhập tên slide")]
+        [MaxLength(50)]
+        [Display(Name = "Tên slide")]
+        public string Name { set; get; }
+
         [Display(Name = "Hình ảnh")]
         [MaxLength(250)]
         [Required(ErrorMessage = "Vui lòng chọn hình")]
-        public string URL { get; set; }
-
-        [AllowHtml]
-        [Display(Name = "Nội dung")]
-        [Column(TypeName = "ntext")]
-        public string Content { get; set; }
+        public string URL { get; set; }  
 
         [Display(Name = "Trạng thái")]
         public bool Status { get; set; }

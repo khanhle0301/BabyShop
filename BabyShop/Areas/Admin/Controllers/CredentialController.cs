@@ -1,10 +1,7 @@
 ﻿using BabyShop.Common;
 using Model.Dao;
 using Model.EF;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BabyShop.Areas.Admin.Controllers
@@ -12,6 +9,7 @@ namespace BabyShop.Areas.Admin.Controllers
     public class CredentialController : BaseController
     {
         // GET: Admin/Credential
+        [HasCredential(RoleID = "VIEW_CREDENTIAL")]
         public ActionResult Index(string id)
         {
             var checkUserGroup = new UserGroupDao().CheckUserGroupID(id);
@@ -27,7 +25,7 @@ namespace BabyShop.Areas.Admin.Controllers
                 var userGroupSession = new UserGroupCredential();
                 userGroupSession.ID = nameGroup.ID;
                 userGroupSession.Name = nameGroup.Name;
-                Session.Add(Constants.USERGROUP_SESSION, userGroupSession);                     
+                Session.Add(Constants.USERGROUP_SESSION, userGroupSession);
                 return View(result);
             }
         }
@@ -38,6 +36,7 @@ namespace BabyShop.Areas.Admin.Controllers
             ViewBag.RoleID = new SelectList(dao.ListAll(userGroup), "ID", "Name");
         }
 
+        [HasCredential(RoleID = "ADD_CREDENTIAL")]
         public ActionResult Create()
         {
             var userGroup = (UserGroupCredential)Session[BabyShop.Common.Constants.USERGROUP_SESSION];
@@ -45,6 +44,7 @@ namespace BabyShop.Areas.Admin.Controllers
             return View();
         }
 
+        [HasCredential(RoleID = "ADD_CREDENTIAL")]
         [HttpPost]
         public ActionResult Create(Credential model)
         {
@@ -66,7 +66,7 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(model);
         }
 
-
+        [HasCredential(RoleID = "CHANGSTATUS_CREDENTIAL")]
         [HttpPost]
         public JsonResult ChangeStatus(string groupId, string roleID)
         {

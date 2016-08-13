@@ -21,8 +21,18 @@ namespace Model.EF
         [Column(TypeName = "varchar")]
         public string MetaTitle {set; get; }
 
+        [Required(ErrorMessage = "Vui lòng nhập từ khóa")]
+        [Display(Name = "Từ khóa")]
+        [MaxLength(200)]
+        public string Metakeyword { set; get; }
+
         [Display(Name = "Tên danh mục cha")]
         public int? ParentID {set; get; }
+
+        [Display(Name = "Mô tả")]
+        [MaxLength(500)]
+        [Required(ErrorMessage = "Vui lòng nhập mô tả")]
+        public string Description { set; get; }
 
         [Required(ErrorMessage = "Vui lòng nhập thứ tự hiển thị")]
         [Display(Name = "Thứ tự hiển thị")]

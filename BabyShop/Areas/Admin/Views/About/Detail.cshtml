@@ -1,7 +1,7 @@
 ﻿@model Model.EF.About
 
 @{
-    ViewBag.Title = "Detail";
+    ViewBag.Title = "Trang chi tiết "+ Model.Name;
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -24,6 +24,13 @@
 
                         <dd>
                             @Html.DisplayFor(model => model.ID)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Name)
                         </dd>
 
                         <dt>

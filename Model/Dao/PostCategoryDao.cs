@@ -70,6 +70,8 @@ namespace Model.Dao
                 model.Metatitle = StringHelper.ToUnsignString(entity.Name);
                 model.UpdatedDate = DateTime.Now;
                 model.UpdatedBy = entity.UpdatedBy;
+                model.Metakeyword = entity.Metakeyword;
+                model.Description = entity.Description;
                 model.Status = entity.Status;
                 db.SaveChanges();
                 return true;
@@ -83,6 +85,11 @@ namespace Model.Dao
         public List<PostCategory> ListAll()
         {
             return db.PostCategories.ToList();
+        }
+
+        public List<PostCategory> ListAllHome()
+        {
+            return db.PostCategories.Where(x=>x.Status).ToList();
         }
     }
 }

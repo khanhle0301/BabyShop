@@ -42,6 +42,7 @@ namespace Model.Dao
             try
             {
                 var about = db.Abouts.Find(entity.ID);
+                about.Name = entity.Name;
                 about.Detail = entity.Detail;
                 about.UpdatedDate = DateTime.Now;
                 about.UpdatedBy = entity.UpdatedBy;
@@ -77,9 +78,9 @@ namespace Model.Dao
             return db.Abouts.ToList();
         }
 
-        public About GetAbout()
+        public About GetAbout(int id)
         {
-            return db.Abouts.SingleOrDefault(x => x.Status == true);
+            return db.Abouts.SingleOrDefault(x => x.ID== id);
         }
     }
 }

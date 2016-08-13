@@ -20,6 +20,7 @@ namespace Model.EF
         [Column(TypeName = "varchar")]
         public string Password { set; get; }
 
+        [Display(Name = "Nhóm người dùng")]
         [MaxLength(20)]
         [Column(TypeName = "varchar")]
         public string GroupID { set; get; }

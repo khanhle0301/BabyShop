@@ -13,8 +13,7 @@ namespace Model.EF
     {
         [Key]
         [MaxLength(20)]
-        [Required(ErrorMessage = "Vui lòng nhập ID")]
-        [System.Web.Mvc.Remote("CheckID", "UserGroup", ErrorMessage = "Tài khoản đã tồn tại.")]
+        [Required(ErrorMessage = "Vui lòng nhập ID")]      
         [Column(TypeName = "varchar")]    
         public string ID { set; get; }
 

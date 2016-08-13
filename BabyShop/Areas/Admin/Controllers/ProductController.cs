@@ -1,12 +1,9 @@
-﻿using BabyShop.Areas.Admin.Models;
-using BabyShop.Common;
+﻿using BabyShop.Common;
 using Common;
 using Model.Dao;
 using Model.EF;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using System.Xml.Linq;
@@ -16,12 +13,14 @@ namespace BabyShop.Areas.Admin.Controllers
     public class ProductController : BaseController
     {
         // GET: Admin/Product
+        [HasCredential(RoleID = "VIEW_PRODUCT")]
         public ActionResult Index()
         {
             var result = new ProductDao().ListAllPaging();
             return View(result);
         }
 
+        [HasCredential(RoleID = "ADD_PRODUCT")]
         [HttpGet]
         public ActionResult Create()
         {
@@ -29,12 +28,14 @@ namespace BabyShop.Areas.Admin.Controllers
             return View();
         }
 
+        [HasCredential(RoleID = "ADD_PRODUCT")]
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(Product model)
         {
             if (ModelState.IsValid)
             {
-                if (model.PromotionPrice.HasValue && model.Price <= model.PromotionPrice)
+                if (model.PromotionFlag && (model.PromotionPrice == null || model.PromotionPrice >= model.Price))
                 {
                     ModelState.AddModelError("", "Vui lòng kiểm tra lại giá khuyến mãi.");
                 }
@@ -47,6 +48,14 @@ namespace BabyShop.Areas.Admin.Controllers
                     model.CreatedBy = entity.UserName;
                     model.ViewCount = 0;
                     model.QuantitySold = 0;
+                    if (model.PromotionFlag)
+                    {
+                        model.PromotionPrice = model.PromotionPrice;
+                    }
+                    else
+                    {
+                        model.PromotionPrice = null;
+                    }
                     var result = new ProductDao().Insert(model);
                     if (result > 0)
                     {
@@ -61,6 +70,7 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(model);
         }
 
+        [HasCredential(RoleID = "EDIT_PRODUCT")]
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -70,13 +80,15 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(result);
         }
 
+        [HasCredential(RoleID = "EDIT_PRODUCT")]
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Edit(Product model)
         {
             if (ModelState.IsValid)
             {
                 var product = new Product();
-                if (model.PromotionPrice.HasValue && model.Price <= model.PromotionPrice)
+                if (model.PromotionFlag && (model.PromotionPrice == null || model.PromotionPrice >= model.Price))
                 {
                     ModelState.AddModelError("", "Vui lòng kiểm tra lại giá khuyến mãi.");
                 }
@@ -87,6 +99,14 @@ namespace BabyShop.Areas.Admin.Controllers
                         var session = (AdminLogin)Session[Common.Constants.ADMIN_SESSION];
                         var entity = new UserDao().GetByID(session.UserName);
                         model.UpdatedBy = entity.UserName;
+                        if (model.PromotionFlag)
+                        {
+                            model.PromotionPrice = model.PromotionPrice;
+                        }
+                        else
+                        {
+                            model.PromotionPrice = null;
+                        }
                         var result = new ProductDao().Update(model);
                         if (result)
                         {
@@ -100,16 +120,18 @@ namespace BabyShop.Areas.Admin.Controllers
                     }
                 }
             }
-            SetViewBag(model.ID);
+            SetViewBag(model.CategoryID);
             return View(model);
         }
 
+        [HasCredential(RoleID = "DETAIL_PRODUCT")]
         public ActionResult Details(int id)
         {
             var result = new ProductDao().ViewDetail(id);
             return View(result);
         }
 
+        [HasCredential(RoleID = "DELETE_PRODUCT")]
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -117,6 +139,7 @@ namespace BabyShop.Areas.Admin.Controllers
             return View(result);
         }
 
+        [HasCredential(RoleID = "DELETE_PRODUCT")]
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
@@ -159,6 +182,8 @@ namespace BabyShop.Areas.Admin.Controllers
                 data = listImagesReturn
             }, JsonRequestBehavior.AllowGet);
         }
+
+        [HasCredential(RoleID = "MORE_PRODUCT")]
         public JsonResult SaveImages(long id, string images)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
@@ -168,7 +193,8 @@ namespace BabyShop.Areas.Admin.Controllers
 
             foreach (var item in listImages)
             {
-                var subStringItem = item.Substring(22);
+                var subStringItem = item.Substring(26);
+                //var subStringItem = item.Substring(22);
                 xElement.Add(new XElement("Image", subStringItem));
             }
             ProductDao dao = new ProductDao();
@@ -187,7 +213,17 @@ namespace BabyShop.Areas.Admin.Controllers
                     status = false
                 });
             }
+        }
 
+        [HasCredential(RoleID = "CHANGESTATUS_PRODUCT")]
+        [HttpPost]
+        public JsonResult ChangeStatus(int id)
+        {
+            var result = new ProductDao().ChangeStatus(id);
+            return Json(new
+            {
+                status = result
+            });
         }
     }
 }

@@ -37,14 +37,13 @@
         $('#btnUpdate').off('click').on('click', function () {
             var listProduct = $('.txtQuantity');
             var cartList = [];
-
-            $.each(listProduct, function (i, item) {           
+            $.each(listProduct, function (i, item) {
                 cartList.push({
                     Quantity: $(item).val(),
                     Product: {
                         ID: $(item).data('id')
                     },
-                    Size: $(item).data('size')                    
+                    Size: $(item).data('size')
                 });
             });
 
@@ -161,14 +160,13 @@
             success: function (response) {
                 if (response.status) {
                     if (response.urlCheckout != undefined && response.urlCheckout != '') {
-
                         window.location.href = response.urlCheckout;
                     }
                     else {
                         console.log('create order ok');
                         $('#divCheckout').hide();
                         cart.deleteAll();
-                        setTimeout(function () {
+                        setTimeout(function () {                           
                             $('#cartContent').html('Cảm ơn bạn đã đặt hàng thành công. Chúng tôi sẽ liên hệ sớm nhất.');
                         }, 2000);
                     }
@@ -189,6 +187,5 @@
         });
         return total;
     },
-
 }
 cart.init();

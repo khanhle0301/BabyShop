@@ -1,7 +1,7 @@
 ﻿@model Model.EF.Contact
 
 @{
-    ViewBag.Title = "Detail";
+    ViewBag.Title = "Trang chi tiết thông tin liên hệ";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -81,15 +81,7 @@
                         <dd>
                             @Html.DisplayFor(model => model.Lng)
                         </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Status)
-                        </dt>
-
-                        <dd>
-                            @Html.Raw(Model.Status ? "Kích hoạt" : "Khoá")                            
-                        </dd>
-
+                      
                     </dl>
                 </div>
             </div>

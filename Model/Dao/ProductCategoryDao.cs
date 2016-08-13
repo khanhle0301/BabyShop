@@ -3,6 +3,8 @@ using Model.EF;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Model.Dao
@@ -61,6 +63,8 @@ namespace Model.Dao
                 model.MetaTitle = StringHelper.ToUnsignString(entity.Name);
                 model.ParentID = entity.ParentID;
                 model.DisplayOrder = entity.DisplayOrder;
+                model.Metakeyword = entity.Metakeyword;
+                model.Description = entity.Description;
                 model.UpdatedDate = DateTime.Now;
                 model.UpdatedBy = entity.UpdatedBy;
                 model.Status = entity.Status;
