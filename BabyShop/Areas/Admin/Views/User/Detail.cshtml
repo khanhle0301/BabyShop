@@ -1,7 +1,7 @@
-﻿@model Model.EF.User
+﻿@model Model.EF.Customer
 
 @{
-    ViewBag.Title = "Trang chi tiết user "+ @Model.UserName;
+    ViewBag.Title = "Trang chi tiết user "+ Model.UserName;
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 @section header{
@@ -72,30 +72,14 @@
                         <dd>
                             @Html.DisplayFor(model => model.CreatedDate)
                         </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.CreatedBy)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.CreatedBy)
-                        </dd>
-
+                       
                         <dt>
                             @Html.DisplayNameFor(model => model.UpdatedDate)
                         </dt>
 
                         <dd>
                             @Html.DisplayFor(model => model.UpdatedDate)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.UpdatedBy)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.UpdatedBy)
-                        </dd>
+                        </dd>                      
 
                         <dt>
                             @Html.DisplayNameFor(model => model.Status)

@@ -81,6 +81,9 @@ namespace Model.EF
         [Display(Name = "Lượt xem")]
         public int ViewCount {set; get;}
 
+        [MaxLength(1000)]
+        public string TTTT { set; get; }
+
         [ForeignKey("CategoryID")]
         public virtual ProductCategory ProductCategory {set; get;}
 

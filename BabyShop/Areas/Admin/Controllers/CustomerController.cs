@@ -16,7 +16,7 @@ namespace BabyShop.Areas.Admin.Controllers
         }
 
         [HasCredential(RoleID = "DETAIL_CUSTOMER")]
-        public ActionResult Details(int id)
+        public ActionResult Detail(int id)
         {
             var model = new CustomerDao().ViewDetail(id);
             return View(model);

@@ -5,17 +5,15 @@ License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <!DOCTYPE html>
-<html xmlns:fb='http://www.facebook.com/2008/fbml'>
+<html lang="vi" xml:lang="vi" xmlns:fb='http://www.facebook.com/2008/fbml'>
 <head>
     <meta property="fb:admins" content="YOUR_FACEBOOK_USER_ID" />
     <meta property="fb:app_id" content="316514802027139" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="Content-Language" content="vi" />
-
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>@ViewBag.Title</title>
     <meta name="keywords" content="@ViewBag.Keywords" />
     <meta name="description" content="@ViewBag.Descriptions" />
-
     <link href="/Assets/client/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
     <link href="/Assets/client/css/boostrap-social.css" rel="stylesheet" />
     <link href="/Assets/client/font-awesome-4.6.3/css/font-awesome.css" rel="stylesheet" />
@@ -33,16 +31,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </head>
 <body>
     <div id="fb-root"></div>
-        <script>
-            (function (d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = d.createElement(s); js.id = id;
-                js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.7&appId=316514802027139";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-        </script>   
-
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.7&appId=316514802027139";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
     <!--header-->
     @{Html.RenderAction("Header", "Home");}
     <!---->
@@ -56,12 +53,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!---->
     @{ Html.RenderAction("Footer", "Home");}
     <div class="clearfix"></div>
-
     <script src="/Assets/client/js/jquery-ui.js"></script>
     <script src="/Assets/client/js/jquery.validate.js"></script>
     <script src="/Assets/client/js/additional-methods.min.js"></script>
     <script src="/Assets/client/js/common.js"></script>
-
     @RenderSection("footerJS", required: false)
 </body>
 </html>

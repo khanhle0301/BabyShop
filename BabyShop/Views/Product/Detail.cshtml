@@ -13,6 +13,11 @@
     @{Html.RenderAction("Category", "Home");}
 }
 
+@section tophot{
+    @{Html.RenderAction("TopHot", "Home");}
+}
+
+
 @helper Truncate(string input, int length)
 {
 if (input.Length <= length)
@@ -119,6 +124,8 @@ else
                     </div>
                 }
                 <a class="now-get get-cart-in btnAddToCart" href="#" data-id="@Model.ID">Thêm vào giỏ hàng</a>
+                <br/>
+                <a href="@Model.TTTT"><img  style="margin-right: 200px" src="http://www.baokim.vn/developers/uploads/baokim_btn/thanhtoan-l.png" /></a>
                 <div class="clearfix"></div>
             </div>
             @if (Model.Quantity > 0)

@@ -23,5 +23,9 @@ namespace Model.EF
 
         [Display(Name = "Trạng thái")]
         public bool Status { get; set; }
+
+        [Required(ErrorMessage = "Chọn link")]
+        [MaxLength(50)]
+        public string Link { set; get; }
     }
 }

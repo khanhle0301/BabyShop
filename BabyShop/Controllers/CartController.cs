@@ -90,6 +90,7 @@ namespace BabyShop.Controllers
             });
         }
 
+        [ValidateAntiForgeryToken()]
         public ActionResult CreateOrder(string orderViewModel)
         {
             var order = new JavaScriptSerializer().Deserialize<OrderViewModel>(orderViewModel);

@@ -50,7 +50,7 @@
                                     <td>@item.CreatedDate</td>
                                     <td><a href="#" class="btn-active" data-id="@item.ID">@Html.Raw(item.Status ? "<strong>Kích hoạt</strong>" : "Khoá")</a></td>
                                     <td>                                       
-                                        <a href="/Admin/User/Details/@item.ID">Chi tiết</a>
+                                        <a href="/Admin/User/Detail/@item.ID">Chi tiết</a>
                                         |
                                         @Ajax.ActionLink("Xoá", "Delete", new { @id = item.ID }, new AjaxOptions
                                    {

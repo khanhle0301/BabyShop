@@ -157,10 +157,10 @@ namespace BabyShop.Controllers
                 dynamic me = fb.Get("me?fields=first_name,middle_name,last_name,id,email");
                 string email = me.email;
                 string firstname = me.first_name;
-                string middlename = me.middle_name;
+                string middlename = me.middle_name;               
                 string lastname = me.last_name;
                 var user = new Customer();
-                user.UserName = email;
+                user.UserName = email;             
                 user.Name = firstname + " " + middlename + " " + lastname;
                 user.Email = email;              
                 user.Status = true;             
@@ -168,8 +168,12 @@ namespace BabyShop.Controllers
                 if (resultInsert > 0)
                 {
                     var userSession = new UserLogin();
-                    userSession.UserName = user.UserName;
-                    userSession.UserID = user.ID;
+                    var dao = new CustomerDao();
+
+                    userSession.UserName = user.UserName;               
+                    var entity = dao.GetByID(user.UserName);
+               
+                    userSession.UserID = entity.ID;
                     userSession.Name = user.Name;
                     userSession.Email = user.Email;
                     userSession.Phone = user.Phone;

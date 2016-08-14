@@ -3,8 +3,7 @@
 @using Model.Dao;
 @{
     var dao = new CustomerDao();
-    var session = (UserLogin)Session[BabyShop.Common.Constants.USER_SESSION];
-    var entity = dao.GetByID(session.UserName);
+    var session = (UserLogin)Session[BabyShop.Common.Constants.USER_SESSION];  
     var res = dao.ViewDetail(session.UserID);
     ViewBag.Title = "Thông tin người dùng " + res.UserName;
     Layout = "~/Views/Shared/_Layout.cshtml";

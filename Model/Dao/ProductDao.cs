@@ -540,6 +540,7 @@ namespace Model.Dao
                 model.Quantity = product.Quantity;
                 model.Description = product.Description;
                 model.Detail = product.Detail;
+                model.TTTT = product.TTTT;
                 model.Tag = product.Tag;
                 model.Size = product.Size;
                 model.UpdatedDate = DateTime.Now;
